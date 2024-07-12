@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     url: 'https://chartwise.vercel.app/',
     description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
     siteName: 'ChartWise',
-    images: ['/chartwise-hp.png']
+    images: ['/chartwise-homepage.png']
 
   }
 }
