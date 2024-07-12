@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     url: 'http://localhost:3001',
     description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
     siteName: 'ChartWise',
-    images: ['/chartwise-homepage.png']
+    images: ['/chartwise-hp.png']
 
   }
 }
