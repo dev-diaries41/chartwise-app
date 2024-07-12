@@ -9,14 +9,14 @@ import'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3001'),
+  metadataBase: new URL('https://chartwise.vercel.app/'),
   title: 'ChartWise',
   description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
   keywords: ['trade', 'trading', 'charts', 'analysis', 'technical-analysis', 'ai', 'artificial intelligence', 'gpt', 'openai', 'computer vision', 'S&P 500', 'spx', 'btc', 'usd', 'gbp', 'forex', 'cryptocurrency'],
   applicationName: 'ChartWise',
   openGraph: {
     type: 'website',
-    url: 'http://localhost:3001',
+    url: 'https://chartwise.vercel.app/',
     description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
     siteName: 'ChartWise',
     images: ['/chartwise-hp.png']
