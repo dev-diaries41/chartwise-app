@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+  will-change: opacity;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+  will-change: opacity;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Loading css */
+.loading-indicator {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #3498db;
+  border-top: 2px solid transparent;
+  animation: spin 1.5s linear infinite;
+  transition: opacity 0.3s ease-in-out; /* Add this line */
+}
+
+.loading-indicator.animate {
+  animation: spin 1.5s linear infinite, pulse 1.5s linear infinite;
+  opacity: 1; /* Add this line */
+}
+
+.loading-indicator:not(.animate) {
+  opacity: 0.5; /* Add this line */
+}
+
+.loading-indicator-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-indicator-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #3498db;
+  margin: 2px;
+  animation: bounce 1.5s linear infinite;
+}
+
+.loading-indicator-circle:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading-indicator-circle:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.loading-indicator-circle:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.truncate-3-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #374151; /* Tailwind gray-700 */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #4b5563; /* Slightly lighter gray */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1f2937; /* Tailwind gray-800 */
+}
+
+/* SideNav.module.css */
+.open {
+  transform: translateX(0); /* Slide in from left */
+  transition: transform 0.3s ease;
+}
+
+.closed {
+  transform: translateX(-100%); /* Slide out to left */
+  transition: transform 0.3s ease;
+}
+
+.mobileOpen {
+  opacity: 1; /* Fade in */
+  transition: opacity 0.3s ease;
+}
+
+.mobileClosed {
+  opacity: 0; /* Fade out */
+  transition: opacity 0.3s ease;
+}
+
+
+@keyframes pulse-border {
+  0% {
+    border-color: rgba(52, 211, 153, 1);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 1);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.75);
+  }
+  100% {
+    border-color: rgba(52, 211, 153, 1);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+  }
+}
+
+
