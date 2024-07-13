@@ -34,7 +34,7 @@ export default function CarouselImageViewer ({ images }: CarouselImageViewerProp
   const visibleDots = moreImagesExist ? 10 : images.length;
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto bg-gray-700 rounded-md">
+    <div className="relative w-full max-w-2xl bg-gray-700 rounded-md">
       <div className="relative overflow-hidden rounded-lg">
         <div
           className="flex transition-transform duration-500 ease-in-out"

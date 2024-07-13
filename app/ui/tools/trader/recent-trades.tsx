@@ -4,6 +4,7 @@ import React from 'react';
 import DropDownMenu from '@/app/ui/common/dropdown-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
 
 export default function RecentAnalyses({
     analyses,
@@ -11,7 +12,7 @@ export default function RecentAnalyses({
     onDelete
 }: RecentAnalysesProps) {
     return (
-        <DropDownMenu title="Recent Analyses">
+        <DropDownMenu title="Recent Analyses" icon={faChartLine}>
             {analyses.map((analysis, index) => (
                 <div 
                     key={index} 

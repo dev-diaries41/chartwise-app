@@ -10,11 +10,10 @@ import { IAnalysis, LoadingState, PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, AuthErrors, JobErrors, RequestErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { RetryHandler, getJobStatus, getNewToken, saveAnalysis, submitAnalysisRequest } from "@/app/lib/requests/request";
 import { useRouter } from "next/navigation";
-import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content/usage";
+import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content/usage";
 import usePolling from "@/app/hooks/usePolling";
 import { useTrader } from "@/app/providers/trader";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useSubscription } from "@/app/providers/subscription";
 import { toast } from "react-toastify";
 import { copyTextToClipboard } from "@/app/lib/utils";
 
@@ -27,7 +26,6 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   const [popUpDescription, setPopUpDescription] = useState('');
   const {analysisToView, setRecentAnalyses, setAnalysisToView} = useTrader();
   const [shareUrl, setShareUrl] = useState<string | null>(null);
-  const {decrementCredits} = useSubscription(userId, isLoading);
   const router = useRouter();
 
   // On mount set recent charts
@@ -72,7 +70,6 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
     setChartAnalysisResult(chartAnalysis);
     Storage.remove(StorageKeys.jobId);
     setLoading(false);
-    decrementCredits();
   };
 
   const onJobFail = () => {
@@ -87,6 +84,8 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   };
 
   const handleFailedJobStart = async (errorMessage: string) => {
+    setLoading(false);
+    
     if (errorMessage === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
       return onReachedFreeUseLimit();
     } 
@@ -94,7 +93,6 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
       return onReachedSubUsageLimit();
     } 
     toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
-    setLoading(false);
   };
 
   const pollJobStatus = async () => {
@@ -130,8 +128,7 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   };
 
   const onReachedSubUsageLimit = () => {
-    setPopUpTitle(PLAN_USAGE_LIMIT_TITLE);
-    setPopUpDescription(PLAN_USAGE_LIMIT_DESC);
+    toast.error(PLAN_USAGE_LIMIT_TITLE, DefaultToastOptions);
   };
 
   const retryHandler = new RetryHandler(1); // Allow only 1 retry to handle expired token

@@ -27,7 +27,7 @@ export default function Page ({params}:  { params: { id: string } }){
 
   if(loading){
     return (
-      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full pt-32 '>
+      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full py-16 '>
       <LoadingIndicator size={50}/>
       </div>
     )
@@ -36,7 +36,7 @@ export default function Page ({params}:  { params: { id: string } }){
 
   if(!loading && (!chartImageUrl || !analysisResult)){
     return (
-      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full text-xl font-semibold pt-32 text-gray-400'>
+      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full text-xl font-semibold py-16 text-gray-400'>
         404 | Analysis not found
       </div>
     )
@@ -44,7 +44,7 @@ export default function Page ({params}:  { params: { id: string } }){
 
 
   return ( 
-    <div className="flex flex-col max-w-4xl mx-auto my-auto items-center justify-center text-center pt-32 px-4 animate-fadeIn">
+    <div className="flex flex-col max-w-4xl mx-auto my-auto items-center justify-center text-center py-16 px-4 animate-fadeIn">
       {chartImageUrl &&  (
         <div className="w-full max-w-[100%]">
         <Image

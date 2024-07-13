@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div id="privacy-policy" className="pt-32 ">
+    <div id="privacy-policy" className="py-16 ">
       <div className="max-w-5xl mx-auto">
         <div className="p-5">
           <h1 className="text-3xl font-bold pb-6">Privacy Policy</h1>

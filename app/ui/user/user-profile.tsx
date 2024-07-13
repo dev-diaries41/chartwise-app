@@ -7,14 +7,14 @@ import { useSubscription } from '@/app/providers/subscription';
 
 
 export default function UserProfileWidget({userId, isLoading}: UserProfileWidgetProps) {
-const {userPlan, credits} = useSubscription(userId, isLoading);
+const {userPlan} = useSubscription(userId, isLoading);
   return (
     <div className="w-full flex flex-col items-center p-1">
      <div className='w-full flex flex-row gap-2 items-center'>
-        <FontAwesomeIcon icon={faUserCircle} className='w-6 h-6'/>
+        <FontAwesomeIcon icon={faUserCircle} className='w-6 h-6 border-2 border-emerald-400 rounded-full'/>
        <div className='flex flex-col gap-1 items-center overflow-hidden'>
       {userId && <p className='w-full text-xs font-semibold overflow-hidden overflow-ellipsis'>{userId}</p>}
-      <p className='w-full text-xs text-gray-400 overflow-hidden overflow-ellipsis'>{`${userPlan} ⦁ Credits ${credits||''}`}</p>
+      <p className='w-full text-xs text-gray-400 overflow-hidden overflow-ellipsis'>{`${userPlan}`}</p>
       </div>
      </div>
     </div>

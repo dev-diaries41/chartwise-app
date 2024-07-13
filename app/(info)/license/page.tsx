@@ -3,7 +3,7 @@ import React from 'react';
 export default function Page() {
   return (
     <div id="license" className="">
-      <div className="max-w-5xl mx-auto pt-32 ">
+      <div className="max-w-5xl mx-auto py-16 ">
         <div className="p-5">
           <div className="reactMarkDown lg:text-lg leading-relaxed">
             <h1 className="text-3xl font-bold mb-4">License Agreement</h1>

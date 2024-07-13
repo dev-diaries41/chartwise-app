@@ -40,7 +40,7 @@ export default function Page() {
 
   if(isLoading){
     return (
-      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full pt-32'>
+      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full py-16'>
       <LoadingIndicator size={50}/>
       </div>
     )
@@ -53,7 +53,7 @@ export default function Page() {
         { showLoadingMiniIndicator && <LoadingIndicator size={24}/>}
       </div>
       <p className="text-light mb-2 px-3">
-        Upload an image of the chart you want to analyse. See the upload guidelines and limitations <Link className="text-blue-500" href="/trader/guide">here</Link>.
+        Upload an image of the chart you want to analyse. See the upload guidelines and limitations <Link className="text-blue-500" href="/guide">here</Link>.
       </p>
       <p className="text-sm text-gray-600">Note: This is not financial advice.</p>
       <Spacer />

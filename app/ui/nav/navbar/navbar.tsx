@@ -46,7 +46,7 @@ export default function NavBar() {
           href={'/trader'}
           className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 px-4 rounded-full shadow-md"
         >
-          {'Get started'}
+          {'Analyse chart'}
         </Link>
       </div>
     </nav>
