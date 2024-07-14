@@ -108,7 +108,7 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
         onJobFail();
       }
     } catch (error) {
-      alert(RequestErrors.POLLING_ERROR);
+      toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
       setLoading(false);
       throw error;
     }
@@ -116,7 +116,7 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   
   const pollOptions: PollOptions = {
     interval: 4 * Time.sec,
-    maxDuration: 2 * Time.min,
+    maxDuration: Time.min,
     maxErrors: 3,
   };
 
