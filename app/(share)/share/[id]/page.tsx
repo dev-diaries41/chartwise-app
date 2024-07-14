@@ -50,8 +50,8 @@ export default function Page ({params}:  { params: { id: string } }){
         <Image
         src={chartImageUrl}
         alt="Uploaded Chart"
-        width={1000}
-        height={1000}
+        width={500}
+        height={500}
         className={`w-full object-contain`}
         />
         </div>
