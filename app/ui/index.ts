@@ -24,10 +24,10 @@ import { PriceTable } from "./pricing/price-table";
 import { OrderCompleteSkeleton } from "./skeletons/order-complete";
 import { ReceiptSkeleton } from "./skeletons/receipt";
 import ContactForm from "./support/contact";
-import { ChartAnalyser } from "./tools/trader/chart-analysis";
+import { ChartAnalyser } from "./trader/chart-analysis";
 import {Background} from "./common/bg";
 import Spacer from "./utilities/spacer";
-import RecentAnalyses from "./tools/trader/recent-trades";
+import RecentAnalyses from "./trader/recent-trades";
 import UserPlanWidget from "./pricing/user-plan";
 import ActionRow from "./common/action-row";
 

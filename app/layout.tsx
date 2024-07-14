@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://chartwise.vercel.app/'),
   title: 'ChartWise',
   description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
-  keywords: ['trade', 'trading', 'charts', 'analysis', 'technical-analysis', 'ai', 'artificial intelligence', 'gpt', 'openai', 'computer vision', 'S&P 500', 'spx', 'btc', 'usd', 'gbp', 'forex', 'cryptocurrency'],
+  keywords: ['trade', 'trading', 'charts', 'analysis', 'technical-analysis', 'ai', 'artificial intelligence', 'openai', 'computer vision', 'forex', 'stocks', 'cryptocurrency'],
   applicationName: 'ChartWise',
   openGraph: {
     type: 'website',
