@@ -19,7 +19,7 @@ export default function Faq(){
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-12">
       <div className="flex flex-col text-center basis-1/2">
-        <h1 className="ttext-center text-4xl mb-4 px-3">
+        <h1 className="ttext-center text-4xl mb-4 px-3 font-bold">
           Frequently Asked Questions
         </h1>
        

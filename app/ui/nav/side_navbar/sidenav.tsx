@@ -8,19 +8,14 @@ import {RecentAnalyses, UserPlanWidget, Logo} from '@/app/ui';
 import { usePathname } from 'next/navigation';
 import { useTrader } from '@/app/providers/trader';
 import UserProfileWidget from '../../user/user-profile';
-import useSubscription from '@/app/hooks/useSubscription';
 import MobileNav from './mobilenav';
 
 export default React.memo(function  SideNav(){
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading } = useUser();
-  const userId = user?.email;
   const pathName = usePathname();
   const showRecentAnalyses = pathName === '/trader';
   const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useTrader();
-  const {userPlan} = useSubscription(userId, isLoading);
-  const showUpgradeWidget = userPlan === 'Free' && !isLoading;
-
 
   return (
     <>
@@ -49,7 +44,7 @@ export default React.memo(function  SideNav(){
             {user ? 'Sign Out' : 'Sign In'}
           </a>
           <div className="absolute bottom-0 right-0 left-0 p-3 flex flex-col gap-4">
-            {showUpgradeWidget && <UserPlanWidget/>}
+            <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
             <UserProfileWidget userId={user?.email} isLoading={isLoading}/>
           </div>
         </div>

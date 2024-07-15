@@ -13,7 +13,7 @@ export default function Layout({
     <TradeProvider>
       <div className={`bg-gray-900`}>
         <SideNav />
-        <div className="flex flex-col lg:pt-32 bg-gray-900 lg:pl-[200px]">{children}</div>
+        <div className="flex flex-col bg-gray-900 lg:pl-[200px]">{children}</div>
       </div>
       </TradeProvider>
       </SubscriptionProvider>

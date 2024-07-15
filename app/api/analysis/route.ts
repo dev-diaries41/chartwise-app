@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
     return nextResponse; 
   } catch (error: any) {
-    console.error('the error is ', error.message)
+    console.error('Error startig analysis', error.message)
     const status = error.response?.status || 500;
     const message = error.response?.data?.message || error.message || 'Internal Server Error';
     return NextResponse.json({ message, status, success: false }, { status })

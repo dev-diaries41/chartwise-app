@@ -191,10 +191,10 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   }
 
   return ( 
-    <div className="flex flex-col w-full mx-auto items-center justify-center">
+    <div className="flex flex-col w-full max-w-5xl mx-auto items-center justify-center">
       {chartImageUrl ? (
         <div className="w-full max-w-[100%]">
-          <ChartImageWithLoader chartImageUrl={chartImageUrl} loading={loading} loadingText="Analysing chart please wait a few seconds..." />
+          <ChartImageWithLoader chartImageUrl={chartImageUrl} loading={loading} />
           <div className="flex justify-center mt-4 gap-4 mx-auto">
             <Button
               icon={faTrash}

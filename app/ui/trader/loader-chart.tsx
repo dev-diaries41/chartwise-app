@@ -12,7 +12,6 @@ interface ChartAnalysisLoaderProps {
 export default function  ChartImageWithLoader({ 
   chartImageUrl, 
   loading, 
-  loadingText = 'loading...',
   width = 500, // default width
   height = 500, // default height
 }: ChartAnalysisLoaderProps){
@@ -27,7 +26,7 @@ export default function  ChartImageWithLoader({
         alt="Uploaded Chart"
         width={width}
         height={height}
-        className={`w-full object-contain ${loading? 'opacity-50' : 'opacity-100'}`}
+        className={`w-full max-h-[600px] object-contain ${loading? 'opacity-50' : 'opacity-100'}`}
       />
       <style jsx>{`
         @keyframes pulse {

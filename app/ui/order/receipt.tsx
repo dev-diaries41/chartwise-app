@@ -1,6 +1,4 @@
-import Link from 'next/link';
 import React from 'react';
-import Logo from '../logo';
 import { getPlanFromPlanAmount } from '@/app/lib/user';
 
 interface ReceiptProps {
@@ -21,14 +19,6 @@ export default function Receipt ({amount, email}: ReceiptProps){
                   <tbody>
                     <tr>
                       <td className="flex justify-between items-center">
-                        <Link className="flex flex-col mb-4" href="/">
-                        <Logo
-                        src={'/fpflabs-icon-100.png'}
-                        alt={'logo'}
-                        width={100}
-                        height={100}
-                      />                        
-                      </Link>
                         <span className="text-xl font-bold text-gray-800">Order summary</span>
                       </td>
                     </tr>
@@ -58,7 +48,7 @@ export default function Receipt ({amount, email}: ReceiptProps){
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="w-1/2 py-2 pl-4 pr-6 border-b border-gray-200 text-base font-medium text-gray-800">{`Subscription ${getPlanFromPlanAmount(amount)} x 1`}</td>
+                      <td className="w-1/2 py-2 pl-4 pr-6 border-b border-gray-200 text-base font-medium text-gray-800">{`Subscription ${getPlanFromPlanAmount(amount)?? ''} x 1`}</td>
                       <td className="w-1/6 py-2 pl-4 pr-6 border-b border-gray-200 text-base text-gray-600"></td>
                       <td className="w-1/3 py-2 pl-4 pr-6 border-b border-gray-200 text-base font-medium text-right text-gray-800">{'£' + amount/100}</td>
                     </tr>

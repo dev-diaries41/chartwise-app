@@ -1,12 +1,12 @@
-import { StorageKeys } from "../constants/app";
+import { StorageKeys, Time } from "../constants/app";
 import { UserPlan, UserProfileInfo } from "../types";
 import { getSubscription } from "./actions";
 import * as Storage from "./storage"
 
 const PlanAmount = {
-    basic:499,
-    pro:1999,
-    elite: 3499,
+    basic:699,
+    pro:2399,
+    elite: 2999,
   }
 
 export async function getUserPlan(userId: string|null|undefined): Promise<UserPlan>{
@@ -65,3 +65,19 @@ export async function getUserPlan(userId: string|null|undefined): Promise<UserPl
       return 'Elite';
     } 
   }
+
+  export async function handleGetSubscriptionInfo (userId: string): Promise<string> {  
+    const cachedData = Storage.get(StorageKeys.subscription);
+    if (cachedData) {
+      const { userPlan, expiresAt } = cachedData;
+      if (Date.now() < expiresAt) {
+        return userPlan;
+      }
+    }
+
+    const plan = await getUserPlan(userId);
+    const ttl = Time.min;
+    const expiresAt = Date.now() + ttl;
+    Storage.set(StorageKeys.subscription, JSON.stringify({ userPlan: plan, expiresAt } as UserProfileInfo));
+    return plan;
+  };

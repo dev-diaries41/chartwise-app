@@ -11,7 +11,6 @@ import {Logo, RecentAnalyses} from '@/app/ui';
 import UserProfileWidget from '../../user/user-profile';
 import { useTrader } from '@/app/providers/trader';
 import { usePathname } from 'next/navigation';
-import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 interface MobileNavProps {
     user: UserProfile | undefined;
@@ -28,7 +27,6 @@ onToggleMenu
 }: MobileNavProps){
   const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useTrader();
   const pathName = usePathname();
-  const showRecentAnalyses = pathName === '/trader';
   
 
     return(
@@ -46,15 +44,15 @@ onToggleMenu
           height={100}
         />
       </Link>
-      <div className='flex flex-row justify-end items-center ml-auto gap-2'>
+      <div className='flex flex-row justify-end items-center ml-auto gap-4'>
         <a
         href={user ? '/api/auth/logout' : '/api/auth/login'}
-        className={`flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 text-gray-200 font-semibold p-2 rounded-3xl shadow-md`}
+        className={`flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 text-sm text-gray-200 font-semibold p-2 rounded-3xl shadow-md`}
       >
         {user ? 'Sign Out' : 'Sign In'}
       </a>
         <button
-          className={`flex p-4 text-gray-200 hover:text-gray-200 z-50`}
+          className={`flex text-gray-200 hover:text-gray-200 z-50`}
           onClick={onToggleMenu}
         >
           <FontAwesomeIcon icon={faBars} size="lg" className="w-6 h-6" />

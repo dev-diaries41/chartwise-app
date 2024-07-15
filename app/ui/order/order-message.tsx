@@ -10,8 +10,7 @@ export default function OrderComplete(){
             </div>
             <div className="flex flex-col  mt-4 max-w-5xl mx-auto bg-transparent items-center text-center">
                 <p className="text-lg">
-                    You will receive an email confirming this along with an invite to the github repo for LaunchIt.
-                    Once you receive the email, accept the invite in order to gain access.
+                    Thank you for your purchase!
                 </p>
             </div>
         </div>

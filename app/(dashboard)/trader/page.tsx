@@ -47,9 +47,9 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col max-w-4xl mx-auto my-auto items-center justify-center text-center pt-8 px-4">
+    <div className="flex flex-col max-w-5xl mx-auto my-auto items-center justify-center text-center py-8 px-4">
       <div className='flex flex-row gap-4 justify-center items-center'>
-        <h1 className="text-center text-4xl my-4 px-3">Trading Assistant</h1>
+        <h1 className="text-center text-4xl my-4 px-3 font-bold">Trading Assistant</h1>
         { showLoadingMiniIndicator && <LoadingIndicator size={24}/>}
       </div>
       <p className="text-light mb-2 px-3">

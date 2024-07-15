@@ -1,9 +1,8 @@
-import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { ProviderProps, UserPlan, UserProfileInfo } from '@/app/types';
-import { getUserCredits, getUserPlan } from '../lib/user';
+import { getUserPlan } from '../lib/user';
 import { StorageKeys, Time } from '../constants/app';
 import * as Storage from "@/app/lib/storage";
-import { getUsage } from '../lib/requests/request';
 
 interface SubscriptionContextProps {
   userPlan: UserPlan;
@@ -43,7 +42,7 @@ const useSubscription = (userId: string | null | undefined, isLoading: boolean) 
     }
 
     const plan = await getUserPlan(userId);
-    const ttl = 5 * Time.min;
+    const ttl = Time.min;
     const expiresAt = Date.now() + ttl;
     setUserPlan(plan)
     Storage.set(StorageKeys.subscription, JSON.stringify({ userPlan: plan, expiresAt } as UserProfileInfo));
@@ -53,7 +52,7 @@ const useSubscription = (userId: string | null | undefined, isLoading: boolean) 
     if (!isLoading && userId)  {
       handleGetSubscriptionInfo(userId);
     }
-  }, [isLoading, userId,]);
+  }, [isLoading, userId, handleGetSubscriptionInfo]);
 
   return {
     userPlan,
