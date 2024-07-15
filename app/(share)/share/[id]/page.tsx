@@ -44,14 +44,14 @@ export default function Page ({params}:  { params: { id: string } }){
 
 
   return ( 
-    <div className="flex flex-col max-w-4xl mx-auto my-auto items-center justify-center text-center py-16 px-4 animate-fadeIn">
+    <div className="flex flex-col max-w-5xl mx-auto my-auto items-center justify-center text-center py-16 px-4 animate-fadeIn">
       {chartImageUrl &&  (
         <div className="w-full max-w-[100%]">
         <Image
         src={chartImageUrl}
         alt="Uploaded Chart"
-        width={500}
-        height={500}
+        width={2048}
+        height={2048}
         className={`w-full object-contain`}
         />
         </div>
