@@ -48,7 +48,7 @@ export default function TradingAssistantGuide(){
       
       <div className="w-full">
         <h2 className="text-lg font-semibold mb-2">Example Charts</h2>
-        <CarouselImageViewer images={['/correct-chart.png', '/incorrect-chart.png']} />
+        <CarouselImageViewer images={['/correct-chart-new.png', '/incorrect-chart-new.png']} />
       </div>
     </div>
   );

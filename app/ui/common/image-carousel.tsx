@@ -34,35 +34,34 @@ export default function CarouselImageViewer ({ images }: CarouselImageViewerProp
   const visibleDots = moreImagesExist ? 10 : images.length;
 
   return (
-    <div className="relative w-full max-w-2xl bg-gray-700 rounded-md">
+    <div className="relative w-full max-w-2xl bg-gray-900 rounded-md">
       <div className="relative overflow-hidden rounded-lg">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            <div key={index} className="min-w-full relative h-64">
+            <div key={index} className="min-w-full relative h-80">
               <Image
                 src={image}
                 alt={`Slide ${index}`}
-                layout="fill"
-                objectFit="contain"
-                className="rounded-lg"
-              />
+                layout='fill'
+                className="w-full h-full object-contain rounded-lg"
+                />
             </div>
           ))}
         </div>
       </div>
       <button
         type='button'
-        className="absolute flex top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 justify-center items-center text-white p-2 rounded-full "
+        className="absolute flex top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 bg-opacity-50 justify-center items-center text-white p-2 rounded-full "
         onClick={goToPrevious}
       >
       <FontAwesomeIcon icon={faArrowLeft}/>
       </button>
       <button
         type='button'
-        className="absolute flex top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full justify-center items-center"
+        className="absolute flex top-1/2 right-2 transform -translate-y-1/2 bg-gray-700 bg-opacity-50 text-white p-2 rounded-full justify-center items-center"
         onClick={goToNext}
       >
       <FontAwesomeIcon icon={faArrowRight} className=''/>
