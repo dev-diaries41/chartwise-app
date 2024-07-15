@@ -24,16 +24,16 @@ export default async function Page() {
     
         {/* {make theis part in the centere of the page} */}
         <div className="w-full z-[10] flex flex-col py-16 justify-center items-center">
-          <h1 className="text-center lg:text-7xl text-5xl my-4 px-3 font-bold text-gray-200">
+          <h1 className="text-center lg:text-7xl md:text-5xl text-3xl my-4 px-3 font-bold text-gray-200">
             Chart analysis made easy! <span className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-transparent bg-clip-text">Upload</span>.{" "}
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>. Trade
           </h1>
-          <p className="text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[100%] lg:max-w-[80%]">
+          <p className="text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[80%]">
             Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.
           </p>
           <Link
             href='/trader'
-            className={`w-[80%] lg:w-[40%] h-20 flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 rounded-full shadow-md text-xl lg:text-2xl mt-4 bounce`}
+            className={`w-[80%] md:w-[60%] lg:w-[40%] h-16 lg:h-20 flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 rounded-full shadow-md text-xl lg:text-2xl mt-4 bounce`}
           >
             {'Try now for free'}
             <FontAwesomeIcon icon={faPlayCircle} className='w-6 h-6 mr-1'/>

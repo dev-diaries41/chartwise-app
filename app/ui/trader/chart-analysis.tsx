@@ -7,7 +7,7 @@ import { faChartLine, faTrash } from "@fortawesome/free-solid-svg-icons";
 import * as Storage from "@/app/lib/storage"
 import ChartImageWithLoader from "./loader-chart";
 import { IAnalysis, LoadingState, PollOptions } from "@/app/types";
-import { DEFAULT_ERROR_MESSAGE, AuthErrors, JobErrors, RequestErrors, ServiceUsageErrors } from "@/app/constants/errors";
+import { DEFAULT_ERROR_MESSAGE, AuthErrors, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { RetryHandler, getJobStatus, getNewToken, saveAnalysis, submitAnalysisRequest } from "@/app/lib/requests/request";
 import { useRouter } from "next/navigation";
 import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content/usage";
@@ -158,7 +158,6 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
       );
       onJobInProgress(jobId);
     } catch (error: any) {
-      console.error('error here:',error.message)
       handleFailedJobStart(error.message)
     }
   };
