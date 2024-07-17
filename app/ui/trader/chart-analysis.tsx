@@ -1,9 +1,9 @@
 'use client'
 import { AcceptedImgFiles, AcceptedImgMimes, DefaultToastOptions, StorageKeys, Time } from "@/app/constants/app";
-import {DragAndDropUpload, ActionRow, PopUp, InfoDisplay} from "@/app/ui/";
+import {ActionRow, PopUp, InfoDisplay, FileUploader} from "@/app/ui/";
 import { useEffect, useState } from "react";
 import { Button } from "@/app/ui/buttons/button";
-import { faChartLine, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faChartLine, faPaperclip, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
 import * as Storage from "@/app/lib/storage"
 import ChartImageWithLoader from "./loader-chart";
 import { IAnalysis, LoadingState, PollOptions } from "@/app/types";
@@ -16,6 +16,9 @@ import { useTrader } from "@/app/providers/trader";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { toast } from "react-toastify";
 import { copyTextToClipboard } from "@/app/lib/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const MAX_CHARS = 150;
 
 export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loading' |'setLoading'>) => {
   const {user, isLoading} = useUser();
@@ -26,6 +29,8 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   const [popUpDescription, setPopUpDescription] = useState('');
   const {analysisToView, setRecentAnalyses, setAnalysisToView} = useTrader();
   const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [strategyAndCriteria, setStrategyAndCriteria] = useState(''); 
+
   const router = useRouter();
 
   // On mount set recent charts
@@ -43,7 +48,6 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   },[analysisToView]);
 
   // Using hook because when using in onComplete chartImageUrl is null;
-
   useEffect(() => {
     if(chartImageUrl && analysisResult){
       saveAnalysis(analysisResult, chartImageUrl).then(url => {
@@ -83,15 +87,18 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
     setTimeout(startPolling, 2 * Time.sec);
   };
 
-  const handleFailedJobStart = async (errorMessage: string) => {
+  const handleFailedJobStart = async (error: Error) => {
     setLoading(false);
     
-    if (errorMessage === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
+    if (error.message === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
       return onReachedFreeUseLimit();
     } 
-    if (errorMessage === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
+    if (error.message === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
       return onReachedSubUsageLimit();
     } 
+    if(error.message.includes('429')){
+      return toast.error('We are currently overloaded at the moment', DefaultToastOptions);
+    }
     toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
   };
 
@@ -142,8 +149,9 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
     setLoading(true);
 
     const formData = new FormData();
-    formData.append('image', chartImageUrl);
     formData.append('userId', userId);
+    formData.append('image', chartImageUrl);
+    formData.append('strategyAndCriteria', strategyAndCriteria);
 
     try {
       const jobId = await retryHandler.retry(
@@ -158,7 +166,7 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
       );
       onJobInProgress(jobId);
     } catch (error: any) {
-      handleFailedJobStart(error.message)
+      handleFailedJobStart(error)
     }
   };
 
@@ -190,32 +198,62 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
     setAnalysisToView(null);
   }
 
+  const handleStrategyAndCriteriaChange = (event: any) => {
+    setStrategyAndCriteria(event.target.value);
+};
+
+
   return ( 
     <div className="flex flex-col w-full mx-auto items-center justify-center">
       {chartImageUrl ? (
         <div className="w-full max-w-[100%]">
           <ChartImageWithLoader chartImageUrl={chartImageUrl} loading={loading} />
-          <div className="flex justify-center mt-4 gap-4 mx-auto">
-            <Button
-              icon={faTrash}
-              className="flex w-full  max-w-[100%] lg:max-w-[80%] items-center justify-center bg-red-700 hover:bg-red-500 lg:mx-0 sm:mx-auto text-white font-bold p-4 rounded-md shadow-md gap-2"
-              onClick={handleRemoveImage}
-              disabled={loading}
-            >
-              Remove chart
-            </Button>
-            <Button
-              icon={faChartLine}
-              className="flex w-full max-w-[100%] lg:max-w-[80%]  items-center justify-center bg-emerald-700 hover:bg-emerald-500 lg:mx-0 sm:mx-auto text-white font-bold p-4 rounded-md shadow-md gap-2"
-              onClick={handleAnalyseChart}
-              disabled={loading || !userId}
-            >
-              Analyse
-            </Button>
+          <div className="w-full flex justify-between mt-4 gap-4 mx-auto">
+              <Button
+                icon={faTrash}
+                className="flex w-full  max-w-[100%] lg:max-w-[60%] items-center justify-center border-2 border-red-400 bg-red-700 hover:bg-red-500 lg:mx-0 sm:mx-auto text-white font-bold p-4 rounded-full shadow-md gap-2"
+                onClick={handleRemoveImage}
+                disabled={loading}
+              >
+                Remove chart
+              </Button>
+              <Button
+                icon={faChartLine}
+                className="flex w-full max-w-[100%] lg:max-w-[60%]  items-center justify-center border-2 border-2 border-emerald-400 bg-emerald-700 hover:bg-emerald-500 lg:mx-0 sm:mx-auto text-white font-bold p-4 rounded-full shadow-md gap-2"
+                onClick={handleAnalyseChart}
+                disabled={loading || !userId}
+              >
+                Analyse
+              </Button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <DragAndDropUpload onFileUpload={handleFileUpload} acceptedMimes={AcceptedImgMimes} acceptedFileExt={AcceptedImgFiles} />
+          ) : (
+            <><div className="w-full text-md flex flex-col bg-gray-800 rounded-md items-left justify-center mb-4 gap-2 border-2 border-gray-700 p-2">
+            <label htmlFor={'strategy-criteria'} className=" flex flex-row block text-left font-medium gap-1 text-gray-300">
+              {`Strategy and Criteria (optional):`}
+            </label>
+            <div className="flex flex-col">
+              <textarea
+                id={"strategy-criteria"}
+                name={"strategy-criteria"}
+                placeholder={"To optimise your analysis, provide details about your trading strategy (e.g., breakout, swing trading) and any criteria like minimum risk-to-reward ratio. Be specific."}
+                className={`flex-1 w-full min-h-[120px] p-2 mb-2 bg-transparent rounded-md focus:outline-none`}
+                value={strategyAndCriteria}
+                onChange={handleStrategyAndCriteriaChange}
+                aria-describedby={"strategy-criteria-error"}
+                maxLength={MAX_CHARS} />
+              <div className="w-full flex flex-row justify-between items-center">
+                <span className="text-right text-gray-600">{`${strategyAndCriteria.length}/${MAX_CHARS}`}</span> 
+                <FileUploader 
+                  label='Upload chart'
+                  className = "flex max-w-[60%] lg:max-w-[30%] gap-2  ml-auto justify-center items-center block cursor-pointer bg-emerald-700 hover:bg-emerald-500 text-white p-2 rounded-3xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  onFileUpload={handleFileUpload} acceptedFileExt={AcceptedImgFiles} acceptedMimes={AcceptedImgMimes}>
+                    <FontAwesomeIcon icon={faPaperclip}/>
+                    Upload chart
+                </FileUploader>
+               </div>
+            </div>
+          </div></>
       )}
       {(popUpTitle && popUpDescription) && <PopUp title={popUpTitle} description={popUpDescription} onConfirm={handleSubscripe} onClose={handleCloseUsageMsg} cta="Subscribe"/>}
         {analysisResult && (

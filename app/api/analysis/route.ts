@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
     const formdata = await req.formData();
     const image = formdata.get('image') as string | null;
     const userId = formdata.get('userId') as string | null;
+    const strategyAndCriteria = formdata.get('strategyAndCriteria') as string | null;
     const currentToken = req.headers?.get('Authorization')?.split(' ')[1];
 
     if (!userId) return NextResponse.json({ message: AuthErrors.INVALID_USER_ID, status: 401}, {status:401});
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
       'api-key': FPF_LABS_API_KEY
     }
 
-    const reqBody = {when: Date.now(), jobData: {image, userId}}
+    const reqBody = {when: Date.now(), jobData: {image, userId, strategyAndCriteria}}
     const response = await axios.post(CHART_ANALYSIS_URL, reqBody, {headers});
     const { message, data} = response.data;
 
