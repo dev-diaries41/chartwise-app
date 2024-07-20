@@ -122,7 +122,7 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
   };
   
   const pollOptions: PollOptions = {
-    interval: 4 * Time.sec,
+    interval: 5 * Time.sec,
     maxDuration: Time.min,
     maxErrors: 3,
   };
@@ -237,7 +237,7 @@ export const ChartAnalyser = ({ loading, setLoading }: Pick<LoadingState, 'loadi
                 id={"strategy-criteria"}
                 name={"strategy-criteria"}
                 placeholder={"To optimise your analysis, provide details about your trading strategy (e.g., breakout, swing trading) and any criteria like minimum risk-to-reward ratio. Be specific."}
-                className={`flex-1 w-full min-h-[120px] p-2 mb-2 bg-transparent rounded-md focus:outline-none`}
+                className={`flex-1 w-full  min-h-[160px] lg:min-h-[120px] p-2 mb-2 bg-transparent rounded-md focus:outline-none`}
                 value={strategyAndCriteria}
                 onChange={handleStrategyAndCriteriaChange}
                 aria-describedby={"strategy-criteria-error"}

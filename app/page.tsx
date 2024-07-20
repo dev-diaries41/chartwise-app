@@ -28,7 +28,7 @@ export default async function Page() {
             Chart analysis made easy! <span className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-transparent bg-clip-text">Upload</span>.{" "}
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>. Trade
           </h1>
-          <p className="text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[100%]">
+          <p className="text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[100%] lg:max-w-[80%]">
             Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas, just by uploading a chart.
           </p>
           <Link
