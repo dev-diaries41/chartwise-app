@@ -1,6 +1,6 @@
 'use client'
 import useLoading from "@/app/hooks/useLoading";
-import { getSharedAnalysis } from "@/app/lib/requests/request";
+import { getSharedAnalysis } from "@/app/lib/requests/client";
 import { InfoDisplay, LoadingIndicator } from "@/app/ui";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
