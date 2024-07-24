@@ -1,45 +1,26 @@
-import { JobErrors } from "@/app/constants/errors";
-import { CHART_ANALYSIS_RESULTS_URL, FPF_LABS_API_KEY } from "@/app/constants/app";
-import { JobResult } from "@/app/types";
-import axios from "axios";
+import { AuthErrors, JobErrors } from "@/app/constants/errors";
 import { NextRequest, NextResponse } from "next/server";
+import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";
+import { handleError } from "@/app/lib/requests/next-api-errors";
 
 
 export async function GET(req: NextRequest) {
   try {
     const jobId = req.nextUrl.searchParams.get('jobId')
+    if (!jobId) return NextResponse.json({ message: JobErrors.INVALID_JOB_ID, status: 400},{status:400} );
+
     const currentToken = req.headers?.get('Authorization')?.split(' ')[1];
+    if (!currentToken) return NextResponse.json({ message: AuthErrors.MISSING_JWT_TOKEN, status: 401},{status:401} );
 
-    if (!currentToken) {
-      throw new Error('No token provided');
+    chartwiseAPI.token = currentToken;
+    const {data, token } = await chartwiseAPI.getJobResult(jobId);
+    const nextResponse = NextResponse.json({data});
+
+    if(token) {
+      nextResponse.headers.append('Authorization', `Bearer ${token}`);
     }
-
-    const headers = {
-      'Authorization': `Bearer ${currentToken}`,
-      'api-key': FPF_LABS_API_KEY
-    }
-
-    const response = await axios.get(`${CHART_ANALYSIS_RESULTS_URL}/${jobId}`, {headers});
-    const jobResults = response.data as JobResult;
-
-    if(!jobResults)throw new Error(JobErrors.INVALID_JOB_RESULTS);
-
-    const newToken = response.headers['authorization']?.split(' ')[1];
-    if (!newToken) {
-      throw new Error('No new token provided');
-    }
-       // Create a new NextResponse to append the header
-       const nextResponse = NextResponse.json(jobResults);
-
-       // Append the Authorization header
-       nextResponse.headers.append('Authorization', `Bearer ${newToken}`);
-  
-      return nextResponse; 
-
+    return nextResponse; 
   } catch (error: any) {
-    console.error(JobErrors.INVALID_JOB_RESULTS, error.message)
-    const status = error.response?.status || 500;
-    const message = error.response?.data?.message || 'Internal Server Error';
-    return NextResponse.json({ message, status, success: false }, { status }) 
+    return handleError(error)
   }
 };

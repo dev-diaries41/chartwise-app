@@ -13,13 +13,13 @@ export const faqData = [
   },
   {
     question: 'How long does the analysis take?',
-    answer: [ "The analysis usually takes a few seconds, but it can take longer during peak times."]
+    answer: [ "The analysis usually takes a 10 - 15 seconds, but it can take longer during peak times."]
 
   },
   {
       question: 'Is the analysis always correct?',
       answer: [
-          'The analysis is AI generated and may not always be 100% accurate and should be used as guidance only, not as financial advice.',
+          'The analysis is AI generated and may not always be 100% accurate and should be used as guidance or to build confluence, not as financial advice.',
       ],
   },
 ];

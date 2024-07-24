@@ -4,12 +4,11 @@ import Image from 'next/image';
 interface ChartAnalysisLoaderProps { 
   chartImageUrl: string, 
   loading: boolean;
-  loadingText?: string;
   width?: number;
   height?: number;
 }
 
-export default function  ChartImageWithLoader({ 
+export default function Chart({ 
   chartImageUrl, 
   loading, 
   width = 500, // default width
@@ -17,16 +16,27 @@ export default function  ChartImageWithLoader({
 }: ChartAnalysisLoaderProps){
 
   return (
-    <div className={`relative flex max-w-[100%]  mx-auto`}>
+    <div className="relative flex mr-auto">
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: '#e0e0e0', animation: 'pulse 2.0s infinite' }}></div>
+        <div 
+          className="absolute inset-0 " 
+        >
+          <div 
+            className="absolute inset-0 flex items-center justify-center" 
+            style={{ 
+              backgroundColor: '#e0e0e0', 
+              animation: 'pulse 2.0s infinite',
+            }} 
+          >
+          </div>
+        </div>
       )}
       <Image
         src={chartImageUrl}
         alt="Uploaded Chart"
         width={width}
         height={height}
-        className={`w-full max-h-[600px] object-contain ${loading? 'opacity-50' : 'opacity-100'}`}
+        className={`object-contain ${loading ? 'opacity-50' : 'opacity-100'}`}
       />
       <style jsx>{`
         @keyframes pulse {

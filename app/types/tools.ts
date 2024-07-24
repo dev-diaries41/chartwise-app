@@ -15,6 +15,10 @@ export interface RecentAnalysesProps {
   analyses: IAnalysis[];
   onClick: (IAnalysis: IAnalysis) => void;
   onDelete: (IAnalysis: IAnalysis) => void;
+}
 
-  
+
+export interface StoredAnalysis {
+  analysis: string;
+  chartUrl: string;
 }

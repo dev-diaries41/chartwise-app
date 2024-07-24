@@ -1,9 +1,7 @@
-import { getSubscription } from "../lib/actions";
 
-export interface JobResult { 
-    status: string | null; 
-    data: Record<string, any>; 
-    error: string | null
+export interface JobResult<T> { 
+    status: JobReceipt["status"]; 
+    data: T; 
 }
 
 export interface JobReceipt {

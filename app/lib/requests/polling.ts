@@ -1,29 +1,23 @@
 import { Counter } from "@/app/lib/counter";
 import { Time } from "@/app/constants/app";
+import { PollOptions } from "@/app/types";
 
+const DefaultPollOptions: PollOptions = {
+  interval: 10 * Time.sec,
+  maxDuration: 2 * Time.min,
+  maxErrors: 3
+}
 
 export class Polling {
   private intervalId: NodeJS.Timeout | null = null;
   private callback: () => void;
-  private options: {
-    interval: number;
-    maxDuration: number;
-    maxErrors: number;
-  };
+  private options: PollOptions;
   private startTime: number;
   private errorCounter: Counter;
 
-  constructor(callback: () => void, options: {
-    interval: number;
-    maxDuration?: number;
-    maxErrors?: number;
-  }) {
+  constructor(callback: () => void, options: Partial<PollOptions>) {
     this.callback = callback;
-    this.options = {
-      interval: options.interval,
-      maxDuration: options.maxDuration || 2 * Time.min,
-      maxErrors: options.maxErrors || 5,
-    };
+    this.options = {...DefaultPollOptions, ...options};
     this.startTime = 0;
     this.errorCounter = new Counter(this.options.maxErrors);
   }
@@ -35,15 +29,18 @@ export class Polling {
         try {
           this.callback();
         } catch (error: any) {
-          console.error(`Error: ${error.message}`);
           this.errorCounter.increment();
           if (this.errorCounter.isMax()) {
-            console.log("Maximum errors reached. Stopping polling.");
+            if(this.options.onMaxErrors){
+              this.options.onMaxErrors();
+            }
             this.stop();
           }
         }
         if (Date.now() - this.startTime >= this.options.maxDuration) {
-          console.log("Maximum duration reached. Stopping polling.");
+          if(this.options.onMaxDuration){
+            this.options.onMaxDuration();
+          }
           this.stop();
         }
       }, this.options.interval);

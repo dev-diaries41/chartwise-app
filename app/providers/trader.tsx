@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode, } from 'react';
 import { ProviderProps, IAnalysis } from '@/app/types';
-import { removeItemFromArray } from '../lib/storage';
+import { removeItemFromArray } from '../lib/storage/local';
 import { StorageKeys } from '../constants/app';
 
 interface TradeContextProps {

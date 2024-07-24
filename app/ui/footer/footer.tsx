@@ -11,15 +11,15 @@ export default function Footer() {
   const hide = pathname === '/trader'
 
   return (
-    <footer className=" relative flex flex-col mt-auto justify-end py-8 text-gray-300">
-      <div className="flex flex-col items-center text-center justify-center px-8 gap-4">
+    <footer className="flex flex-col  justify-end  mt-auto text-gray-300">
+     {!hide&& <div className="flex flex-col items-center text-center justify-center px-8 gap-4  py-8">
         <div className='lg:hidden'>
         <FooterLinks/>
         </div>
        {!hide&& <p className="text-gray-400">
           Copyright © {new Date().getFullYear()} FPF Labs. All rights reserved.
         </p>}
-      </div>
+      </div>}
       <div className='fixed bottom-4 right-4'>
       <InformationMenu/>
       </div>

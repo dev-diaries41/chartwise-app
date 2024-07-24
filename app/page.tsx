@@ -35,7 +35,7 @@ export default async function Page() {
             href='/trader'
             className={`w-[80%] md:w-[60%] lg:w-[40%] h-16 lg:h-20 flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 rounded-full shadow-md text-xl lg:text-2xl mt-4 bounce`}
           >
-            {'Try now for free'}
+            {'Try for free'}
             <FontAwesomeIcon icon={faPlayCircle} className='w-6 h-6 mr-1'/>
           </Link>
         </div>

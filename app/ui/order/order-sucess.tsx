@@ -7,7 +7,7 @@ import OrderComplete from '@/app/ui//order/order-message';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Stripe from 'stripe';
-import * as Storage from '@/app/lib/storage'
+import * as Storage from '@/app/lib/storage/local'
 import { StorageKeys, Time } from '@/app/constants/app';
 import { getPlanFromPlanAmount } from '@/app/lib/user';
 import { UserProfileInfo } from '@/app/types';

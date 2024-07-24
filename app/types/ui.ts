@@ -65,7 +65,7 @@ export interface WhatsIncludedItem {
     }
     
     export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-      children: ReactNode;
+      children?: ReactNode;
       className?: string;
       icon?: IconProp;
     };
@@ -86,8 +86,10 @@ export interface WhatsIncludedItem {
 
 export interface PollOptions  {
   interval: number;
-  maxDuration?: number;
-  maxErrors?: number;
+  maxDuration: number;
+  maxErrors: number;
+  onMaxErrors?: () => void;
+  onMaxDuration?: () => void;
 }
 
 export interface ToastProps {

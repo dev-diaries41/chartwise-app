@@ -5,6 +5,7 @@ import { sendNotification } from '@/app/lib/actions';
 import InputError from '../forms/form-error';
 import { toast } from 'react-toastify';
 import { DefaultToastOptions } from '@/app/constants/app';
+import { SubmitButton } from '../buttons/button';
 
 const supportOptions: {value:string, name: string}[] = [
   {
@@ -80,11 +81,7 @@ export default function ContactForm(){
           />
         </div>
         <div className='flex justify-center ml-auto w-[100%] lg:w-[25%] '>
-        <button
-          type="submit" className = {`flex w-full items-center justify-center bg-emerald-700 hover:bg-emerald-500  lg:mx-0 sm:mx-auto text-white font-semibold p-2 rounded-3xl shadow-md`}
-          > 
-          {'Submit'}
-          </button>
+        <SubmitButton/>
         </div>
       </div>
     </form>

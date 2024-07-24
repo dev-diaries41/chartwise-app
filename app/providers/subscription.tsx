@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { ProviderProps, UserPlan, UserProfileInfo } from '@/app/types';
 import { getUserPlan } from '../lib/user';
 import { StorageKeys, Time } from '../constants/app';
-import * as Storage from "@/app/lib/storage";
+import * as Storage from "@/app/lib/storage/local";
 
 interface SubscriptionContextProps {
   userPlan: UserPlan;

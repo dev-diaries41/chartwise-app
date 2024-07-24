@@ -1,7 +1,7 @@
 import { StorageKeys, Time } from "../constants/app";
 import { UserPlan, UserProfileInfo } from "../types";
 import { getSubscription } from "./actions";
-import * as Storage from "./storage"
+import * as Storage from "./storage/local"
 
 const PlanAmount = {
     basic:699,

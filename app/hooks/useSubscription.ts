@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UserPlan, UserProfileInfo } from "../types";
 import { StorageKeys, Time } from "../constants/app";
-import * as Storage from "@/app/lib/storage";
+import * as Storage from "@/app/lib/storage/local";
 import { getUserPlan } from "../lib/user";
 
 
