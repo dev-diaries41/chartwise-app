@@ -9,8 +9,7 @@ import { navLinks, footerLinks } from '@/app/constants/navigation';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import {Logo, RecentAnalyses} from '@/app/ui';
 import UserProfileWidget from '../../user/user-profile';
-import { useTrader } from '@/app/providers/trader';
-import { usePathname } from 'next/navigation';
+import { useChartwise } from '@/app/providers/chartwise';
 
 interface MobileNavProps {
     user: UserProfile | undefined;
@@ -18,17 +17,15 @@ interface MobileNavProps {
     isLoading: boolean;
     onToggleMenu: () => void;
 }
-export default function MobileNav({
+export default function MobileNav({ 
 user,
 isOpen,
 isLoading,
 onToggleMenu
 
 }: MobileNavProps){
-  const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useTrader();
-  const pathName = usePathname();
+  const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useChartwise();
   
-
     return(
       <div className="lg:hidden w-full p-4">
         <div className=' flex flex-row justify-between bg-transparent items-center z-50'>

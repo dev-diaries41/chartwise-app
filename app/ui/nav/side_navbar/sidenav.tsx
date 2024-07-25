@@ -6,7 +6,7 @@ import { navLinks } from '@/app/constants/navigation';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import {RecentAnalyses, UserPlanWidget, Logo} from '@/app/ui';
 import { usePathname } from 'next/navigation';
-import { useTrader } from '@/app/providers/trader';
+import { useChartwise } from '@/app/providers/chartwise';
 import UserProfileWidget from '../../user/user-profile';
 import MobileNav from './mobilenav';
 
@@ -15,8 +15,8 @@ export default React.memo(function  SideNav(){
   const { user, isLoading } = useUser();
   const pathName = usePathname();
   const showRecentAnalyses = pathName === '/trader';
-  const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useTrader();
-
+  const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useChartwise();
+ 
   return (
     <>
       <div className="fixed flex flex-col max-w-[200px] w-[200px] min-h-screen bg-gray-800 border border-r-1 border-gray-700 p-2 lg:block hidden z-[100]">

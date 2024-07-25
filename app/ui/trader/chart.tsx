@@ -16,7 +16,7 @@ export default function Chart({
 }: ChartAnalysisLoaderProps){
 
   return (
-    <div className="relative flex mr-auto">
+    <div className="relative flex mr-auto max-w-[500px] max-h-[500px] border border-gray-700 rounded-md">
       {loading && (
         <div 
           className="absolute inset-0 " 
@@ -26,6 +26,7 @@ export default function Chart({
             style={{ 
               backgroundColor: '#e0e0e0', 
               animation: 'pulse 2.0s infinite',
+              objectFit: 'contain'
             }} 
           >
           </div>
@@ -36,6 +37,7 @@ export default function Chart({
         alt="Uploaded Chart"
         width={width}
         height={height}
+        objectFit='contain'
         className={`object-contain ${loading ? 'opacity-50' : 'opacity-100'}`}
       />
       <style jsx>{`

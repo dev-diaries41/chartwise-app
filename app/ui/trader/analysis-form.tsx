@@ -5,9 +5,9 @@ import { faChartLine, faPaperclip, faTrash, faWarning } from "@fortawesome/free-
 import Chart from "./chart";
 import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useChartwise } from "@/app/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SliderInput from "../forms/slider";
+import { useChartwise } from "@/app/providers/chartwise";
 
 interface AnalysisFormProps {
     loading: boolean;
@@ -20,7 +20,7 @@ interface AnalysisFormProps {
   export default function AnalysisForm ({handleJobInProgress, handleFailedJobStart, loading, setLoading}: AnalysisFormProps){
     const MAX_CHARS = 150;
     const router = useRouter();
-    const {analysisResult, chartImageUrl, strategyAndCriteria, risk, handleRiskChange, handleStrategyAndCriteriaChange, getRiskTolerance, setChartAnalysisResult, analyseChart,  removeChart, uploadChart} = useChartwise(router);
+    const {analysisResult, chartImageUrl, strategyAndCriteria, risk, handleRiskChange, handleStrategyAndCriteriaChange, getRiskTolerance, setChartAnalysisResult, analyseChart,  removeChart, uploadChart} = useChartwise();
 
     const AnalysisActionRow = () => {
         const {user} = useUser();

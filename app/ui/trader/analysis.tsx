@@ -7,15 +7,16 @@ import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/cons
 import { getJobStatus } from "@/app/lib/requests/client";
 import { useRouter } from "next/navigation";
 import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content/usage";
-import { usePopUp, useChartwise, usePolling, useLoading } from "@/app/hooks";
+import { usePopUp, usePolling, useLoading } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { copyTextToClipboard } from "@/app/lib/utils";
 import AnalysisForm from "./analysis-form";
+import { useChartwise } from "@/app/providers/chartwise";
 
 
 export function ChartAnalyser (){
   const router = useRouter();
-  const {analysisResult, shareUrl, removeAnalysis, setChartAnalysisResult} = useChartwise(router);
+  const {analysisResult, shareUrl, removeAnalysis, setChartAnalysisResult} = useChartwise();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle} = usePopUp();
   const { loading, setLoading, minimizeLoader, showLoadingDialog } = useLoading();
 

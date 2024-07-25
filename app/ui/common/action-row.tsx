@@ -1,11 +1,11 @@
 import { copyTextToClipboard } from '@/app/lib/utils';
 import { ActionRowProps } from '@/app/types';
-import { faCopy, faShare, faShareNodes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faShareNodes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 
-export default function ActionRow({onCopy, onDelete, shareUrl}:ActionRowProps) {
+export default React.memo(function ActionRow({onCopy, onDelete, shareUrl}:ActionRowProps) {
     return(
       <div className="flex flex-row justify-center items-center mr-auto gap-2">
         <div className="relative group">
@@ -43,4 +43,4 @@ export default function ActionRow({onCopy, onDelete, shareUrl}:ActionRowProps) {
         </div>}
       </div>
     )
-  }
+  })
