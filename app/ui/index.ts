@@ -24,7 +24,7 @@ import { PriceTable } from "./pricing/price-table";
 import { OrderCompleteSkeleton } from "./skeletons/order-complete";
 import { ReceiptSkeleton } from "./skeletons/receipt";
 import ContactForm from "./support/contact";
-import { ChartAnalyser } from "./trader/chart-analysis";
+import { ChartAnalyser } from "./trader/analysis";
 import {Background} from "./common/bg";
 import Spacer from "./utilities/spacer";
 import RecentAnalyses from "./trader/recent-trades";

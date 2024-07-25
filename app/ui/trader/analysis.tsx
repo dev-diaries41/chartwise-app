@@ -3,7 +3,7 @@ import { AcceptedImgFiles, AcceptedImgMimes, DefaultToastOptions, StorageKeys, T
 import {ActionRow, PopUp, InfoDisplay, FileUploader, LoaderDialog} from "@/app/ui/";
 import { faChartLine, faPaperclip, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
 import * as Storage from "@/app/lib/storage/local"
-import Chart from "./loader-chart";
+import Chart from "./chart";
 import { PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { getJobStatus } from "@/app/lib/requests/client";
@@ -155,21 +155,20 @@ export function ChartAnalyser (){
     )
   }
 
-
-  return (
-    <div className="w-full flex flex-col mx-auto items-center">
-      <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-md shadow-md rounded-md mb-2 p-4" >
+  function AnalysisForm (){
+    return (
+      <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-sm md:text-md lg:text-lg shadow-md rounded-md mb-2 p-4" >
         <div className="flex flex-row justify-between">
           <label htmlFor={'strategy-criteria'} className=" flex flex-row block text-left font-medium mb-1 text-gray-200">
             {`Strategy and Criteria (optional):`}
           </label>      
         </div>
-        <div className="flex flex-col items-center mb-4 w-full bg-gray-800 rounded-md border border-gray-700 ">
+        <div className="flex flex-col items-center mb-4 w-full bg-gray-800 rounded-md border border-gray-700 text-sm md:text-md lg:text-lg ">
         <textarea
           id={"strategy-criteria"}
           name={"strategy-criteria"}
           placeholder={"To optimise your analysis, provide details about your trading strategy (e.g., breakout, swing trading) and any criteria like minimum risk-to-reward ratio. Be specific."}
-          className={`flex w-full  min-h-[180px] lg:min-h-[100px] p-2 bg-transparent rounded-md focus:outline-none resize-none`}
+          className={`flex w-full  flex-grow min-h-[180px] lg:min-h-[100px] p-2 bg-transparent rounded-md focus:outline-none resize-none`}
           value={strategyAndCriteria}
           onChange={handleStrategyAndCriteriaChange}
           aria-describedby={"strategy-criteria-error"}
@@ -199,6 +198,13 @@ export function ChartAnalyser (){
         <AnalysisActionRow/>
         </div>
     </div>
+    )
+  }
+
+
+  return (
+    <div className="w-full flex flex-col mx-auto items-center">
+      <AnalysisForm/>
     {analysisResult && (
     <div className="flex flex-col items-center justify-center w-full mt-8">
       <InfoDisplay info={analysisResult} title="Chart Analysis"/>

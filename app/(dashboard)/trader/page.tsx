@@ -17,10 +17,10 @@ export default function Page() {
 
   return (
     <div className="w-full flex flex-col max-w-5xl mx-auto lg:min-h-screen min-h-auto items-center justify-center text-center py-8 px-4">
-         <div className='flex flex-row gap-4 justify-center items-center'>
+      <div className='flex flex-row gap-4 justify-center items-center'>
         <h1 className="text-center text-4xl my-4 px-3 font-bold">Upload & Analyse</h1>
       </div>
-      <p className="text-light mb-2 px-3">
+      <p className="text-light mb-2 px-3 text-sm md:text-md lg:text-lg">
         Upload an image of the chart you want to analyse. See the upload guidelines and limitations <Link className="text-blue-500" href="/guide">here</Link>.
       </p>
       <p className="text-sm text-gray-600">Note: This is not financial advice.</p>

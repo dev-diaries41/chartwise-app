@@ -8,7 +8,7 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default async function Page() {
   return (
-    <div className='w-full'>
+    <div className='w-full my-auto'>
       <Image
       src={'/background.jpg'}
       alt='bg'
@@ -28,15 +28,14 @@ export default async function Page() {
             Chart analysis made easy! <span className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-transparent bg-clip-text">Upload</span>.{" "}
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>. Trade
           </h1>
-          <p className="text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[100%] lg:max-w-[80%]">
-            Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas, just by uploading a chart.
-          </p>
+          <p className="text-sm md:text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[100%] lg:max-w-[80%]">
+          Transform your trading experience with actionable insights, key patterns, trends, and practical trade ideas. Just upload your chart.</p>
           <Link
             href='/trader'
-            className={`w-[80%] md:w-[60%] lg:w-[40%] h-16 lg:h-20 flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 rounded-full shadow-md text-xl lg:text-2xl mt-4 bounce`}
+            className={`w-[80%] md:w-[60%] lg:w-[40%] h-12 md:h-16 lg:h-20 flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 bounce`}
           >
             {'Try for free'}
-            <FontAwesomeIcon icon={faPlayCircle} className='w-6 h-6 mr-1'/>
+            <FontAwesomeIcon icon={faPlayCircle} className='w-4 md:w-6 h-4 md:h-6 mr-1'/>
           </Link>
         </div>
       </div>
