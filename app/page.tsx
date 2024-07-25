@@ -29,7 +29,7 @@ export default async function Page() {
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>. Trade
           </h1>
           <p className="text-sm md:text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[100%] lg:max-w-[80%]">
-          Transform your trading experience with actionable insights, key patterns, trends, and practical trade ideas. Just upload your chart.</p>
+          ChartWise helps traders identify patterns, trends, and more, and provides detailed insights to inform precise trade execution strategies.</p>
           <Link
             href='/trader'
             className={`w-[80%] md:w-[60%] lg:w-[40%] h-12 md:h-16 lg:h-20 flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 bounce`}

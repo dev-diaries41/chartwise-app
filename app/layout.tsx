@@ -11,13 +11,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   metadataBase: new URL('https://chartwise.vercel.app/'),
   title: 'ChartWise',
-  description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
+  description: 'ChartWise helps traders identify patterns, trends, and more, and provides detailed insights to inform precise trade execution strategies.',
   keywords: ['trade', 'trading', 'charts', 'analysis', 'technical-analysis', 'ai', 'artificial intelligence', 'openai', 'computer vision', 'forex', 'stocks', 'cryptocurrency'],
   applicationName: 'ChartWise',
   openGraph: {
     type: 'website',
     url: 'https://chartwise.vercel.app/',
-    description: 'Trasform your trading experience. Get actionable insights, identify key patterns and trends and practical trade execution ideas just by uploading a chart.',
+    description: 'ChartWise helps traders identify patterns, trends, and more, and provides detailed insights to inform precise trade execution strategies.',
     siteName: 'ChartWise',
     images: ['/chartwise-homepage.png']
 
