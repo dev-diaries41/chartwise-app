@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react'
+import React, {ChangeEvent, useEffect, useState } from 'react'
 import { useTrader } from '../providers/trader';
 import * as Storage from "@/app/lib/storage/local"
 import { StorageKeys } from '../constants/app';
@@ -57,7 +57,7 @@ const useChartwise = (router: AppRouterInstance) => {
       setAnalysisToView(null);
     }
     
-  const handleStrategyAndCriteriaChange = (event: any) => {
+  const handleStrategyAndCriteriaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setStrategyAndCriteria(event.target.value);
 };
 

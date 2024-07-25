@@ -61,7 +61,7 @@ onToggleMenu
 
         {isOpen && (
         <div className="absolute top-0 right-0 w-full min-h-screen bg-gray-800 border border-r-1 border-gray-700 pt-24 p-4 z-40 flex flex-col">
-        <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy policy'].includes(link.name))]} />
+        <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy Policy'].includes(link.name))]} />
         <div className="flex-1 max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar pl-2">
           <RecentAnalyses analyses={recentAnalyses} onClick={handleViewAnalysis} onDelete={handleDeleteAnalysis} />
         </div>

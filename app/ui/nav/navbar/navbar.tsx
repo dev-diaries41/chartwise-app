@@ -36,7 +36,7 @@ export default function NavBar() {
 
         {/* Dropdown menu */}
         <div className="absolute top-0 right-0 w-full bg-gray-800 border border-r-1 border-gray-700 pt-24 p-4 z-40 hidden" id='navbar-menu'>
-          <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy policy'].includes(link.name))]} />
+          <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy Policy'].includes(link.name))]} />
          
         </div>
       </div>

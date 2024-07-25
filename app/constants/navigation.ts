@@ -10,7 +10,7 @@ export const navLinks: NavItem[] = [
     { name: 'Pricing', link: '/pricing', icon: faCreditCard},
     { name: 'Terms', link: '/terms'},
     { name: 'License', link: '/license'},
-    { name: 'Privacy policy', link: '/privacy'},
+    { name: 'Privacy Policy', link: '/privacy'},
   ];
   
 
