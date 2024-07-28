@@ -30,6 +30,10 @@ import Spacer from "./utilities/spacer";
 import RecentAnalyses from "./trader/recent-trades";
 import UserPlanWidget from "./pricing/user-plan";
 import ActionRow from "./common/action-row";
+import Settings from "./common/settings";
+import SuspenseFallback from "./common/suspense";
+import SliderInput from "./forms/slider";
+import AnalysisForm from "./trader/analysis-form";
 
 export {
     Card,
@@ -63,5 +67,9 @@ export {
     Background,
     Spacer,
     UserPlanWidget,
-    ActionRow
+    ActionRow,
+    Settings,
+    SuspenseFallback,
+    SliderInput,
+    AnalysisForm
 }

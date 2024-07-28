@@ -1,13 +1,14 @@
 'use client'
 import useLoading from "@/app/hooks/useLoading";
-import { getSharedAnalysis } from "@/app/lib/requests/client";
-import { InfoDisplay, LoadingIndicator } from "@/app/ui";
+import { getSharedAnalysis } from "@/app/lib/requests/chartwise-client";
+import { StoredAnalysis } from "@/app/types";
+import { InfoDisplay, SuspenseFallback } from "@/app/ui";
+import NotFound from "@/app/ui/common/not-found";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function Page ({params}:  { params: { id: string } }){
-  const [chartImageUrl, setChartImageUrl] = useState<string | null>(null);
-  const [analysisResult, setChartAnalysisResult] = useState<string | null>(null);
+  const [analysis, setAnalysis] = useState<StoredAnalysis|null>(null);
   const {loading, setLoading} = useLoading(true);
   const id = params.id;
 
@@ -15,9 +16,10 @@ export default function Page ({params}:  { params: { id: string } }){
     async function fetchAnalysis(id: string){
       try {
         const analysis = await getSharedAnalysis(id);
-        setChartImageUrl(analysis.chartUrl);
-        setChartAnalysisResult(analysis.analysis);
-      }finally{
+        setAnalysis(analysis);
+      }catch(error){
+      }
+      finally{
         setLoading(false);
       }
     }
@@ -25,30 +27,22 @@ export default function Page ({params}:  { params: { id: string } }){
     fetchAnalysis(id);
   }, [])
 
+
   if(loading){
-    return (
-      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full py-16 '>
-      <LoadingIndicator size={50}/>
-      </div>
-    )
+    return <SuspenseFallback/>
   }
 
-
-  if(!loading && (!chartImageUrl || !analysisResult)){
-    return (
-      <div className='flex flex-col my-auto mx-auto justify-center items-center w-full text-xl font-semibold py-16 text-gray-400'>
-        404 | Analysis not found
-      </div>
-    )
+  if(!loading && !analysis){
+    return <NotFound title={'404 | Analysis not found'} />;
   }
 
 
   return ( 
     <div className="flex flex-col max-w-5xl mx-auto my-auto items-center justify-center text-center py-16 px-4 animate-fadeIn">
-      {chartImageUrl &&  (
+      {analysis &&  (
         <div className="w-full max-w-[100%]">
         <Image
-        src={chartImageUrl}
+        src={analysis?.chartUrl}
         alt="Uploaded Chart"
         width={2048}
         height={2048}
@@ -56,9 +50,9 @@ export default function Page ({params}:  { params: { id: string } }){
         />
         </div>
       )}
-        {(analysisResult && chartImageUrl) && (
+        {analysis && (
         <div className="flex flex-col items-center justify-center w-full mt-8">
-          <InfoDisplay info={analysisResult} title="Chart Analysis"/>
+          <InfoDisplay info={analysis.analysis} title="Chart Analysis"/>
         </div>
         )}
     </div>

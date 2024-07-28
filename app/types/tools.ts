@@ -6,19 +6,30 @@ export interface MoreOptionsProps  {
  }
 
 
-export type IAnalysis = {
+export type IAnalysisUrl = {
   name: string;
   analyseUrl: string;
 }
 
 export interface RecentAnalysesProps {
-  analyses: IAnalysis[];
-  onClick: (IAnalysis: IAnalysis) => void;
-  onDelete: (IAnalysis: IAnalysis) => void;
+  analyses: IAnalysisUrl[];
+  onClick: (IAnalysisUrl: IAnalysisUrl) => void;
+  onDelete: (IAnalysisUrl: IAnalysisUrl) => void;
 }
 
 
 export interface StoredAnalysis {
-  analysis: string;
+  analysis: string ;
   chartUrl: string;
+  userId: string;
+  formatVersion?: number;
+  metadata?: Record<string, any>;
+}
+
+export interface IAnalyseChart {
+  chartUrl: string;
+  metadata: {
+    strategyAndCriteria?: string;
+    risk?: string;
+  }
 }

@@ -9,6 +9,9 @@ import { usePathname } from 'next/navigation';
 import { useChartwise } from '@/app/providers/chartwise';
 import UserProfileWidget from '../../user/user-profile';
 import MobileNav from './mobilenav';
+import { useSettings } from '@/app/providers/settings';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 export default React.memo(function  SideNav(){
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +19,7 @@ export default React.memo(function  SideNav(){
   const pathName = usePathname();
   const showRecentAnalyses = pathName === '/trader';
   const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useChartwise();
+  // const {toggleSettings} = useSettings();
  
   return (
     <>
@@ -34,17 +38,30 @@ export default React.memo(function  SideNav(){
         <div className='flex h-full flex-col justify-between gap-4'>
           <NavLinks navItems={navLinks} />
           {showRecentAnalyses && <div className="flex-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
-          { showRecentAnalyses && <RecentAnalyses analyses={recentAnalyses} onClick={handleViewAnalysis} onDelete={handleDeleteAnalysis}/>}
+          { showRecentAnalyses && (
+
+          <div className='mr-auto p-1'>
+          <RecentAnalyses analyses={recentAnalyses} onClick={handleViewAnalysis} onDelete={handleDeleteAnalysis}/>
+
+          </div>
+          )}
           </div>
           }
+         
+          <div className="absolute bottom-0 right-0 left-0 p-3 flex flex-col gap-4">
           <a
             href={user ? '/api/auth/logout' : '/api/auth/login'}
-            className={`flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 text-sm text-white font-semibold p-2 rounded-3xl shadow-md`}
-          >
-            {user ? 'Sign Out' : 'Sign In'}
+            className='flex flex-row items-center justify-start gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer' >
+            <FontAwesomeIcon icon={faSignOut} className='w-4 h-4'/>
+            {user ? 'Sign out' : 'Sign in'}
           </a>
-          <div className="absolute bottom-0 right-0 left-0 p-3 flex flex-col gap-4">
-            <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
+            {/* <button onClick={() => {
+            toggleSettings();
+          }}className='flex flex-row items-center justify-start gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer'>
+            <FontAwesomeIcon icon={faGear} className='w-4 h-4'/>
+            Settings
+          </button> */}
+          <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
             <UserProfileWidget userId={user?.email} isLoading={isLoading}/>
           </div>
         </div>

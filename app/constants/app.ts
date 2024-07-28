@@ -50,6 +50,8 @@ export const StorageKeys = {
   recentCharts: 'recent-charts',
   subscription: 'stripe-subscription',
   credits: 'credits',
+  settings: 'settings',
+  usage: 'usage'
 }
 
 export const DefaultToastOptions: ToastOptions = {

@@ -17,9 +17,9 @@ export default function Logo({
             height={height}
             className="relative w-12 h-12"
           />
-      <h1 className='w-full mr-4 text-lg text-gray-200 font-bold'>
-        ChartWise
-      </h1>
+        <h1 className='hidden md:block w-full mr-4 text-lg text-gray-200 font-bold'>
+          ChartWise
+        </h1>
     </div>
   );
 };

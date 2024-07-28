@@ -20,3 +20,25 @@ import { z } from 'zod';
       { message: 'Feedback type cannot be empty.' }
     ),
   });
+
+  export const storedAnalysisSchema = z.object({
+    analysis: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
+    chartUrl: z.string().min(1, { message: "Chart URL must be at least 10 characters long." }),
+    userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
+    formatVersion: z.number().optional(),
+    metadata: z.record(z.any()).optional().refine(val => typeof val === 'object', { message: "Metadata must be an object." }),
+  });
+  
+  
+  export const storedAnalysisWithoutUserIdSchema = storedAnalysisSchema.omit({ userId: true });
+  
+  export const analyseChartSchema = z.object({
+    chartUrl: z.string().min(10, { message: "Chart URL must be at least 10 characters long." }),
+    metadata: z.object({
+      strategyAndCriteria: z.string().optional(),
+      risk: z.string().optional(),
+    }).refine((data) => typeof data.strategyAndCriteria === 'undefined' || typeof data.strategyAndCriteria === 'string', { message: "strategyAndCriteria must be a string" })
+      .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'string', { message: "risk must be a string" })
+  });
+  
+  

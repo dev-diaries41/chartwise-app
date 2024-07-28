@@ -1,3 +1,5 @@
+import { Time } from "@/app/constants/app";
+
 export function set(key: string, value: string) {
     try {
       localStorage.setItem(key, value);
@@ -15,14 +17,14 @@ export function set(key: string, value: string) {
   };
 
 
-  export function get(key: string) {
+  export function get<T>(key: string): T|string|null {
     try {
       const jsonData = localStorage.getItem(key);
       try {
-        return JSON.parse(jsonData!);
+        return JSON.parse(jsonData!) as T;
       } catch {
         // If parsing fails, return the plain string
-        return jsonData;
+        return jsonData ;
       }
     } catch (error) {
       console.error('Error getting data from storage:', error);
@@ -63,3 +65,22 @@ export function set(key: string, value: string) {
       console.error('Error clearing storage:', error);
     }
   }
+
+  export function getCachedData<T>(storageKey: string, onValid: (data: T) => void): boolean {
+    const cachedData = get<{data: T, expiresAt: number}>(storageKey);
+    if (cachedData && typeof cachedData === 'object') {
+      const { data, expiresAt } = cachedData;
+      if (Date.now() < expiresAt) {
+        onValid(data);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  export function cacheData(storageKey: string, data: object, ttl = Time.min): void{
+    const expiresAt = Date.now() + ttl;
+    set(storageKey, JSON.stringify({data, expiresAt}));
+  }
+
+ 

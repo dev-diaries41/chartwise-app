@@ -1,4 +1,4 @@
-import { Counter } from "@/app/lib/counter";
+import { Counter } from "@/app/lib/utils/counter";
 import { Time } from "@/app/constants/app";
 import { PollOptions } from "@/app/types";
 

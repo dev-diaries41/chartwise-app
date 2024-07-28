@@ -11,5 +11,5 @@ export {
     usePageLifecycle,
     usePolling,
     usePopUp,
-    useSubscription
+    useSubscription,
 }

@@ -27,5 +27,16 @@ export type UserProfileInfo = {
     credits: number
 }
 
+export type UsagePeriod = keyof Usage
 
+export type Usage = {
+    today: number;
+    month: number;
+    total: number;
+  }
   
+  export interface UsageType {
+    name: string;
+    count: number;
+  }
+

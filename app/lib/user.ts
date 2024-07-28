@@ -13,9 +13,9 @@ export async function getUserPlan(userId: string|null|undefined): Promise<UserPl
     if(!userId)return 'Free';
 
     try {
-      const cachedPlanInfo = Storage.get(StorageKeys.subscription);
-      if (cachedPlanInfo) {
-        const { userPlan, expiresAt }: UserProfileInfo = cachedPlanInfo;
+      const cachedPlanInfo = Storage.get<UserProfileInfo>(StorageKeys.subscription);
+      if (cachedPlanInfo && typeof cachedPlanInfo === 'object') {
+        const { userPlan, expiresAt } = cachedPlanInfo;
         if (expiresAt > Date.now() && userPlan) {
           return userPlan as UserPlan;
         }
@@ -40,6 +40,19 @@ export async function getUserPlan(userId: string|null|undefined): Promise<UserPl
       return 'Free';
     }
   }
+
+  function cacheUserPlan (userPlan: UserPlan) {
+    const ttl = Time.min;
+    const expiresAt = Date.now() + ttl;
+    Storage.set(StorageKeys.subscription, JSON.stringify({ userPlan, expiresAt } as UserProfileInfo));
+  }
+
+  export async function handleGetSubscriptionInfo (userId: string): Promise<string> {  
+    const plan = await getUserPlan(userId);
+    cacheUserPlan(plan)
+    return plan;
+    
+  };
 
   export function getUserCredits(plan: UserPlan, monthlyUsage: number){
     if(plan === 'Free'){
@@ -66,18 +79,3 @@ export async function getUserPlan(userId: string|null|undefined): Promise<UserPl
     } 
   }
 
-  export async function handleGetSubscriptionInfo (userId: string): Promise<string> {  
-    const cachedData = Storage.get(StorageKeys.subscription);
-    if (cachedData) {
-      const { userPlan, expiresAt } = cachedData;
-      if (Date.now() < expiresAt) {
-        return userPlan;
-      }
-    }
-
-    const plan = await getUserPlan(userId);
-    const ttl = Time.min;
-    const expiresAt = Date.now() + ttl;
-    Storage.set(StorageKeys.subscription, JSON.stringify({ userPlan: plan, expiresAt } as UserProfileInfo));
-    return plan;
-  };

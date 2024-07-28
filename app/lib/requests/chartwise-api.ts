@@ -22,9 +22,9 @@ export class ChartWiseAPI {
     this.token = newToken;
   }
 
-  public async analyse( image:string, strategyAndCriteria: string | null, risk: string | null): Promise<ChartWiseAPIResponse<JobReceipt>>{
+  public async analyse( analysis: Omit<StoredAnalysis, 'userId'>): Promise<ChartWiseAPIResponse<JobReceipt>>{
     const headers = this.getHeaders()
-    const reqBody = {when: Date.now(), jobData: {image, strategyAndCriteria, risk}}
+    const reqBody = {when: Date.now(), jobData: analysis}
     const response = await axios.post(CHART_ANALYSIS_URL, reqBody, {headers});
     const {message, data} = response.data
     const newToken = response.headers['authorization']?.split(' ')[1];
@@ -32,9 +32,9 @@ export class ChartWiseAPI {
     return {message, data, token: newToken};
   }
 
-  public async saveAnalysis(chart: string, analysis: string): Promise<ChartWiseAPIResponse<string>> {
+  public async saveAnalysis(analysis: Omit<StoredAnalysis, 'userId'>): Promise<ChartWiseAPIResponse<string>> {
     const headers = this.getHeaders()
-    const reqBody = { chart, analysis };
+    const reqBody = {analysis};
     const response = await axios.post(SAVE_ANALYSIS_URL, reqBody, { headers });
     const { message, data } = response.data;
     const newToken = response.headers['authorization']?.split(' ')[1];

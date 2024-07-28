@@ -13,14 +13,14 @@ export async function GET(req: NextRequest) {
     }
 
     const response = await axios.get(`${USAGE_URL}/daily/${userId}`, {headers});
-    const monthlyUsage = response.data as {data: number};
+    const todaysUsage = response.data as {data: number};
 
-    if(!monthlyUsage)throw new Error(ServiceUsageErrors.FAILED_MONTHLY_USAGE_CHECK);
+    if(!todaysUsage)throw new Error(ServiceUsageErrors.FAILED_DAILY_USAGE_CHECK);
 
-    const nextResponse = NextResponse.json(monthlyUsage);
+    const nextResponse = NextResponse.json(todaysUsage);
     return nextResponse; 
   } catch (error: any) {
-    console.error(ServiceUsageErrors.FAILED_MONTHLY_USAGE_CHECK, error.message)
+    console.error(ServiceUsageErrors.FAILED_DAILY_USAGE_CHECK, error.message)
     const status = error.response?.status || 500;
     const message = error.response?.data?.message || 'Internal Server Error';
     return NextResponse.json({ message, status, success: false }, { status }) 

@@ -4,12 +4,14 @@ import React from 'react';
 import FooterLinks from './footer-links';
 import InformationMenu from '@/app/ui/common/info-menu';
 import { usePathname } from 'next/navigation';
+import { shouldHide } from '@/app/lib/utils/ui';
 
 
 export default function Footer() {
   const pathname = usePathname();
-  const hide = pathname === '/trader'
-
+  const pathsToHide = ['/trader', '/account']
+  const hide = shouldHide(pathname, pathsToHide)
+  
   return (
     <footer className="flex flex-col  justify-end  mt-auto text-gray-300">
      {!hide&& <div className="flex flex-col items-center text-center justify-center px-8 gap-4  py-8">

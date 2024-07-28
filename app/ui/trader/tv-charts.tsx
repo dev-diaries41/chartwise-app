@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
 
-function TradingViewWidget() {
+export default React.memo(function TradingViewWidget() {
   const container = useRef<HTMLDivElement>(null); // Correct ref type for the container
 
   
@@ -31,7 +31,7 @@ function TradingViewWidget() {
   }, []);
 
   return (
-    <div className="min-h-screen tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>
+    <div className="absolute  top-16 min-h-screen m-w-screen tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>
       <div className="tradingview-widget-container__widget" style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
       <div className="tradingview-widget-copyright">
         {/* <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
@@ -40,6 +40,5 @@ function TradingViewWidget() {
       </div>
     </div>
   );
-}
+})
 
-export default memo(TradingViewWidget);

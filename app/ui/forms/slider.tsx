@@ -1,3 +1,4 @@
+'use client'
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import React, { useState, ChangeEvent } from 'react';
 

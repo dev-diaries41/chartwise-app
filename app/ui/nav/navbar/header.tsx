@@ -4,11 +4,13 @@ import { NavBar } from '../..';
 import Link from 'next/link';
 import Logo from '../../logo';
 import { usePathname } from 'next/navigation';
+import { shouldHide } from '@/app/lib/utils/ui';
 
 export default function Header({...props}) {
   const pathname = usePathname();
+  const pathsToHide = ['/trader', '/account']
 
-  if(pathname === '/trader')return null;
+  if(shouldHide(pathname, pathsToHide))return null;
   
   return (
     <div 

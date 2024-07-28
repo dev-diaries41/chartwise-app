@@ -1,5 +1,5 @@
 import { IconDefinition, IconProp } from "@fortawesome/fontawesome-svg-core";
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, ChangeEvent, HTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 import { positions } from "../constants/layout/style";
 
 export interface WhatsIncludedItem {
@@ -145,4 +145,42 @@ export interface ActionRowProps {
   onCopy: () => void;
   onDelete: () => void;
   shareUrl: string | null;
+}
+
+export interface SettingItem {
+  type: 'dropdown' | 'toggle' | 'button';
+  label: string;
+  options?: string[]; // For dropdown
+  value?: string | boolean;
+  onChange?: (value: | string | boolean) => void;
+}
+
+export interface SettingCategory {
+  name: string;
+  items: SettingItem[];
+}
+
+export interface Settings {
+  general: Record<string, any>
+  dataControls: Record<string, any>
+}
+
+export type Mode = 'chart' | 'analysis'
+
+export interface AnalysisUsageProps {
+  usage: number;
+  limit: number;
+  period: string;
+}
+
+
+export interface ActionItem {
+  icon: IconDefinition;
+  onClick: () => void;
+  tooltip: string;
+  condition?: boolean;
+}
+
+export interface ActionRowProps {
+  actions: ActionItem[];
 }
