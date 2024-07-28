@@ -107,7 +107,7 @@ interface AnalysisFormProps {
           {chartImageUrl && (
           <div className="relative mb-auto w-full lg:w-[50%] mt-4">
           <button 
-      className="absolute top-0 right-0 mt-2  text-red-600 transform -translate-y-8 z-[40]"
+      className="absolute top-0 right-0 mt-2  text-red-600 transform -translate-y-8 z-[20]"
       onClick={removeChart}
           >
             <FontAwesomeIcon icon={faTimes} className="w-4 h-4"/>
