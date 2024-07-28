@@ -48,7 +48,7 @@ export default function Page() {
         {
           mode === 'chart'? <TradingViewWidget/> : (
             <div className="relative w-full flex flex-col max-w-5xl mx-auto lg:min-h-screen  items-center justify-center text-center py-8 px-4">   
-            <div className='flex flex-col w-full  my-auto mb-auto'>
+            <div className='flex flex-col w-full  my-auto mb-auto pt-8'>
             <div className='flex flex-row gap-4 justify-between items-center mt-4'>
               <h1 className="text-center text-xl md:text-3xl my-4 font-bold">Upload Chart & Analyse</h1>
             </div>
