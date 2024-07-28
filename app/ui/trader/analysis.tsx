@@ -104,7 +104,7 @@ export function ChartAnalyser (){
   
 
   return (
-    <div className="w-full flex flex-col mx-auto items-center">
+    <div className="w-full flex flex-col mx-auto items-center pt-8">
       <AnalysisForm handleFailedJobStart={handleFailedJobStart} handleJobInProgress={handleJobInProgress} loading={loading} setLoading={setLoading}/>
       {analysisResult && (
       <div className="flex flex-col items-center justify-center w-full mt-8">
