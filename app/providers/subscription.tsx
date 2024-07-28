@@ -32,8 +32,8 @@ const useSubscription = (userId: string | null | undefined, isLoading: boolean) 
 
   const { userPlan, setUserPlan } = context;
   const handleGetSubscriptionInfo = async (userId: string) => {  
-    const cachedData = Storage.get(StorageKeys.subscription);
-    if (cachedData) {
+    const cachedData = Storage.get<UserProfileInfo>(StorageKeys.subscription);
+    if (cachedData && typeof cachedData === 'object') {
       const { userPlan, expiresAt } = cachedData;
       if (Date.now() < expiresAt) {
         setUserPlan(userPlan);
