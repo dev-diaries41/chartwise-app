@@ -17,7 +17,7 @@ export const faqData = [
 
   },
   {
-      question: 'Is the analysis always correct?',
+      question: 'Is the analysis always accurate?',
       answer: [
           'The analysis is AI generated and may not always be 100% accurate and should be used as guidance or to build confluence, not as financial advice.',
       ],

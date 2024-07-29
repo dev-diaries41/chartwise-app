@@ -92,7 +92,7 @@ export function ChartAnalyser (){
 
 
   const handleSubscripe = () => {
-    router.push('/pricing')
+    router.push('/#pricing')
   }
 
   return (

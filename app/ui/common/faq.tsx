@@ -17,14 +17,15 @@ export default function Faq(){
   
 
   return (
+    <section id='faq' className='mx-auto w-full  py-16 mb-16'>
     <div className="max-w-7xl mx-auto flex flex-col gap-12">
       <div className="flex flex-col text-center basis-1/2">
-        <h1 className="ttext-center text-4xl mb-4 px-3 font-bold">
+        <h1 className="ttext-center text-3xl mb-4 px-3 font-bold">
           Frequently Asked Questions
         </h1>
        
       </div>
-      <ul className="basis-1/2 bg-gray-800 rounded-md p-4">
+      <ul className="basis-1/2 rounded-md p-4">
         {faqData.map((item, index) => (
           <li key={index}>
             <button
@@ -55,5 +56,6 @@ export default function Faq(){
         ))}
       </ul>
     </div>
+  </section>
   );
 };

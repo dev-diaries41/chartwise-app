@@ -7,7 +7,7 @@ export const navLinks: NavItem[] = [
   
   export const footerLinks: NavItem[] = [
     { name: 'Support', link: '/support', icon: faQuestionCircle},
-    { name: 'Pricing', link: '/pricing', icon: faCreditCard},
+    { name: 'Pricing', link: '/#pricing', icon: faCreditCard},
     { name: 'Terms', link: '/terms'},
     { name: 'License', link: '/license'},
     { name: 'Privacy Policy', link: '/privacy'},
@@ -16,7 +16,7 @@ export const navLinks: NavItem[] = [
 
   export const headerLinks: NavItem[] = [
     { name: 'Support', link: '/support', icon: faQuestionCircle},
-    { name: 'Pricing', link: '/pricing', icon: faCreditCard},
+    { name: 'Pricing', link: '/#pricing', icon: faCreditCard},
   ];
 
   export const accountNav: NavItem[] = [

@@ -10,8 +10,6 @@ import { useChartwise } from "@/app/providers/chartwise";
 import { analyseChartSchema } from "@/app/constants/schemas";
 import ActionRow from "../common/action-row";
 import { copyTextToClipboard } from "@/app/lib/utils/ui";
-import { PLACEHOLDER_ANALYSIS } from "@/app/constants/content/placeholder";
-
 
 
 interface AnalysisFormProps {
@@ -47,7 +45,7 @@ interface AnalysisFormProps {
               const jobId = await analyseChart(userId, formData);
               handleJobInProgress(jobId);
             } catch (error: any) {
-              handleFailedJobStart(error)
+              handleFailedJobStart(error);
             }
         };
     

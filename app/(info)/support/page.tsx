@@ -12,10 +12,6 @@ export default function Page () {
       <section id='contact' className=" w-full mb-16">
         <ContactForm />
       </section>
-
-      <section id='faq' className='mx-auto w-full  py-16 mb-16'>
-        <Faq />
-      </section>
     </div>
   );
 };

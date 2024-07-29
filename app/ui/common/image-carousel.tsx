@@ -34,7 +34,7 @@ export default function CarouselImageViewer ({ images }: CarouselImageViewerProp
   const visibleDots = moreImagesExist ? 10 : images.length;
 
   return (
-    <div className="relative w-full max-w-2xl bg-gray-900 rounded-md">
+    <div className="relative w-full max-w-2xl bg-transparent rounded-md shadow-md shadow-black p-2">
       <div className="relative overflow-hidden rounded-lg">
         <div
           className="flex transition-transform duration-500 ease-in-out"
@@ -54,14 +54,14 @@ export default function CarouselImageViewer ({ images }: CarouselImageViewerProp
       </div>
       <button
         type='button'
-        className="absolute flex top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 bg-opacity-50 justify-center items-center text-white p-2 rounded-full "
+        className="absolute flex top-1/2 left-1 transform-translate-y-1/2 transform-translate-y-1/2 bg-gray-700 bg-opacity-50 justify-center items-center text-white p-2 rounded-full "
         onClick={goToPrevious}
       >
       <FontAwesomeIcon icon={faArrowLeft}/>
       </button>
       <button
         type='button'
-        className="absolute flex top-1/2 right-2 transform -translate-y-1/2 bg-gray-700 bg-opacity-50 text-white p-2 rounded-full justify-center items-center"
+        className="absolute flex top-1/2 right-1 transform-translate-y-1/2 bg-gray-700 bg-opacity-50 text-white p-2 rounded-full justify-center items-center"
         onClick={goToNext}
       >
       <FontAwesomeIcon icon={faArrowRight} className=''/>

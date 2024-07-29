@@ -11,14 +11,24 @@ export interface WhatsIncludedItem {
     export interface WhatsIncludedProps {
       items: WhatsIncludedItem[];
     }
-    
-    export interface CardProps extends React.HTMLAttributes<HTMLDivElement>   {
+
+    export interface BaseCard extends React.HTMLAttributes<HTMLDivElement> {
       title: string;
+      description?: string;
+      link?: string;
+      cta?: string;
+      tags?: string[];
+      metadata?: string[];
+    }
+    
+    export interface CardProps extends BaseCard   {
       description: string;
       link: string;
       cta: string;
-      tags?: string[];
-      metadata?: string[];
+    }
+
+    export interface ListCardProps extends BaseCard   {
+      items: string[]
     }
 
     export type InputField = Partial<React.JSX.IntrinsicElements['input']> & {

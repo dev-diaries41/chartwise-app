@@ -14,7 +14,7 @@ export default function UserPlanWidget({userId, isLoading}: UserProfileWidgetPro
 
   return (
     <div className='flex flex-col items-center p-1 bg-transparent text-gray-200  rounded-lg'>
-    <Link href={'/pricing'} className="w-full flex flex-row items-center gap-1">
+    <Link href={'/#pricing'} className="w-full flex flex-row items-center gap-1">
         <FontAwesomeIcon icon={faLevelUpAlt} className="w-4 h-4"/>
       <div className='flex flex-col gap-0'>
         <div className="w-full text-sm font-medium">Upgrade plan</div>

@@ -15,12 +15,15 @@ export default function Header({...props}) {
   return (
     <div 
     {...props}
-    className='flex flex-row w-full max-w-7xl mx-auto items-center justify-between text-gray-200 z-50 px-4 pt-2'
+    className='sticky top-0 flex flex-row w-full mx-auto items-center justify-between pt-2 z-50'
     >
+      <div className='flex flex-row w-full max-w-7xl mx-auto items-center justify-between px-4'>
       <Link href={'/'} className='z-50'>
         <Logo src={'/chartwise-icon.png'}/>
       </Link>
     <NavBar/>
+      </div>
+     
     </div>
   );
 };
