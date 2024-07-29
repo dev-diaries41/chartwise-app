@@ -2,8 +2,6 @@ import { CarouselImageViewer, Faq, PriceTable } from '@/app/ui';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import ListCard from './ui/cards/list-card';
 import List from './ui/common/list';
 import { ChartWiseBenefits, HowItWorksGuide, TraderProblems } from './constants/content/landing-page';
@@ -20,25 +18,28 @@ const Hero = () => {
         objectFit='cover'
         className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-10 z-20'
       />
-      <div className="animate-fadeIn relative flex flex-col max-w-5xl  max-h-full w-full mx-auto items-center lg:justify-center text-center opacity-90 p-8 h-full">
+      <div className="animate-fadeIn relative flex flex-col max-w-5xl  w-full mx-auto items-center  text-center opacity-90 p-8 h-full">
         {/* <Background /> */}
         <div className="absolute top-0 left-0 w-[80%] h-[80%]">
           <div className="absolute inset-0 bg-gradient-radial from-gray-800 to-gray-900 opacity-50 blur-xl"></div>
         </div> 
         <div className="w-full z-[10] flex flex-col py-16 justify-center items-center">
-          <h1 className="text-center lg:text-7xl md:text-5xl text-4xl my-4 px-3 font-bold text-gray-200">
+          <h1 className="text-center lg:text-7xl md:text-5xl text-5xl my-4 px-3 font-bold text-gray-200">
             Chart analysis made easy! <span className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-transparent bg-clip-text">Upload</span>.{" "}
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>. Trade
           </h1>
-          <p className="text-sm md:text-md lg:text-lg text-gray-400 mb-5 px-3 opacity-90 mt-4 max-w-[90%] md:max-w-[80%]">
-          ChartWise helps traders identify patterns, trends, and more, and provides detailed insights to inform precise trade execution strategies.</p>
+          {/* <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 opacity-90 mt-4 max-w-[90%] md:max-w-[80%]">
+          ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p> */}
+          <div className='absolute bottom-40 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
+          <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 font-medium mt-4 max-w-[90%] md:max-w-[80%]">
+          ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
           <Link
-            href='/trader'
-            className={`w-[80%] md:max-w-[60%] lg:max-w-[40%] flex flex-row items-center gap-2 justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}
-          >
-            {'Get started for free'}
-            {/* <FontAwesomeIcon icon={faPlayCircle} className='w-4 md:w-6 h-4 md:h-6 mr-1'/> */}
-          </Link>
+              href='/trader'
+              className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
+              {'Get started for free'}
+            </Link>
+          </div>
+        
         </div>
       </div>
     </section>
