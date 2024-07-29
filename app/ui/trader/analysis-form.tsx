@@ -101,7 +101,7 @@ interface AnalysisFormProps {
         </div>
        
           
-        <div className="flex lg:flex-row flex-col justify-between items-center gap-16 my-4 pb-20">
+        <div className="flex lg:flex-row flex-col justify-between items-center gap-16 my-4">
           <div className="mb-auto w-full lg:w-[50%]">
             <SliderInput
               title={getRiskTolerance()}
@@ -114,19 +114,19 @@ interface AnalysisFormProps {
             </div>
           {chartImageUrl && (
           <div className="relative mb-auto w-full lg:w-[50%] mt-4">
-          <button 
-      className="absolute top-0 right-0 mt-2  text-red-600 transform -translate-y-8 z-[20]"
-      onClick={removeChart}
-          >
-            <FontAwesomeIcon icon={faTimes} className="w-4 h-4"/>
-          </button>
+            <button 
+              className="absolute top-0 right-0 mt-2  text-red-600 transform -translate-y-8 z-[20]"
+              onClick={removeChart}
+            >
+              <FontAwesomeIcon icon={faTimes} className="w-4 h-4"/>
+            </button>
           <Chart chartImageUrl={chartImageUrl} loading={loading} />
-        </div>
+          </div>
           )}
         </div>
-        {analysisResult && (
+        {!analysisResult && (
       <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto mx-auto py-8 mb-8 text-sm md:text-md">
-        <InfoDisplay info={analysisResult} title="Chart Analysis"/>
+        <InfoDisplay info={analysisResult || PLACEHOLDER_ANALYSIS} title="Chart Analysis"/>
         <ActionRow actions={actions}/>
       </div>
     )}
