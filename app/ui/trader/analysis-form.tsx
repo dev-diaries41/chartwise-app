@@ -124,9 +124,9 @@ interface AnalysisFormProps {
           </div>
           )}
         </div>
-        {!analysisResult && (
+        {analysisResult && (
       <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto mx-auto py-8 mb-8 text-sm md:text-md">
-        <InfoDisplay info={analysisResult || PLACEHOLDER_ANALYSIS} title="Chart Analysis"/>
+        <InfoDisplay info={analysisResult} title="Chart Analysis"/>
         <ActionRow actions={actions}/>
       </div>
     )}
