@@ -1,6 +1,7 @@
-import { IconDefinition, IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition, } from "@fortawesome/free-solid-svg-icons";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, ChangeEvent, HTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 import { positions } from "../constants/layout/style";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface WhatsIncludedItem {
     icon: IconDefinition;
@@ -19,6 +20,8 @@ export interface WhatsIncludedItem {
       cta?: string;
       tags?: string[];
       metadata?: string[];
+      icon?: IconProp
+      iconColor?: string;
     }
     
     export interface CardProps extends BaseCard   {

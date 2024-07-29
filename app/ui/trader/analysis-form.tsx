@@ -1,7 +1,7 @@
 'use client'
 import { AcceptedImgFiles, AcceptedImgMimes } from "@/app/constants/app";
 import {FileUploader, InfoDisplay} from "@/app/ui/";
-import {faCopy, faPaperclip, faSearch, faShareNodes, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faMagnifyingGlassChart, faPaperclip, faShareNodes, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
 import Chart from "./chart";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -65,7 +65,7 @@ interface AnalysisFormProps {
             className={`flex  items-center justify-center border-2 border-2 border-emerald-400 bg-emerald-700 text-sm  ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading || !userId || !chartImageUrl? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
             onClick={handleAnalyseChart}
           >
-            <FontAwesomeIcon icon={faSearch} className="w-4 h-4"/>
+            <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
             {/* <AnalysisIcon/> */}
             <span className="">Analyse Chart</span>
           </button>

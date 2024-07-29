@@ -5,6 +5,9 @@ import Link from 'next/link';
 import ListCard from './ui/cards/list-card';
 import List from './ui/common/list';
 import { ChartWiseBenefits, HowItWorksGuide, TraderProblems } from './constants/content/landing-page';
+import { faChartGantt, faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
@@ -66,11 +69,15 @@ const Benefits = () => {
           title={'Trading Challenges'}
           items={TraderProblems}
           titleClassName='text-red-500'
+          icon={faChartGantt}
+          iconColor='red'
         />
           <ListCard
           title={'ChartWise Solutions'}
           items={ChartWiseBenefits}
-          titleClassName='text-emerald-500'
+          titleClassName='text-emerald-400'
+          icon={faChartLine}
+          iconColor='#34D399'
         />
     </div>
     </section>
@@ -79,7 +86,7 @@ const Benefits = () => {
 
 const HowItWorks = () => {
   return (
-    <section id='how-it-works' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16 mb-16">
+    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16 mb-16">
       <h1 className="text-center text-3xl my-4 px-3 font-bold">How to analyse charts with ChartWise?</h1>
       <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
         <CarouselImageViewer images={['/chartwise-chart-mode.png', '/chartwise-analysis-mode.png']} />
@@ -87,6 +94,8 @@ const HowItWorks = () => {
         <List items={HowItWorksGuide} listType='numbered' />
         </div>
     </div>
+    {<FontAwesomeIcon icon={faMagnifyingGlassChart} className='absolute bottom-20  w-20 h-20'/>}
+
     </section>
   )
 }
