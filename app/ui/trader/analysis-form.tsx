@@ -81,7 +81,7 @@ interface AnalysisFormProps {
     return (
       <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-sm md:text-md lg:text-lg shadow-md rounded-md mb-2 p-4" >
         <div className="flex flex-row justify-between">
-          <label htmlFor={'strategy-criteria'} className=" flex flex-row block text-left font-medium mb-1 text-gray-200">
+          <label htmlFor={'strategy-criteria'} className=" flex flex-row block text-left font-medium mb-1 opacity-80">
             {`Strategy and Criteria (optional):`}
           </label>      
         </div>
@@ -95,7 +95,7 @@ interface AnalysisFormProps {
           onChange={handleStrategyAndCriteriaChange}
           aria-describedby={"strategy-criteria-error"}
           maxLength={MAX_CHARS} />
-          <span className="p-2 w-full text-right text-gray-400">{`${strategyAndCriteria.length}/${MAX_CHARS}`}</span> 
+          <span className="p-2 w-full text-right opacity-50">{`${strategyAndCriteria.length}/${MAX_CHARS}`}</span> 
         </div>
        
           

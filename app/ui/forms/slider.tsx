@@ -29,12 +29,12 @@ const SliderInput: React.FC<SliderInputProps> = ({ min, max, initialValue, icon,
 
   return (
     <div className="w-full flex flex-col items-left gap-1 mb-4">
-      <div className='flex flex-row items-center justify-left gap-2 text-md'>
+      <div className='flex flex-row items-center justify-left gap-2 text-md opacity-80'>
         { icon && <FontAwesomeIcon icon={icon} className='w-4 h-4'/> }
-        <h2 className="font-semibold text-gray-700 dark:text-gray-300">{title}</h2>
-        <span className="font-semibold text-gray-700 dark:text-gray-300 ml-auto">{value}</span>
+        <h2 className="font-semibold  ">{title}</h2>
+        <span className="font-semibold  ml-auto">{value}</span>
       </div>
-      {description &&<p className=" text-gray-200 dark:text-gray-400 text-left mb-4">{description}</p>}
+      {description &&<p className="text-left mb-4">{description}</p>}
       <input
         type="range"
         min={min}

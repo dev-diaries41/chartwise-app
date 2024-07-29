@@ -14,9 +14,8 @@ const Hero = () => {
       <Image
         src={'/background.jpg'}
         alt='bg'
-        layout='fill'bg-gray-800
-        objectFit='cover'
-        className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-10 z-20'
+        layout='fill'
+        className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-10 object-cover'
       />
       <div className="animate-fadeIn relative flex flex-col max-w-5xl  w-full mx-auto items-center  text-center opacity-90 p-8 h-full">
         {/* <Background /> */}
@@ -28,15 +27,14 @@ const Hero = () => {
             Chart analysis made easy! <span className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-transparent bg-clip-text">Upload</span>.{" "}
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>. Trade
           </h1>
-          {/* <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 opacity-90 mt-4 max-w-[90%] md:max-w-[80%]">
-          ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p> */}
-          <div className='absolute bottom-40 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
-          <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 font-medium mt-4 max-w-[90%] md:max-w-[80%]">
-          ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
-          <Link
-              href='/trader'
-              className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
-              {'Get started for free'}
+         
+          <div className='absolute bottom-48 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
+            <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
+            ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
+            <Link
+                href='/trader'
+                className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
+                {'Get started for free'}
             </Link>
           </div>
         
