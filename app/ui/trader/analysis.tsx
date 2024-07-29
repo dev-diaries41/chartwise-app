@@ -14,7 +14,7 @@ import { useChartwise } from "@/app/providers/chartwise";
 
 export function ChartAnalyser (){
   const router = useRouter();
-  const {analysisResult, shareUrl, removeAnalysis, onAnalysisComplete} = useChartwise();
+  const {onAnalysisComplete} = useChartwise();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle} = usePopUp();
   const { loading, setLoading, minimizeLoader, showLoadingDialog } = useLoading();
 
@@ -94,8 +94,6 @@ export function ChartAnalyser (){
   const handleSubscripe = () => {
     router.push('/pricing')
   }
-
-  
 
   return (
     <div className="w-full flex flex-col mx-auto items-center">

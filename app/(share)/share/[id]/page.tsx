@@ -51,7 +51,7 @@ export default function Page ({params}:  { params: { id: string } }){
         </div>
       )}
         {analysis && (
-        <div className="flex flex-col items-center justify-center w-full mt-8">
+        <div className="flex flex-col items-center justify-center w-full">
           <InfoDisplay info={analysis.analysis} title="Chart Analysis"/>
         </div>
         )}

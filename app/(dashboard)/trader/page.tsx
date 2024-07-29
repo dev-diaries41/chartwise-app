@@ -5,14 +5,12 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-// import { useSettings } from '@/app/providers/settings';
 import { useChartwise } from '@/app/providers/chartwise';
 import Switch from '@/app/ui/common/switch';
 import TradingViewWidget from '@/app/ui/trader/tv-charts';
 
 export default function Page() {
   const {isLoading} = useUser();
-  // const {showSettings} = useSettings();
   const {toggleMode, mode, newAnalysis} = useChartwise();
 
 
@@ -43,7 +41,6 @@ export default function Page() {
 
   return (
     <div className='relative flex-1 max-w-full mx-auto w-full'>
-      {/* { showSettings && <Settings/>} */}
       <TopActionRow/>
         {
           mode === 'chart'? <TradingViewWidget/> : (
@@ -52,9 +49,6 @@ export default function Page() {
             <div className='flex flex-row gap-4 justify-between items-center mt-4'>
               <h1 className="text-center text-xl md:text-3xl my-4 font-bold">Upload Chart & Analyse</h1>
             </div>
-            {/* <p className="text-light mb-2 px-3 text-sm md:text-md lg:text-lg">
-              Upload an image of the chart you want to analyse.
-            </p> */}
             <Spacer  space={4}/>
             <ChartAnalyser/>
             </div>
