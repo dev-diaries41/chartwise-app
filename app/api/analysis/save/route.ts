@@ -1,4 +1,4 @@
-import { AuthErrors, RequestErrors } from "@/app/constants/errors";
+import { AuthErrors } from "@/app/constants/errors";
 import { NextRequest, NextResponse } from "next/server";
 import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";
 import { ChartWiseAPIResponse } from "@/app/types/response";

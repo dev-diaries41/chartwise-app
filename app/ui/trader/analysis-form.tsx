@@ -1,13 +1,16 @@
 'use client'
 import { AcceptedImgFiles, AcceptedImgMimes } from "@/app/constants/app";
-import {FileUploader} from "@/app/ui/";
-import {faPaperclip, faSearch, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
+import {FileUploader, InfoDisplay} from "@/app/ui/";
+import {faCopy, faPaperclip, faSearch, faShareNodes, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
 import Chart from "./chart";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {SliderInput} from "@/app/ui";
 import { useChartwise } from "@/app/providers/chartwise";
 import { analyseChartSchema } from "@/app/constants/schemas";
+import ActionRow from "../common/action-row";
+import { copyTextToClipboard } from "@/app/lib/utils/ui";
+import { PLACEHOLDER_ANALYSIS } from "@/app/constants/content/placeholder";
 
 
 
@@ -21,7 +24,7 @@ interface AnalysisFormProps {
 
   export default function AnalysisForm ({handleJobInProgress, handleFailedJobStart, loading, setLoading}: AnalysisFormProps){
     const MAX_CHARS = 150;
-    const {anaylsisParams, analysisResult, chartImageUrl, strategyAndCriteria, risk, handleRiskChange, handleStrategyAndCriteriaChange, getRiskTolerance, setChartAnalysisResult, analyseChart,  removeChart, uploadChart} = useChartwise();
+    const {shareUrl, anaylsisParams, analysisResult, chartImageUrl, strategyAndCriteria, risk, handleRiskChange, handleStrategyAndCriteriaChange, getRiskTolerance, setChartAnalysisResult, analyseChart,  removeChart, uploadChart} = useChartwise();
 
     const AnalysisActionRow = () => {
         const {user} = useUser();
@@ -72,6 +75,11 @@ interface AnalysisFormProps {
         )
       }
     
+      const actions = [
+        { icon: faCopy, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Copy' },
+        { icon: faShareNodes, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Share', condition: !!shareUrl }
+      ];
+      
     return (
       <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-sm md:text-md lg:text-lg shadow-md rounded-md mb-2 p-4" >
         <div className="flex flex-row justify-between">
@@ -116,6 +124,12 @@ interface AnalysisFormProps {
         </div>
           )}
         </div>
+        {analysisResult && (
+      <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto mx-auto py-8 mb-8 text-sm md:text-md">
+        <InfoDisplay info={analysisResult} title="Chart Analysis"/>
+        <ActionRow actions={actions}/>
+      </div>
+    )}
         <div className="absolute bottom-0 right-0 left-0 w-full  bg-gray-900 border-t-2 border-gray-700 pb-4 px-4 rounded-md">
         <AnalysisActionRow/>
         </div>

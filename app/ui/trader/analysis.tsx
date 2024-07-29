@@ -1,6 +1,6 @@
 'use client'
 import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/app";
-import {ActionRow, PopUp, InfoDisplay, LoaderDialog, AnalysisForm} from "@/app/ui/";
+import {PopUp, LoaderDialog, AnalysisForm} from "@/app/ui/";
 import * as Storage from "@/app/lib/storage/local"
 import { PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
@@ -9,9 +9,7 @@ import { useRouter } from "next/navigation";
 import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content/usage";
 import { usePopUp, usePolling, useLoading } from "@/app/hooks";
 import { toast } from "react-toastify";
-import { copyTextToClipboard } from "@/app/lib/utils/ui";
 import { useChartwise } from "@/app/providers/chartwise";
-import { faCopy, faShareNodes, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 export function ChartAnalyser (){
@@ -97,21 +95,11 @@ export function ChartAnalyser (){
     router.push('/pricing')
   }
 
-  const actions = [
-    { icon: faCopy, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Copy' },
-    { icon: faShareNodes, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Share', condition: !!shareUrl }
-  ];
   
 
   return (
     <div className="w-full flex flex-col mx-auto items-center">
       <AnalysisForm handleFailedJobStart={handleFailedJobStart} handleJobInProgress={handleJobInProgress} loading={loading} setLoading={setLoading}/>
-      {analysisResult && (
-      <div className="flex flex-col items-center justify-center w-full mt-8">
-        <InfoDisplay info={analysisResult} title="Chart Analysis"/>
-        <ActionRow actions={actions}/>
-      </div>
-    )}
   {(popUpTitle && popUpDescription) && <PopUp title={popUpTitle} description={popUpDescription} onConfirm={handleSubscripe} onClose={closePopUp} cta="Subscribe"/>}
       {showLoadingDialog && (
         <LoaderDialog
