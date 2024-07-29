@@ -101,7 +101,7 @@ interface AnalysisFormProps {
         </div>
        
           
-        <div className="flex lg:flex-row flex-col justify-between items-center gap-16 my-4">
+        <div className="flex lg:flex-row flex-col justify-between items-center gap-16 my-4 pb-20">
           <div className="mb-auto w-full lg:w-[50%]">
             <SliderInput
               title={getRiskTolerance()}
@@ -125,7 +125,7 @@ interface AnalysisFormProps {
           )}
         </div>
         {analysisResult && (
-      <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto mx-auto py-8 mb-8 text-sm md:text-md">
+      <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto mx-auto pt-4 pb-8 mb-8 text-sm md:text-md">
         <InfoDisplay info={analysisResult} title="Chart Analysis"/>
         <ActionRow actions={actions}/>
       </div>
