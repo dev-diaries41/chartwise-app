@@ -94,8 +94,6 @@ const HowItWorks = () => {
         <List items={HowItWorksGuide} listType='numbered' />
         </div>
     </div>
-    {<FontAwesomeIcon icon={faMagnifyingGlassChart} className='absolute bottom-20  w-20 h-20'/>}
-
     </section>
   )
 }
