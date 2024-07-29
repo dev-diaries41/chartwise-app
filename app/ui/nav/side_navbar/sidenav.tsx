@@ -23,9 +23,9 @@ export default React.memo(function  SideNav(){
  
   return (
     <>
-      <div className="fixed flex flex-col max-w-[200px] w-[200px] min-h-screen bg-gray-800 border border-r-1 border-gray-700 p-2 lg:block hidden z-[100]">
+      <div className="fixed flex flex-col rounded-r-md max-w-[200px] w-[200px] min-h-screen bg-gray-800 border border-r-1 border-gray-700 p-2 lg:block hidden z-[100]">
         <Link
-          className="flex w-100 h-32 items-center justify-start rounded-3xl"
+          className="flex w-100 h-20 items-center justify-start rounded-3xl"
           href="/"
         >
           <Logo

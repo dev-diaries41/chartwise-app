@@ -22,7 +22,7 @@ export default function Page() {
 
   const TopActionRow = () => {
     return (
-      <div className='absolute ml-auto md:top-4  right-0 left-0  flex flex-row justify-between items-center p-4 '>
+      <div className='absolute ml-auto md:top-0 right-0 left-0  flex flex-row justify-between items-center p-2 z-10 '>
         { mode === 'analysis' && (
           <button
               className="flex w-auto items-center justify-center text-sm mr-auto font-semibold gap-1"
@@ -42,12 +42,12 @@ export default function Page() {
 
 
   return (
-    <div className='relative flex-1 max-w-7xl mx-auto w-full'>
+    <div className='relative flex-1 max-w-full mx-auto w-full'>
       {/* { showSettings && <Settings/>} */}
       <TopActionRow/>
         {
           mode === 'chart'? <TradingViewWidget/> : (
-            <div className="relative w-full flex flex-col max-w-5xl mx-auto lg:min-h-screen  items-center justify-center text-center py-8 px-4">   
+            <div className="relative w-full flex flex-col max-w-5xl mx-auto   min-h-screen items-center justify-center text-center py-8 px-4">   
             <div className='flex flex-col w-full  my-auto mb-auto pt-8'>
             <div className='flex flex-row gap-4 justify-between items-center mt-4'>
               <h1 className="text-center text-xl md:text-3xl my-4 font-bold">Upload Chart & Analyse</h1>
