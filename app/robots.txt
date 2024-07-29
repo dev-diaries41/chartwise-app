@@ -3,3 +3,4 @@ Allow: /
 Disallow: /trader/
 Disallow: /order
 Disallow: /share
+Disallow: /account
