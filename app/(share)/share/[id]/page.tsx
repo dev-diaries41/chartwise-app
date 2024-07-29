@@ -28,13 +28,14 @@ export default function Page ({params}:  { params: { id: string } }){
   }, [])
 
 
-  if(loading){
-    return <SuspenseFallback/>
+  if (loading) {
+    return <SuspenseFallback />;
   }
-
-  if(!loading && !analysis){
-    return <NotFound title={'404 | Analysis not found'} />;
+  
+  if (!analysis) {
+    return <NotFound title="404 | Analysis not found" />;
   }
+  
 
 
   return ( 

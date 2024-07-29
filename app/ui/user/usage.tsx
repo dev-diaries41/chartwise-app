@@ -71,7 +71,7 @@ export default function UsageDashboard({usage}: {usage: Usage | null}) {
           </div>
         ))}
       </div>
-      <AnalysisUsage usage={usage.month} limit={120} period={getCurrentMonth()} />
+      <AnalysisUsage usage={usage.month} limit={100} period={getCurrentMonth()} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { StorageKeys } from "@/app/constants/app";
-import { AuthErrors, JobErrors, MiscErrors, RequestErrors } from "../../constants/errors";
+import { AuthErrors, JobErrors } from "../../constants/errors";
 import * as Storage from "@/app/lib/storage/session"
 import {JobReceipt, JobResult, StoredAnalysis, Usage, UsagePeriod} from "@/app/types"
 import { validateAnalysis } from "../validation";
@@ -85,7 +85,6 @@ import { validateAnalysis } from "../validation";
       const headers = getAuthHeaders();
       const formData = new FormData();
       const results = validateAnalysis(analysis)
-      console.log({analysis})
       if(!results.success)throw new Error(JSON.stringify(results.error))
       formData.append('analysis', JSON.stringify(results.data));
       const response = await fetch('/api/analysis/save', {method: 'POST',body: formData, headers});
@@ -99,7 +98,6 @@ import { validateAnalysis } from "../validation";
       const shareableUrl = `${window.location.origin}/share/${id}`;
       return shareableUrl;
     } catch (error) {
-      console.log({error})
       return null;
     }
   };
