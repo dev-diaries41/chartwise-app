@@ -1,15 +1,15 @@
 import { StorageKeys, Time } from "../constants/app";
 import { UserPlan, UserProfileInfo } from "../types";
 import { getSubscription } from "./actions";
-import * as Storage from "./storage/local"
+import * as Storage from "./storage/session"
 
 const PlanAmount = {
     basic:699,
     pro:2399,
     elite: 2999,
-  }
+}
 
-export async function getUserPlan(userId: string|null|undefined): Promise<UserPlan>{
+async function getUserPlan(userId: string|null|undefined): Promise<UserPlan>{
     if(!userId)return 'Free';
 
     try {
@@ -17,7 +17,7 @@ export async function getUserPlan(userId: string|null|undefined): Promise<UserPl
       if (cachedPlanInfo && typeof cachedPlanInfo === 'object') {
         const { userPlan, expiresAt } = cachedPlanInfo;
         if (expiresAt > Date.now() && userPlan) {
-          return userPlan as UserPlan;
+          return userPlan;
         }
       }
   
@@ -47,25 +47,25 @@ export async function getUserPlan(userId: string|null|undefined): Promise<UserPl
     Storage.set(StorageKeys.subscription, JSON.stringify({ userPlan, expiresAt } as UserProfileInfo));
   }
 
-  export async function handleGetSubscriptionInfo (userId: string): Promise<string> {  
+  export async function handleGetSubscriptionInfo (userId: string): Promise<{limit: number, plan: UserPlan}> {  
     const plan = await getUserPlan(userId);
-    cacheUserPlan(plan)
-    return plan;
-    
+    cacheUserPlan(plan);
+    const limit = getMonthlyLimit(plan)
+    return {limit, plan};
   };
 
-  export function getUserCredits(plan: UserPlan, monthlyUsage: number){
+  export function getMonthlyLimit(plan: UserPlan): number {
     if(plan === 'Free'){
-      return 5 - monthlyUsage;
+      return 30;
     }else if(plan === 'Basic'){
-      return 100 - monthlyUsage;
+      return 100 ;
     }else if(plan === 'Pro'){
-      return 500 - monthlyUsage;
+      return 500 ;
     }else if(plan === 'Elite'){
-      return 1000 - monthlyUsage;
+      return 1000 ;
     }
     else{
-      return 5 - monthlyUsage;
+      return 30;
     }
   }
 

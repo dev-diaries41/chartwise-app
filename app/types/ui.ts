@@ -182,7 +182,6 @@ export type Mode = 'chart' | 'analysis'
 
 export interface AnalysisUsageProps {
   usage: number;
-  limit: number;
   period: string;
 }
 

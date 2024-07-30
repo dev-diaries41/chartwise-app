@@ -7,8 +7,8 @@ import { useSubscription } from '@/app/providers/subscription';
 import Link from 'next/link';
 
 
-export default function UserProfileWidget({ userId, isLoading }: UserProfileWidgetProps) {
-  const { userPlan } = useSubscription(userId, isLoading);
+export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
+  const { userPlan } = useSubscription();
   
   return (
     <div className="w-full flex flex-row items-center p-1 justify-center">
@@ -16,7 +16,7 @@ export default function UserProfileWidget({ userId, isLoading }: UserProfileWidg
         <FontAwesomeIcon icon={faUserCircle} className='w-4 h-4 rounded-full' />
         <div className='flex flex-col w-full gap-0 items-start overflow-hidden'>
           {userId && <p className='w-full text-sm font-medium overflow-hidden overflow-ellipsis'>{userId}</p>}
-          <p className=' text-xs font-medium text-gray-400 overflow-hidden overflow-ellipsis'>{`${userPlan}`}</p>
+          <span className=' text-xs font-medium opacity-50 overflow-hidden overflow-ellipsis'>{`${userPlan||''}`}</span>
         </div>
       </Link>
       

@@ -1,7 +1,7 @@
 export const faqData = [
   {
       question: 'Is there a free trial?',
-      answer: ['Users who are not subscribed can use the tool 5 times a day for free.'],
+      answer: ['Users who are not subscribed can use the tool 5 times a day for free, with a max of 30 times a month.'],
   },
   {
       question: 'How do payments work?',

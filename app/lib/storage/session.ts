@@ -14,11 +14,11 @@ export function set(key: string, value: string) {
     }
   }
   
-  export function get(key: string) {
+  export function get<T>(key: string): T|string|null {
     try {
       const jsonData = sessionStorage.getItem(key);
       try {
-        return JSON.parse(jsonData!);
+        return JSON.parse(jsonData!) as T;
       } catch {
         // If parsing fails, return the plain string
         return jsonData;

@@ -11,17 +11,14 @@ import * as Storage from '@/app/lib/storage/local'
 import { StorageKeys, Time } from '@/app/constants/app';
 import { getPlanFromPlanAmount } from '@/app/lib/user';
 import { UserProfileInfo } from '@/app/types';
-import useSubscription from '@/app/hooks/useSubscription';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useSubscription } from '@/app/providers/subscription';
 
 export default function OrderSuccess() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const sessionId = searchParams.get('session_id');
     const [checkOutDetails, setCheckoutDetails] = useState<Partial<Stripe.Response<Stripe.Checkout.Session>>|null>(null);
-    const {user, isLoading} = useUser()
-    const userId = user?.email;
-    const {setUserPlan} = useSubscription(userId, isLoading);
+    const {setUserPlan} = useSubscription();
 
     const getCheckoutSessionDetails = async () => {
       try {

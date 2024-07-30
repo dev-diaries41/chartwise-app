@@ -4,6 +4,7 @@ import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import NotFound from '../common/not-found';
+import { useSubscription } from '@/app/providers/subscription';
 
 
 
@@ -16,7 +17,9 @@ function getCurrentMonth() {
   return monthNames[currentMonthIndex];
 }
 
-const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, limit, period }) => {
+const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, period }) => {
+  const {limit} = useSubscription();
+  if(!limit)return null
   const percentage = (usage / limit) * 100;
   
   return (
@@ -55,8 +58,7 @@ function UsageCard({ periodUsage }: UsageCardProps) {
   );
 }
 
-export default function UsageDashboard({usage}: {usage: Usage | null}) {
-  
+export default function UsageDashboard({usage}: {usage: Usage | null}) {  
   if (!usage) {
     return <NotFound title={'500 | Error fetching usage'} />;
   }
@@ -71,7 +73,7 @@ export default function UsageDashboard({usage}: {usage: Usage | null}) {
           </div>
         ))}
       </div>
-      <AnalysisUsage usage={usage.month} limit={100} period={getCurrentMonth()} />
+      <AnalysisUsage usage={usage.month} period={getCurrentMonth()} />
     </div>
   );
 }

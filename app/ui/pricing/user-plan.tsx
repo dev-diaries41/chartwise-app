@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLevelUpAlt } from '@fortawesome/free-solid-svg-icons'; // Replace with the icon similar to the one in your image
 import Link from 'next/link';
 import { UserProfileWidgetProps } from '@/app/types';
-import useSubscription from '@/app/hooks/useSubscription';
+import { useSubscription } from '@/app/providers/subscription';
 
 
 export default function UserPlanWidget({userId, isLoading}: UserProfileWidgetProps) {
-  const {userPlan} = useSubscription(userId, isLoading)
+  const {userPlan} = useSubscription()
   const hideUpgradeWidget = !userId || isLoading || userPlan !== 'Free';
   if(hideUpgradeWidget)return null
 
