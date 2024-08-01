@@ -9,7 +9,7 @@ export const CHART_ANALYSIS_RECURRING_URL = process.env.CHART_ANALYSIS_RECURRING
 export const USAGE_URL = process.env.USAGE_URL!;
 export const REFRESH_TOKEN_URL = process.env.REFRESH_TOKEN_URL!;
 export const BASE_URL = process.env.BASE_URL!;
-export const FPF_LABS_API_KEY = process.env.FPF_LABS_API_TEST_KEY!
+export const FPF_LABS_API_KEY = process.env.FPF_LABS_API_KEY!
 
 
 export const AcceptedMimes = [
