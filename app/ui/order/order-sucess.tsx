@@ -6,54 +6,20 @@ import Receipt from '@/app/ui/order/receipt';
 import OrderComplete from '@/app/ui//order/order-message';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Stripe from 'stripe';
-import * as Storage from '@/app/lib/storage/local'
-import { StorageKeys, Time } from '@/app/constants/app';
-import { getPlanFromPlanAmount } from '@/app/lib/user';
-import { UserProfileInfo } from '@/app/types';
 import { useSubscription } from '@/app/providers/subscription';
 
 export default function OrderSuccess() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const sessionId = searchParams.get('session_id');
-    const [checkOutDetails, setCheckoutDetails] = useState<Partial<Stripe.Response<Stripe.Checkout.Session>>|null>(null);
-    const {setUserPlan} = useSubscription();
+    const {getCheckoutSessionDetails, checkOutDetails} = useSubscription();
 
-    const getCheckoutSessionDetails = async () => {
-      try {
-        const url = `/api/order/complete?session_id=${sessionId}`;
-        const res = await fetch(url);
-        const { session } = await res.json();
-        if (!session) {
-          router.push('/'); // Redirect to root page
-          return;
-        }
-        const { customer_details, status, amount_total, created } = session as  Stripe.Response<Stripe.Checkout.Session>;
-        if(amount_total){
-          const newUserPlan = getPlanFromPlanAmount(amount_total)
-          const expiresAt = Date.now() + Time.min;
-          const updatedUserInfo = JSON.stringify({ userPlan: newUserPlan, expiresAt } as UserProfileInfo);
-          if(newUserPlan){
-            setUserPlan(newUserPlan)
-            Storage.set(StorageKeys.subscription, updatedUserInfo);
-          }
-        }
-    
-        setCheckoutDetails({ customer_details, status, amount_total, created });
-        if (status !== 'complete') {
-          router.push('/'); // Redirect to root page
-        }
-      } catch (error) {
-        router.push('/'); // Redirect to root page
-      }
-    };
 
     useLayoutEffect(() => {
       if(!sessionId){
         return router.push('/');
       }
-      getCheckoutSessionDetails();
+      getCheckoutSessionDetails(sessionId, router);
       
     },[])
     

@@ -12,6 +12,7 @@ import UserProfileWidget from '../../user/user-profile';
 import { useChartwise } from '@/app/providers/chartwise';
 import { faClose, faGear } from '@fortawesome/free-solid-svg-icons';
 import { useSettings } from '@/app/providers/settings';
+import Switch from '../../common/switch';
 
 interface MobileNavProps {
     user: UserProfile | undefined;
@@ -26,7 +27,7 @@ isLoading,
 onToggleMenu
 
 }: MobileNavProps){
-  const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useChartwise();
+  const {recentAnalyses, deleteAnalysis, viewAnalysis, mode, toggleMode} = useChartwise();
   const {toggleSettings}=useSettings()
   
     return(
@@ -44,6 +45,10 @@ onToggleMenu
             />
           </Link>
           <div className='flex flex-row justify-end items-center ml-auto'>
+          <div className='flex flex-row items-center ml-auto justify-between text-sm p-3 font-medium focus:cursor-pointer text-gray-400'>
+          Chart mode
+          <Switch value={mode ==='analysis'? false:true} onChange={toggleMode} />
+        </div>
             <button
               className={`flex text-gray-200 hover:text-gray-200 z-50`}
               onClick={onToggleMenu}
@@ -57,7 +62,7 @@ onToggleMenu
         <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-800 border border-r-1 border-gray-700 pt-24  p-2 z-40 ">
         <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy Policy'].includes(link.name))]} />
         <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1">
-          <RecentAnalyses analyses={recentAnalyses} onClick={handleViewAnalysis} onDelete={handleDeleteAnalysis} />
+          <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
         </div>
         {/* <button onClick={() => {
           toggleSettings();

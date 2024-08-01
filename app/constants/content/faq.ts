@@ -5,7 +5,7 @@ export const faqData = [
   },
   {
       question: 'How do payments work?',
-      answer: ["Once you subscribe, you'll receive a set amount of credits corresponding to the plan you chose. These will be reset every month."],
+      answer: ["Once you subscribe, you'll allocated a set amount of uses corresponding to the plan you chose. These will be reset every month."],
   },
   {
       question: 'Will new features be added?',

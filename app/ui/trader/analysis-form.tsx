@@ -1,8 +1,7 @@
 'use client'
 import { AcceptedImgFiles, AcceptedImgMimes } from "@/app/constants/app";
-import {FileUploader, InfoDisplay} from "@/app/ui/";
+import {CarouselImageViewer, FileUploader, InfoDisplay} from "@/app/ui/";
 import {faCopy, faMagnifyingGlassChart, faPaperclip, faShareNodes, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
-import Chart from "./chart";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {SliderInput} from "@/app/ui";
@@ -22,7 +21,7 @@ interface AnalysisFormProps {
 
   export default function AnalysisForm ({handleJobInProgress, handleFailedJobStart, loading, setLoading}: AnalysisFormProps){
     const MAX_CHARS = 150;
-    const {shareUrl, anaylsisParams, analysisResult, chartImageUrl, strategyAndCriteria, risk, handleRiskChange, handleStrategyAndCriteriaChange, getRiskTolerance, setChartAnalysisResult, analyseChart,  removeChart, uploadChart} = useChartwise();
+    const {shareUrl, anaylsisParams, analysisResult, chartUrls,  strategyAndCriteria, risk, uploadCharts, removeAnalysis, onRiskChange, onStrategyAndCriteriaChange, getRiskTolerance, analyseChart,  removeCharts} = useChartwise();
 
     const AnalysisActionRow = () => {
         const {user} = useUser();
@@ -30,9 +29,9 @@ interface AnalysisFormProps {
     
     
         const handleAnalyseChart = async () => {
-            if(!userId || !chartImageUrl)return;
+            if(!userId || chartUrls.length < 1)return;
             if(analysisResult){
-              setChartAnalysisResult(null);
+              removeAnalysis();
             }
             setLoading(true);
         
@@ -52,7 +51,7 @@ interface AnalysisFormProps {
         return(
           <div className="w-full flex flex-row justify-start items-center gap-3 rounded-md mt-4 h-10">
           <div className="">
-          <FileUploader onFileUpload={uploadChart} acceptedFileExt={AcceptedImgFiles} acceptedMimes={AcceptedImgMimes}>
+          <FileUploader onFileUpload={uploadCharts} acceptedFileExt={AcceptedImgFiles} acceptedMimes={AcceptedImgMimes} fileLimit={3}>
             <div className='flex flex-row gap-1 justify-center items-center'>
               <FontAwesomeIcon icon={faPaperclip} className="w-4 h-4" />
               <span className="">Upload Chart</span>
@@ -61,12 +60,11 @@ interface AnalysisFormProps {
           </div>
         
           <button
-            disabled={loading || !userId || !chartImageUrl}
-            className={`flex  items-center justify-center border-2 border-2 border-emerald-400 bg-emerald-700 text-sm  ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading || !userId || !chartImageUrl? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
+            disabled={loading || !userId || chartUrls.length < 1}
+            className={`flex  items-center justify-center border-2 border-2 border-emerald-400 bg-emerald-700 text-sm  ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading || !userId || chartUrls.length < 1? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
             onClick={handleAnalyseChart}
           >
             <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
-            {/* <AnalysisIcon/> */}
             <span className="">Analyse Chart</span>
           </button>
         </div>
@@ -92,15 +90,14 @@ interface AnalysisFormProps {
           placeholder={"To optimise your analysis, provide details about your trading strategy (e.g., breakout, swing trading) and any criteria like minimum risk-to-reward ratio. Be specific."}
           className={`flex w-full  flex-grow min-h-[180px] lg:min-h-[100px] p-2 bg-transparent rounded-md focus:outline-none resize-none text-sm md:text-md lg:text-lg`}
           value={strategyAndCriteria}
-          onChange={handleStrategyAndCriteriaChange}
+          onChange={onStrategyAndCriteriaChange}
           aria-describedby={"strategy-criteria-error"}
           maxLength={MAX_CHARS} />
           <span className="p-2 w-full text-right opacity-50">{`${strategyAndCriteria.length}/${MAX_CHARS}`}</span> 
         </div>
        
-          
-        <div className="flex lg:flex-row flex-col justify-between items-center gap-16 my-4 pb-20">
-          <div className="mb-auto w-full lg:w-[50%]">
+        <div className={`flex lg:flex-row flex-col justify-between items-center gap-16 my-4 pb-${analysisResult? '2' : '16'}`}>
+          <div className="w-full lg:w-[50%]">
             <SliderInput
               title={getRiskTolerance()}
               description="Adjust your risk tolerance"
@@ -108,17 +105,17 @@ interface AnalysisFormProps {
               min={0}
               max={100}
               initialValue={risk}
-              onChange={handleRiskChange}/>
+              onChange={onRiskChange}/>
             </div>
-          {chartImageUrl && (
+          {chartUrls.length > 0 && (
           <div className="relative mb-auto w-full lg:w-[50%] mt-4">
             <button 
               className="absolute top-0 right-0 mt-2  text-red-600 transform -translate-y-8 z-[20]"
-              onClick={removeChart}
+              onClick={removeCharts}
             >
               <FontAwesomeIcon icon={faTimes} className="w-4 h-4"/>
             </button>
-          <Chart chartImageUrl={chartImageUrl} loading={loading} />
+            <CarouselImageViewer images={chartUrls}/>
           </div>
           )}
         </div>

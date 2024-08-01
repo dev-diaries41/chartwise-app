@@ -1,5 +1,5 @@
 import { CHART_ANALYSIS_RESULTS_URL, CHART_ANALYSIS_URL, SAVE_ANALYSIS_URL, FPF_LABS_API_KEY, SHARED_ANALYSIS_URL } from "@/app/constants/app";
-import { JobReceipt, JobResult, StoredAnalysis } from "@/app/types";
+import { IAnalyseCharts, JobReceipt, JobResult, StoredAnalysis } from "@/app/types";
 import { ChartWiseAPIResponse } from "@/app/types/response";
 import axios from "axios";
 
@@ -22,7 +22,7 @@ export class ChartWiseAPI {
     this.token = newToken;
   }
 
-  public async analyse( analysis: Omit<StoredAnalysis, 'userId'>): Promise<ChartWiseAPIResponse<JobReceipt>>{
+  public async analyse( analysis:  IAnalyseCharts): Promise<ChartWiseAPIResponse<JobReceipt>>{
     const headers = this.getHeaders()
     const reqBody = {when: Date.now(), jobData: analysis}
     const response = await axios.post(CHART_ANALYSIS_URL, reqBody, {headers});

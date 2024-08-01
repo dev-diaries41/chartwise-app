@@ -24,7 +24,6 @@ export type UserPlan = 'Free' | 'Basic' | 'Pro' | 'Elite';
 export type UserProfileInfo = {
     userPlan: UserPlan, 
     expiresAt: number, 
-    credits: number
 }
 
 export type UsagePeriod = keyof Usage

@@ -1,16 +1,16 @@
 import { StorageKeys } from "@/app/constants/app";
 import { AuthErrors, JobErrors } from "../../constants/errors";
-import * as Storage from "@/app/lib/storage/session"
+import {SessionStorage} from "@/app/lib/storage"
 import {JobReceipt, JobResult, StoredAnalysis, Usage, UsagePeriod} from "@/app/types"
 import { validateAnalysis } from "../validation";
 
  function getAuthHeaders (){
-    const currentToken = Storage.get(StorageKeys.token);
+    const currentToken = SessionStorage.get<string>(StorageKeys.token);
     if (!currentToken || typeof currentToken !=='string' ) throw new Error(AuthErrors.MISSING_JWT_TOKEN);
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${currentToken}`);
     return headers;
-  };
+  }; 
 
   async function fetchWithJWT<T>(endpointUrl: string, options: RequestInit = {}): Promise<T> {
     const response = await fetch(endpointUrl, options);
@@ -20,7 +20,7 @@ import { validateAnalysis } from "../validation";
     }
   
     const newToken = response.headers.get('Authorization')?.split(' ')[1];
-    if (newToken) Storage.set(StorageKeys.token, newToken);
+    if (newToken) SessionStorage.set(StorageKeys.token, newToken);
     return await response.json();
   }
 
@@ -40,7 +40,7 @@ import { validateAnalysis } from "../validation";
       const newToken = authHeader?.split(' ')[1];
       if (!newToken) throw new Error('Failed to get token');
   
-      Storage.set(StorageKeys.token, newToken);
+      SessionStorage.set(StorageKeys.token, newToken);
       return newToken;
   }
   

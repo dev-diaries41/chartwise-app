@@ -243,4 +243,14 @@ body {
   transition: opacity 0.3s ease;
 }
 
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
+.aspect-ratio-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Adjust this value to maintain your desired aspect ratio, e.g., 56.25% for 16:9 */
+}

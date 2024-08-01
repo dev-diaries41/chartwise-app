@@ -1,7 +1,7 @@
 import { StorageKeys, Time } from "../constants/app";
 import { UserPlan, UserProfileInfo } from "../types";
 import { getSubscription } from "./actions";
-import * as Storage from "./storage/session"
+import {SessionStorage} from "./storage"
 
 const PlanAmount = {
     basic:699,
@@ -13,7 +13,7 @@ async function getUserPlan(userId: string|null|undefined): Promise<UserPlan>{
     if(!userId)return 'Free';
 
     try {
-      const cachedPlanInfo = Storage.get<UserProfileInfo>(StorageKeys.subscription);
+      const cachedPlanInfo = SessionStorage.get<UserProfileInfo>(StorageKeys.subscription);
       if (cachedPlanInfo && typeof cachedPlanInfo === 'object') {
         const { userPlan, expiresAt } = cachedPlanInfo;
         if (expiresAt > Date.now() && userPlan) {
@@ -41,10 +41,10 @@ async function getUserPlan(userId: string|null|undefined): Promise<UserPlan>{
     }
   }
 
-  function cacheUserPlan (userPlan: UserPlan) {
+  export function cacheUserPlan (userPlan: UserPlan) {
     const ttl = Time.min;
     const expiresAt = Date.now() + ttl;
-    Storage.set(StorageKeys.subscription, JSON.stringify({ userPlan, expiresAt } as UserProfileInfo));
+    SessionStorage.set(StorageKeys.subscription, JSON.stringify({ userPlan, expiresAt } as UserProfileInfo));
   }
 
   export async function handleGetSubscriptionInfo (userId: string): Promise<{limit: number, plan: UserPlan}> {  

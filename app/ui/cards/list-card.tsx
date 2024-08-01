@@ -14,7 +14,7 @@ export default function ListCard ({
   }: ListCardProps & { titleClassName?: string }) {
   return (
     <div
-      className="flex flex-col min-h-[300px] w-full h-full bg-gray-800 p-6 rounded-lg transform hover:scale-105 transition-transform duration-300 ease-in-out shadow-black shadow-lg hover:shadow-2xl border-gray-500"
+      className="flex flex-col min-h-[300px] w-full h-full bg-gray-900 p-6 rounded-lg transform hover:scale-105 transition-transform duration-300 ease-in-out shadow-black shadow-lg hover:shadow-xl border border-gray-700"
       {...props}
     >
       <div className="text-left flex-grow">

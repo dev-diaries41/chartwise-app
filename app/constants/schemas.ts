@@ -23,7 +23,7 @@ import { z } from 'zod';
 
   export const storedAnalysisSchema = z.object({
     analysis: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
-    chartUrl: z.string().min(1, { message: "Chart URL must be at least 10 characters long." }),
+    chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
     userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
     formatVersion: z.number().optional(),
     metadata: z.record(z.any()).optional().refine(val => typeof val === 'object', { message: "Metadata must be an object." }),
@@ -33,7 +33,7 @@ import { z } from 'zod';
   export const storedAnalysisWithoutUserIdSchema = storedAnalysisSchema.omit({ userId: true });
   
   export const analyseChartSchema = z.object({
-    chartUrl: z.string().min(10, { message: "Chart URL must be at least 10 characters long." }),
+    chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
     metadata: z.object({
       strategyAndCriteria: z.string().optional(),
       risk: z.string().optional(),

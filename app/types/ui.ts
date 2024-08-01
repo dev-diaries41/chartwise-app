@@ -59,11 +59,12 @@ export interface WhatsIncludedItem {
     
     export interface FileUploaderProps {
       label?: string;
-      onFileUpload: (file: File) => void | Promise<void>;
+      onFileUpload: (files: File[]) => void; // Updated to handle an array of files
       acceptedFileExt: string[];
       acceptedMimes: string[];
       className?: string;
       children?: ReactNode;
+      fileLimit?: number
     }
     
     export interface Option {

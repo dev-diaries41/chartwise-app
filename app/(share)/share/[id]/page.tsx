@@ -2,9 +2,8 @@
 import useLoading from "@/app/hooks/useLoading";
 import { getSharedAnalysis } from "@/app/lib/requests/chartwise-client";
 import { StoredAnalysis } from "@/app/types";
-import { InfoDisplay, SuspenseFallback } from "@/app/ui";
+import { CarouselImageViewer, InfoDisplay, SuspenseFallback } from "@/app/ui";
 import NotFound from "@/app/ui/common/not-found";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function Page ({params}:  { params: { id: string } }){
@@ -35,27 +34,13 @@ export default function Page ({params}:  { params: { id: string } }){
   if (!analysis) {
     return <NotFound title="404 | Analysis not found" />;
   }
-  
 
-
-  return ( 
-    <div className="flex flex-col max-w-5xl mx-auto my-auto items-center justify-center text-center py-16 px-4 animate-fadeIn">
-      {analysis &&  (
-        <div className="w-full max-w-[100%]">
-        <Image
-        src={analysis?.chartUrl}
-        alt="Uploaded Chart"
-        width={2048}
-        height={2048}
-        className={`w-full object-contain`}
-        />
+  return (
+    <div className="flex flex-col max-w-5xl min-h-screen items-center justify-center text-center py-16 px-4 animate-fadeIn mx-auto gap-4">
+        <div className="w-full max-w-[90%] items-center">
+          <CarouselImageViewer images={analysis.chartUrls}/>
         </div>
-      )}
-        {analysis && (
-        <div className="flex flex-col items-center justify-center w-full">
-          <InfoDisplay info={analysis.analysis} title="Chart Analysis"/>
-        </div>
-        )}
+          <InfoDisplay info={analysis.analysis} title="Chart Analysis" />
     </div>
   );
-};
+}

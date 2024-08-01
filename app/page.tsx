@@ -1,3 +1,4 @@
+'use client'
 import { CarouselImageViewer, Faq, PriceTable } from '@/app/ui';
 import React from 'react';
 import Image from 'next/image';
@@ -5,9 +6,8 @@ import Link from 'next/link';
 import ListCard from './ui/cards/list-card';
 import List from './ui/common/list';
 import { ChartWiseBenefits, HowItWorksGuide, TraderProblems } from './constants/content/landing-page';
-import { faChartGantt, faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
+import { faChartGantt } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
@@ -17,8 +17,10 @@ const Hero = () => {
       <Image
         src={'/background.jpg'}
         alt='bg'
-        layout='fill'
-        className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-10 object-cover'
+        width={2048}
+        height={2048}
+        priority={true}
+        className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-20 object-cover'
       />
       <div className="animate-fadeIn relative flex flex-col max-w-5xl  w-full mx-auto items-center  text-center opacity-90 p-8 h-full">
         {/* <Background /> */}
@@ -62,7 +64,7 @@ const Pricing = () => {
 
 const Benefits = () => {
   return (
-    <section id='benefits' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16 mb-8">
+    <section id='benefits' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-gray-900 to-gray-800">
       <h1 className="text-center text-3xl my-4 px-3 font-bold">Looking to improve your trading success?</h1>
       <div className="flex flex-col  md:flex-row w-full max-w-7xl justify-center items-center gap-8 my-8 p-4">
         <ListCard
@@ -86,12 +88,14 @@ const Benefits = () => {
 
 const HowItWorks = () => {
   return (
-    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16 mb-16">
+    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-gray-900 to-gray-800" >
       <h1 className="text-center text-3xl my-4 px-3 font-bold">How to analyse charts with ChartWise?</h1>
       <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
-        <CarouselImageViewer images={['/chartwise-chart-mode.png', '/chartwise-analysis-mode.png']} />
-        <div className='w-full lg:w-[40%] justify-start'>
-        <List items={HowItWorksGuide} listType='numbered' />
+        {/* <div className='max-w-2xl flex-1'> */}
+          <CarouselImageViewer images={['/chartwise-chart-mode.png', '/chartwise-analysis-mode.png']}  switchInterval={5000}/>
+        {/* </div> */}
+        <div className='w-full justify-start font-medium'>
+          <List items={HowItWorksGuide} listType='numbered' />
         </div>
     </div>
     </section>

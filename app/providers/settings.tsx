@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext, useEffect, useLayoutEffect } from 'react';
 import { ProviderProps, SettingCategory, Settings } from '@/app/types';
 import { StorageKeys, Time } from '../constants/app';
-import * as Storage from "@/app/lib/storage/local";
+import {LocalStorage} from "@/app/lib/storage";
 import { defaultSettings } from '../constants/settings';
-
+ 
 interface SettingsContextProps {
     settings: Settings;
     setSettings: React.Dispatch<React.SetStateAction<Settings>>;
@@ -22,7 +22,7 @@ const SettingsProvider = ({ children }: ProviderProps) => {
 
         // Retreive settings
         useLayoutEffect(() => {
-            const userSettings = Storage.get<Settings>(StorageKeys.settings);
+            const userSettings = LocalStorage.get<Settings>(StorageKeys.settings);
             if (userSettings && typeof userSettings ==='object' ) {
                 setSettings(userSettings); 
             }
@@ -30,9 +30,9 @@ const SettingsProvider = ({ children }: ProviderProps) => {
     
         // Save settings
         useEffect(() => {
-            const previousSettings = Storage.get(StorageKeys.settings);
+            const previousSettings = LocalStorage.get(StorageKeys.settings);
             if(previousSettings !== settings){
-              Storage.set(StorageKeys.settings, JSON.stringify(settings))
+              LocalStorage.set(StorageKeys.settings, JSON.stringify(settings))
             }
         }, [settings]);
     

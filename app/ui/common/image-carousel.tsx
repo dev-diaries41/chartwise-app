@@ -1,15 +1,26 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 interface CarouselImageViewerProps {
   images: string[];
+  switchInterval?: number
 }
 
-export default function CarouselImageViewer ({ images }: CarouselImageViewerProps){
+export default function CarouselImageViewer({ images, switchInterval }: CarouselImageViewerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  if (switchInterval) {
+    useEffect(() => {
+      const interval = setInterval(() => {
+        goToNext();
+      }, switchInterval);
+
+      return () => clearInterval(interval);
+    }, [currentIndex, switchInterval]);
+  }
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -27,56 +38,67 @@ export default function CarouselImageViewer ({ images }: CarouselImageViewerProp
     setCurrentIndex(index);
   };
 
-  // Determine if more images exist beyond the first 10
   const moreImagesExist = images.length > 10;
-
-  // Determine how many dots to show (max 10)
   const visibleDots = moreImagesExist ? 10 : images.length;
 
   return (
-    <div className="relative w-full max-w-2xl bg-transparent rounded-md shadow-md shadow-black p-2">
+    <div className="relative w-full bg-transparent rounded-md shadow-md shadow-black group">
       <div className="relative overflow-hidden rounded-lg">
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.map((image, index) => (
-            <div key={index} className="min-w-full relative h-80">
-              <Image
-                src={image}
-                alt={`Slide ${index}`}
-                layout='fill'
-                className="w-full h-full object-contain rounded-lg"
-                />
-            </div>
-          ))}
+        <div className="carousel-container relative overflow-hidden w-full h-full">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {images.map((image, index) => (
+              <div key={index} className="flex min-w-full relative aspect-ratio-wrapper">
+                <div className="absolute inset-0 flex justify-center items-center">
+                  <Image
+                    quality={100}
+                    src={image}
+                    alt={`Slide ${index}`}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={image}
+                    fill={true}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <button
-        type='button'
-        className="absolute flex top-1/2 left-1 transform-translate-y-1/2 transform-translate-y-1/2 bg-gray-700 bg-opacity-50 justify-center items-center text-white p-2 rounded-full "
-        onClick={goToPrevious}
-      >
-      <FontAwesomeIcon icon={faArrowLeft}/>
-      </button>
-      <button
-        type='button'
-        className="absolute flex top-1/2 right-1 transform-translate-y-1/2 bg-gray-700 bg-opacity-50 text-white p-2 rounded-full justify-center items-center"
-        onClick={goToNext}
-      >
-      <FontAwesomeIcon icon={faArrowRight} className=''/>
-      </button>
+      {images.length > 1 && (
+        <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            type="button"
+            aria-label="Previous slide"
+            className="flex top-1/2 left-1 transform-translate-y-1/2 bg-gray-700 bg-opacity-50 justify-center items-center text-white p-2 rounded-full"
+            onClick={goToPrevious}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} className='w-4 h-4'/>
+          </button>
+          <button
+            type="button"
+            aria-label="Next slide"
+            className="flex top-1/2 right-1 transform-translate-y-1/2 bg-gray-700 bg-opacity-50 justify-center items-center text-white p-2 rounded-full"
+            onClick={goToNext}
+          >
+            <FontAwesomeIcon icon={faChevronRight} className='w-4 h-4'/>
+          </button>
+        </div>
+      )}
       <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-        {Array.from({ length: visibleDots }, (_, dotIndex) => {
+        {images.length > 1 && Array.from({ length: visibleDots }, (_, dotIndex) => {
           const index = dotIndex;
           return (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`h-2.5 w-2.5 rounded-full bg-white ${
-                currentIndex === index ? 'opacity-100' : 'opacity-50'
+              className={`h-2.5 w-2.5 rounded-full ${
+                currentIndex === index ? 'bg-blue-500' : 'bg-white'
               }`}
-            ></button>
+            />
           );
         })}
         {moreImagesExist && (
@@ -87,4 +109,4 @@ export default function CarouselImageViewer ({ images }: CarouselImageViewerProp
       </div>
     </div>
   );
-};
+}

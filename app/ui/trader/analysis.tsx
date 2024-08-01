@@ -1,7 +1,7 @@
 'use client'
 import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/app";
 import {PopUp, LoaderDialog, AnalysisForm} from "@/app/ui/";
-import * as Storage from "@/app/lib/storage/local"
+import {LocalStorage} from "@/app/lib/storage"
 import { PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { getJobStatus } from "@/app/lib/requests/chartwise-client";
@@ -11,6 +11,8 @@ import { usePopUp, usePolling, useLoading } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { useChartwise } from "@/app/providers/chartwise";
 
+const LOADER_DESCRIPTION = "Chart analysis in progress. This can take a few seconds. Please do not refresh the page.";
+const LOADER_TITLE = "Analysing chart...";
 
 export function ChartAnalyser (){
   const router = useRouter();
@@ -34,7 +36,7 @@ export function ChartAnalyser (){
   };
 
   const handleJobInProgress = (jobId: string) => {
-    Storage.set(StorageKeys.jobId, jobId);
+    LocalStorage.set(StorageKeys.jobId, jobId);
     setTimeout(startPolling, 5 * Time.sec);
   };
 
@@ -55,7 +57,7 @@ export function ChartAnalyser (){
 
   const pollJobStatus = async () => {
     try {
-      const jobId = Storage.get<string>(StorageKeys.jobId);
+      const jobId = LocalStorage.get<string>(StorageKeys.jobId);
       if (!jobId) throw new Error(JobErrors.INVALID_JOB_ID);
   
       const { data, status } = await getJobStatus(jobId);
@@ -103,8 +105,8 @@ export function ChartAnalyser (){
         <LoaderDialog
           onMinimize={minimizeLoader}
           position="BOTTOM_RIGHT"
-          title="Analysing chart..."
-          description="Chart analysis in progress. This can take a few seconds. Please do not refresh the page."/>
+          title={LOADER_TITLE}
+          description={LOADER_DESCRIPTION}/>
       )}
   </div>
   );

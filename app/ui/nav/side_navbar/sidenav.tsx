@@ -12,13 +12,14 @@ import MobileNav from './mobilenav';
 import { useSettings } from '@/app/providers/settings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import Switch from '../../common/switch';
 
 export default React.memo(function  SideNav(){
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading } = useUser();
   const pathName = usePathname();
   const showRecentAnalyses = pathName === '/trader';
-  const {recentAnalyses, handleDeleteAnalysis, handleViewAnalysis} = useChartwise();
+  const {recentAnalyses, deleteAnalysis, viewAnalysis, mode, toggleMode} = useChartwise();
   // const {toggleSettings} = useSettings();
  
   return (
@@ -35,13 +36,17 @@ export default React.memo(function  SideNav(){
             height={100}
           />
         </Link>
-        <div className='flex h-full flex-col justify-between gap-4'>
+        <div className='flex flex-row items-center ml-auto justify-between text-sm p-3 font-medium focus:cursor-pointer text-gray-400'>
+          Chart mode
+          <Switch value={mode ==='analysis'? false:true} onChange={toggleMode} />
+        </div>
+        <div className='flex h-full flex-col justify-between'>
           <NavLinks navItems={navLinks} />
           {showRecentAnalyses && <div className="flex-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
           { showRecentAnalyses && (
 
           <div className='mr-auto p-1'>
-          <RecentAnalyses analyses={recentAnalyses} onClick={handleViewAnalysis} onDelete={handleDeleteAnalysis}/>
+          <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis}/>
 
           </div>
           )}
@@ -61,7 +66,7 @@ export default React.memo(function  SideNav(){
             <FontAwesomeIcon icon={faGear} className='w-4 h-4'/>
             Settings
           </button> */}
-          <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
+            <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
             <UserProfileWidget userId={user?.email} isLoading={isLoading}/>
           </div>
         </div>

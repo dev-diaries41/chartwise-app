@@ -3,7 +3,7 @@ import { Usage } from '@/app/types';
 import * as ChartwiseClient from '@/app/lib/requests/chartwise-client';
 import { RetryHandler } from '@/app/lib/utils/retry';
 import { StorageKeys, Time } from '../constants/app';
-import * as Storage from '@/app/lib/storage/local'
+import {SessionStorage} from '@/app/lib/storage'
 
 export function useUsage(userId: string | null | undefined) {
   const [usage, setUsage] = useState<Usage | null>(null);
@@ -15,7 +15,7 @@ export function useUsage(userId: string | null | undefined) {
       const retryHandler = new RetryHandler(1); 
 
       try {
-      if (Storage.getCachedData<Usage>(StorageKeys.usage, setUsage)) {
+      if (SessionStorage.getCachedData<Usage>(StorageKeys.usage, setUsage)) {
         return;
       }
         const fetchedUsage = await retryHandler.retry(
@@ -24,7 +24,7 @@ export function useUsage(userId: string | null | undefined) {
         );
         setUsage(fetchedUsage);
         if(fetchedUsage){
-         Storage.cacheData(StorageKeys.usage,fetchedUsage);
+          SessionStorage.cacheData(StorageKeys.usage,fetchedUsage);
         }
       } catch (error) {
         console.error('Failed to fetch usage data:', error);

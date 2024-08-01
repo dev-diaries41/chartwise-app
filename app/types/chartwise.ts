@@ -20,14 +20,14 @@ export interface RecentAnalysesProps {
 
 export interface StoredAnalysis {
   analysis: string ;
-  chartUrl: string;
+  chartUrls: string[];
   userId: string;
   formatVersion?: number;
   metadata?: Record<string, any>;
 }
 
-export interface IAnalyseChart {
-  chartUrl: string;
+export interface IAnalyseCharts {
+  chartUrls: string[];
   metadata: {
     strategyAndCriteria?: string;
     risk?: string;

@@ -41,21 +41,28 @@ export default function Page() {
 
   return (
     <div className='relative flex-1 max-w-full mx-auto w-full'>
-      <TopActionRow/>
         {
           mode === 'chart'? <TradingViewWidget/> : (
-            <div className="relative w-full flex flex-col max-w-5xl mx-auto   min-h-screen items-center justify-center text-center py-8 px-4">   
-            <div className='flex flex-col w-full  my-auto mb-auto pt-8'>
-            <div className='flex flex-row gap-4 justify-between items-center mt-4'>
-              <h1 className="text-center text-xl md:text-3xl my-4 font-bold">Upload Chart & Analyse</h1>
-            </div>
-            <Spacer  space={4}/>
-            <ChartAnalyser/>
+            <div className="relative w-full flex flex-col max-w-5xl mx-auto min-h-screen items-center justify-center text-center py-8 px-4">   
+              <div className='flex flex-col w-full mb-auto md:my-auto'>
+                <div className='flex flex-row gap-4 justify-between items-center'>
+                  <h1 className="text-center text-xl md:text-3xl my-4 font-bold">Upload & Analyse</h1>
+                  
+                  <button
+                  className="flex w-auto items-center justify-center text-sm  font-semibold gap-1"
+                  onClick={newAnalysis}
+                >
+                  <FontAwesomeIcon icon={faPlusCircle} className="w-4 md:w-4 h-4 md:h-4"  />
+                  <span className="">New Analysis</span>
+                  </button>
+                </div>
+                <p className="flex text-sm text-left md:text-md opacity-80">You can upload up to 3 charts for different timeframes.</p>
+              <Spacer  space={4}/>
+              <ChartAnalyser/>
             </div>
           <p className="flex  text-xs text-gray-600 mt-auto p-2">ChartWise can make mistakes. Check upload guidelines<Link className="text-blue-500 ml-1" href="/guide">here</Link>.</p>
          </div>
-          )
-        }
+          )}
     </div>
   );
 }

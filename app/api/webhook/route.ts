@@ -1,4 +1,4 @@
-import { handlePaymentComplete } from '@/app/lib/order';
+import { handlePaymentComplete } from '@/app/stripe';
 import { endpointSecret, stripe } from '@/app/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 

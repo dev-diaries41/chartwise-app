@@ -1,4 +1,4 @@
-import { AuthErrors, ServiceUsageErrors } from "@/app/constants/errors";
+import { ServiceUsageErrors } from "@/app/constants/errors";
 import {FPF_LABS_API_KEY, USAGE_URL } from "@/app/constants/app";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
