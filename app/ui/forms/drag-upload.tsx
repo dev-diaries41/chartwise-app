@@ -13,7 +13,7 @@ export default function DragAndDropUpload({ onFileUpload, acceptedMimes, accepte
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file: File) => {
-      onFileUpload(file);
+      onFileUpload([file]);
     });
   }, [onFileUpload]);
 
