@@ -96,7 +96,7 @@ interface AnalysisFormProps {
           <span className="p-2 w-full text-right opacity-50">{`${strategyAndCriteria.length}/${MAX_CHARS}`}</span> 
         </div>
        
-        <div className={`flex lg:flex-row flex-col justify-between items-center gap-16 my-4 pb-${analysisResult? '2' : '16'}`}>
+        <div className={`flex lg:flex-row flex-col justify-between items-center gap-16 my-4 ${analysisResult? 'pb-2' : 'pb-16'}`}>
           <div className="w-full lg:w-[50%]">
             <SliderInput
               title={getRiskTolerance()}
