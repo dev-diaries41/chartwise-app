@@ -56,7 +56,7 @@ export default function Page() {
                   <span className="">New Analysis</span>
                   </button>
                 </div>
-                <p className="flex text-sm text-left md:text-md opacity-80">You can upload up to 3 charts for different timeframes.</p>
+                <p className="flex  text-sm md:text-md text-left md:text-md opacity-80">You can upload up to 3 charts for different timeframes.</p>
               <Spacer  space={4}/>
               <ChartAnalyser/>
             </div>

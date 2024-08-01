@@ -77,18 +77,18 @@ interface AnalysisFormProps {
       ];
       
     return (
-      <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-sm md:text-md lg:text-lg shadow-md rounded-md mb-2 p-4" >
+      <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-sm md:text-md shadow-md rounded-md mb-2 p-4" >
         <div className="flex flex-row justify-between">
           <label htmlFor={'strategy-criteria'} className=" flex flex-row block text-left font-medium mb-1 opacity-80">
             {`Strategy and Criteria (optional):`}
           </label>      
         </div>
-        <div className="flex flex-col items-center mb-4 w-full bg-gray-800 rounded-md border border-gray-700 text-sm md:text-md lg:text-lg ">
+        <div className="flex flex-col items-center mb-4 w-full bg-gray-800 rounded-md border border-gray-700 text-sm md:text-md ">
         <textarea
           id={"strategy-criteria"}
           name={"strategy-criteria"}
           placeholder={"To optimise your analysis, provide details about your trading strategy (e.g., breakout, swing trading) and any criteria like minimum risk-to-reward ratio. Be specific."}
-          className={`flex w-full  flex-grow min-h-[180px] lg:min-h-[100px] p-2 bg-transparent rounded-md focus:outline-none resize-none text-sm md:text-md lg:text-lg`}
+          className={`flex w-full  flex-grow min-h-[180px] lg:min-h-[100px] p-2 bg-transparent rounded-md focus:outline-none resize-none text-sm md:text-md`}
           value={strategyAndCriteria}
           onChange={onStrategyAndCriteriaChange}
           aria-describedby={"strategy-criteria-error"}
