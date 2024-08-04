@@ -10,6 +10,9 @@ export default function InformationMenu () {
     setIsOpen(!isOpen);
   };
 
+  const filteredFooterLinks = footerLinks.filter(footerLink => !['Pricing'].includes(footerLink.name))
+
+
   return (
     <div className="relative hidden md:block">
       <button
@@ -20,7 +23,7 @@ export default function InformationMenu () {
       </button>
       {isOpen && (
         <div className="absolute bottom-12 right-0 p-2 bg-gray-800 border border-gray-700 rounded-md shadow-lg w-48 z-10">
-         <NavLinks navItems={footerLinks}/>
+         <NavLinks navItems={filteredFooterLinks}/>
         </div>
       )}
     </div>

@@ -48,6 +48,7 @@ const Hero = () => {
     </section>
   )
 }
+
 const Pricing = () => {
   return (
     <section id='pricing' className="relative  flex flex-col bg-gray-800 w-full mx-auto items-center justify-center text-center py-16 mb-16">
@@ -91,9 +92,7 @@ const HowItWorks = () => {
     <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-gray-900 to-gray-800" >
       <h1 className="text-center text-3xl my-4 px-3 font-bold">How to analyse charts with ChartWise?</h1>
       <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
-        {/* <div className='max-w-2xl flex-1'> */}
           <CarouselImageViewer images={['/chartwise-chart-mode.png', '/chartwise-analysis-mode.png']}  switchInterval={5000}/>
-        {/* </div> */}
         <div className='w-full justify-start font-medium'>
           <List items={HowItWorksGuide} listType='numbered' />
         </div>

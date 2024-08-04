@@ -60,7 +60,7 @@ export default function Page() {
               <Spacer  space={4}/>
               <ChartAnalyser/>
             </div>
-          <p className="flex  text-xs text-gray-600 mt-auto p-2">ChartWise can make mistakes. Check upload guidelines<Link className="text-blue-500 ml-1" href="/guide">here</Link>.</p>
+          <p className="flex  text-xs text-gray-600 mt-auto p-2">ChartWise can make mistakes. Check guidelines.</p>
          </div>
           )}
     </div>

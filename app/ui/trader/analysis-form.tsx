@@ -73,7 +73,7 @@ interface AnalysisFormProps {
     
       const actions = [
         { icon: faCopy, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Copy' },
-        { icon: faShareNodes, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Share', condition: !!shareUrl }
+        { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', condition: !!shareUrl }
       ];
       
     return (

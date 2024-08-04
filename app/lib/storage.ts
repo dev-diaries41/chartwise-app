@@ -206,7 +206,7 @@ export class EncryptedStorage {
 }
 
 
-export const encrypt = (key: string, string: string) => {
+export function encrypt (key: string, string: string){
   const encryptionKey = genEncryptionKey();
   const textBytes = AES.utils.utf8.toBytes(string);
   const aesCtr = new AES.ModeOfOperation.ctr(encryptionKey, new AES.Counter(5));
@@ -217,7 +217,6 @@ export const encrypt = (key: string, string: string) => {
   return encryptedText;
 }
 
-// Read key from SecureStore and decrypt note content
 export function decrypt(key: string, encryptedText: string): string | null {
   const encryptStorageKey = `${ENCRYPTION_PREFIX}${key}`;
   const encryptionKeyStr = LocalStorage.get<string>(encryptStorageKey);

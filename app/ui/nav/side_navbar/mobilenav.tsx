@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { navLinks, footerLinks } from '@/app/constants/navigation';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
-import {Logo, RecentAnalyses} from '@/app/ui';
+import {Logo, RecentAnalyses, UserPlanWidget} from '@/app/ui';
 import UserProfileWidget from '../../user/user-profile';
 import { useChartwise } from '@/app/providers/chartwise';
 import { faClose, faGear } from '@fortawesome/free-solid-svg-icons';
@@ -60,7 +60,7 @@ onToggleMenu
 
         {isOpen && (
         <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-800 border border-r-1 border-gray-700 pt-24  p-2 z-40 ">
-        <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy Policy'].includes(link.name))]} />
+        <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy Policy', 'Pricing'].includes(link.name))]} />
         <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1">
           <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
         </div>
@@ -71,6 +71,10 @@ onToggleMenu
           <FontAwesomeIcon icon={faGear} className='w-4 h-4'/>
           Settings
         </button> */}
+        <div className='mt-auto'>
+        <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
+
+        </div>
         <div className="bg-gray-700 p-2 rounded-md mt-auto">
           <UserProfileWidget userId={user?.email} isLoading={isLoading} />
         </div>

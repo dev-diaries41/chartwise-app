@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     description: 'ChartWise assists traders with techincal analysis by identifying patterns and trends, and offering insights for precise trade strategies',
     siteName: 'ChartWise',
     images: ['/chartwise-homepage.png']
-
   }
 }
 
