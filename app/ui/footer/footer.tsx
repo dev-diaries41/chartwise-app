@@ -13,7 +13,7 @@ export default function Footer() {
   const hide = shouldHide(pathname, pathsToHide)
   
   return (
-    <footer className="flex flex-col  justify-end  mt-auto text-gray-300">
+    <footer className="flex flex-col  justify-end  mt-auto text-gray-300 text-sm">
      {!hide&& <div className="flex flex-col items-center text-center justify-center px-8 gap-4  py-8">
         <div className='lg:hidden'>
         <FooterLinks/>
