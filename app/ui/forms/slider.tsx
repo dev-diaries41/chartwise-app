@@ -1,23 +1,20 @@
 'use client'
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface SliderInputProps {
   title: string;
   description?: string;
   min: number;
   max: number;
-  initialValue: number;
+  value: number;
   onChange: (value: number) => void;
   icon?: FontAwesomeIconProps['icon']
 }
 
-const SliderInput: React.FC<SliderInputProps> = ({ min, max, initialValue, icon, title, description, onChange }) => {
-  const [value, setValue] = useState<number>(initialValue);
-
+const SliderInput: React.FC<SliderInputProps> = ({ min, max, value, icon, title, description, onChange }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
-    setValue(newValue);
     onChange(newValue);
   };
 

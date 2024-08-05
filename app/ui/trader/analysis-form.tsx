@@ -22,7 +22,7 @@ interface AnalysisFormProps {
   export default function AnalysisForm ({handleJobInProgress, handleFailedJobStart, loading, setLoading}: AnalysisFormProps){
     const MAX_CHARS = 150;
     const {shareUrl, anaylsisParams, analysisResult, chartUrls,  strategyAndCriteria, risk, uploadCharts, removeAnalysis, onRiskChange, onStrategyAndCriteriaChange, getRiskTolerance, analyseChart,  removeCharts} = useChartwise();
-
+    
     const AnalysisActionRow = () => {
         const {user} = useUser();
         const userId = user?.email;
@@ -75,7 +75,7 @@ interface AnalysisFormProps {
         { icon: faCopy, onClick: () => copyTextToClipboard(analysisResult), tooltip: 'Copy' },
         { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', condition: !!shareUrl }
       ];
-      
+
     return (
       <div className="relative w-full max-w-[100%] flex flex-col bg-gray-800 border-2 border-gray-700 text-sm md:text-md shadow-md rounded-md mb-2 p-4" >
         <div className="flex flex-row justify-between">
@@ -104,7 +104,7 @@ interface AnalysisFormProps {
               icon={faWarning}
               min={0}
               max={100}
-              initialValue={risk}
+              value={risk} 
               onChange={onRiskChange}/>
             </div>
           {chartUrls.length > 0 && (
