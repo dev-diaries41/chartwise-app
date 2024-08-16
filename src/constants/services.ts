@@ -4,4 +4,4 @@ export const BackgroundJobs = {
 }
 
 export const FREE_DAILY_LIMIT = 5;
-export const FREE_MONTHLY_LIMIT = 30
+export const FREE_MONTHLY_LIMIT = 10

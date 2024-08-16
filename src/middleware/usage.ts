@@ -27,7 +27,7 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
             // Define usage limits and errors
             const limits = {
                 daily: subscription?.status !== 'active' ? FREE_DAILY_LIMIT : null,
-                monthly: subscription?.status !== 'active' ? FREE_MONTHLY_LIMIT : maxMonthlyUsage,
+                monthly: maxMonthlyUsage,
             };
 
             const errors = {
