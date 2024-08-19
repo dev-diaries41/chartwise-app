@@ -1,18 +1,11 @@
-const sec = 1000;
-const min = 60 * sec;
-const hour = 60 * min;
-const day = 24 * hour;
-const week = 7 * day;
-
 export const Time = {
-    sec,
-    min,
-    hour,
-    day,
-    week
-}
-
-export const allowedOrigins: string[]= []
+    sec: 1000,
+    min: 60 * 1000,
+    hour: 60 * 60 * 1000,
+    day: 24 * 60 * 60 * 1000,
+    week: 7 * 24 * 60 * 60 * 1000
+  } as const;
+  
 
 export const roles = {
     basic: 'basic',

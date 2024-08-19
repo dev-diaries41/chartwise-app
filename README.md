@@ -54,14 +54,10 @@ This backend system is designed to provide a robust and scalable infrastructure 
    - **Worker Lifecycle Management**:
      - Supports starting and stopping of workers, ensuring clean job processing.
 
-## Technologies Used
+## Key Technologies Used
+- **Express.js**: Used for mananging request.
 - **MongoDB**: Used for storing analysis results, journal entries, and usage data.
 - **BullMQ**: Handles job queues, enabling delayed, recurring, and scheduled job execution.
-- **Cloudinary**: Manages storage for chart images.
+- **Redis**: Required for bullmq and caching functionality.
 - **Stripe**: Manages user subscriptions and determines usage limits.
-- **TypeScript**: The backend is written in TypeScript, providing type safety and better developer experience.
-- **OpenAI GPT4o**: GPT 4o's vision capabilities are used to provide the analysis
-
-## Conclusion
-
-This backend system is a comprehensive solution for managing services that require heavy processing, background task management, and robust storage capabilities. The combination of MongoDB, BullMQ, and Stripe allows for a scalable, reliable, and efficient system that can be easily extended to support additional services and features.
+- **OpenAI**: GPT 4o's vision capabilities are used to provide the analysis
