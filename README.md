@@ -1,4 +1,4 @@
-# Backend Services and Queue Management
+# ChartWise Backend
 
 ## Overview
 
@@ -54,7 +54,7 @@ This backend system is designed to provide a robust and scalable infrastructure 
    - **Worker Lifecycle Management**:
      - Supports starting and stopping of workers, ensuring clean job processing.
 
-## Key Technologies Used
+## Tech Stack
 - **Express.js**: Used for mananging request.
 - **MongoDB**: Used for storing analysis results, journal entries, and usage data.
 - **BullMQ**: Handles job queues, enabling delayed, recurring, and scheduled job execution.
