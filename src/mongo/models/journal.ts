@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { ITradeJournalEntry } from '../../types';
 
 
-const tradeJournalEntrySchema = new mongoose.Schema({
+const TradeJournalEntrySchema = new mongoose.Schema({
     entryId: { type: Number, required: true },
     userId: { type: String, required: true},
     tradeDate: { type: Date, required: true },
@@ -18,7 +18,7 @@ const tradeJournalEntrySchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now },
   });
   
-  tradeJournalEntrySchema.index({ entryId: 1, userId: 1 });
+  TradeJournalEntrySchema.index({ entryId: 1, userId: 1 });
 
 
-export const TradeJournal = mongoose.model<ITradeJournalEntry>('TradeJournal', tradeJournalEntrySchema);
+export const TradeJournal = mongoose.model<ITradeJournalEntry>('TradeJournal', TradeJournalEntrySchema);

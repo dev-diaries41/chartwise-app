@@ -6,7 +6,7 @@ import { addDoc } from "../mongo/utils/add";
 import { deleteDocs } from "../mongo/utils/delete";
 import { getDocs } from "../mongo/utils/get";
 import { AddDocResponse, DeleteDocsResponse, DeleteLogsOptions, GetDocsResponse, GetLogsOptions, LogEntry, MetricLog } from "../types";
-import { getFilter } from "../utils/data/log-queries";
+import { getFilter } from "../utils/data/queries";
 
 // Add docs is handle by an bullmq for robustness of logging
 export async function addLog(newLogJob:{log: LogEntry}): Promise<AddDocResponse>{

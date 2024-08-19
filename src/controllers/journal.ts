@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { AuthErrors, ServerErrors } from "../constants/errors";
 import { logger } from "../logger";
 import { addJournalEntry, getJournalEntries } from "../services/journal";
-import { tradeJournalEntrySchema } from "../utils/validation";
+import { TradeJournalEntrySchema } from "../utils/validation";
 import { cache } from "..";
 
 
@@ -13,7 +13,7 @@ export async function addEntry(req: Request, res: Response) {
       const {entry} = req.body;
       if(!userId) return res.status(400).json({ message: AuthErrors.INVALID_USER_ID});
   
-      const validatedEntry = tradeJournalEntrySchema.safeParse({...(entry||{}), userId});
+      const validatedEntry = TradeJournalEntrySchema.safeParse({...(entry||{}), userId});
       if(!validatedEntry.success)return res.status(400).json({ message: validatedEntry.error});
   
       await addJournalEntry(validatedEntry.data);

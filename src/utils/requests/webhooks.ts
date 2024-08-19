@@ -10,13 +10,12 @@ export async function sendWebhook(webhook: Webhook): Promise<boolean> {
           },
         });
 
-        if (!(response.status === 200)) {
-          throw new Error('Webhook not sent')
-        }
-        jobLogger.info(`Successfully sent webhook to ${webhook.url}`);
+        if (!(response.status === 200)) throw new Error('Webhook not sent');
+
+        jobLogger.info({message: `Successfully sent webhook`, url: webhook.url});
         return response.status === 200;
-      } catch (error) {
-        console.error(`Error sending webhook to ${webhook.url}: ${error}`);
+      } catch (error: any) {
+        jobLogger.error({message:`Error sending webhook`, url: webhook.url, details: error.message});
         return false;
       }
 }

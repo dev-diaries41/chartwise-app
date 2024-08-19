@@ -7,7 +7,7 @@ export class WorkerManager {
     public worker: Worker;
     private task: ServiceJob;
 
-    static DefaultWorkerOpts =  {
+    static readonly DefaultWorkerOpts =  {
         concurrency: 1,
         limiter: { max: 10, duration: 1000 }
     }

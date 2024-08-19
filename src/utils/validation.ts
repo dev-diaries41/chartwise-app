@@ -2,13 +2,12 @@ import { z } from 'zod';
 import { Request } from 'express';
 
 const serviceJobSchema = z.object({
-  when: z.number().optional().describe('When must be a valid number in milliseconds'),
-  jobData: z.record(z.any()).optional().describe('Params must be an object with any properties')
+  when: z.number().optional().describe('When must be a valid number in milliseconds').default(() => Date.now()),
+  jobData: z.record(z.any()).optional().describe('Params must be an object with any properties').default({})
 });
 
 export function validateJob (req: Request){
-    const result = serviceJobSchema.safeParse(req.body);
-    return result;
+    return serviceJobSchema.safeParse(req.body);
 };
 
 const userInfoSchema = z.object({
@@ -16,8 +15,7 @@ const userInfoSchema = z.object({
 });
 
 export function validateUserInfo (req: Request){
-    const result = userInfoSchema.safeParse(req.body);
-    return result;
+   return userInfoSchema.safeParse(req.body);
 };
 
 export const StoredAnalysisSchema = z.object({
@@ -50,7 +48,7 @@ export const ServiceJobDetailsSchema = z.object({
 export const AnalysisJobScehma = AnalyseChartSchema.merge(ServiceJobDetailsSchema);
 
 
-export const tradeJournalEntrySchema = z.object({
+export const TradeJournalEntrySchema = z.object({
   entryId: z.number({
     required_error: 'Entry ID is required',
     invalid_type_error: 'Entry ID must be a number',

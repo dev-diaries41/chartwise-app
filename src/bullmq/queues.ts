@@ -11,9 +11,9 @@ import { Time } from "../constants/server";
 
 export class QueueManager {
     public queue: Queue;
-    private jobOptions: JobsOptions;
+    private readonly jobOptions: JobsOptions;
 
-    static DefaultJobOpts = {
+    static readonly DefaultJobOpts = {
       attempts: 1,
       removeOnFail: { age: 3600 },
       removeOnComplete: true,
@@ -26,7 +26,7 @@ export class QueueManager {
     }
 
     private async addJob(newJob: NewJob): Promise<Job> {
-      const { serviceName, jobData, when } = newJob || {};
+      const { serviceName, jobData, when } = newJob;
       const delay = this.getDelay(when);
       const jobOptions = { delay,...this.jobOptions };
       return await this.queue.add(serviceName, jobData, jobOptions);
@@ -37,10 +37,10 @@ export class QueueManager {
       return { jobId: job.id, delay: job.opts.delay!, status, queue: await this.queue.count(), when: job.timestamp, jobName: job.name };
     }
 
-    public async add(newJob: NewJob): Promise<jobReceipt> {
+    public async addToQueue(newJob: NewJob): Promise<jobReceipt> {
         try {
             const job = await this.addJob(newJob);
-            const jobReceipt = await this.getJobReceipt(job)
+            const jobReceipt = await this.getJobReceipt(job);
             jobLogger.info({jobReceipt});
             return jobReceipt;
         } catch (error: any) {
@@ -56,7 +56,6 @@ export class QueueManager {
           return;
         } 
     }
-
 
     public async addRecurringJob(name: string, jobData: Record<string, any> = {}, pattern = '0 0 * * * *'): Promise<void> {
         const existingBackgroundJob = await this.findJobByName(name);
@@ -81,17 +80,19 @@ export class QueueManager {
     public async getResults(jobId: string, backgroundQueue?: QueueManager): Promise<JobResult>{
         const job = await this.queue.getJob(jobId);
         if(!job) throw new Error(JobErrors.JOB_NOT_FOUND);
-
         const status = await job.getState();
         if(status === 'completed'){
-            await this.removeCompletedJob(jobId);
-            if(backgroundQueue){
-                await QueueManager.cancelPendingBackgroundJob(job, backgroundQueue)
-            }
-        }
-           
+          await this.handleCompletedJob(jobId, job, backgroundQueue);
+        }  
         return { data: this.filterJobReturnValue(job.returnvalue), status};
     }
+
+    private async handleCompletedJob(jobId: string, job: Job, backgroundQueue?: QueueManager): Promise<void> {
+      await this.removeCompletedJob(jobId);
+      if (backgroundQueue) {
+          await QueueManager.cancelPendingBackgroundJob(job, backgroundQueue);
+      }
+  }
 
     private filterJobReturnValue(returnValue: object & Partial<ServiceJobDetails>): object & Partial<ServiceJobDetails> {
       const filteredData = { ...returnValue };
@@ -104,7 +105,6 @@ export class QueueManager {
         try {
           const job = await this.queue.getJob(jobId);
           if (!job) throw new Error(JobErrors.JOB_NOT_FOUND);
-      
           await job.remove();
           jobLogger.info({ message: `Cancelled job`, jobId, jobName: job.name});
         } catch (error: any) {
@@ -119,15 +119,8 @@ export class QueueManager {
 
     public async getJobCompletionTime(jobId: string): Promise<number | null> {
       const job = await this.queue.getJob(jobId);
-      if (!job) {
-          console.log('Job not found');
-          return null;
-      }
-      if (!job.finishedOn) {
-          console.log('Job has not finished yet');
-          return null;
-      }
-      return job.finishedOn - job.timestamp; // Time in milliseconds
+      if (!job || !job.finishedOn) return null;
+      return job.finishedOn - job.timestamp; 
     }
   
 
@@ -137,7 +130,7 @@ export class QueueManager {
 
     public static async removeExpiredJob(job: Job, backgroundJobQM: QueueManager, ttl: number = Time.min){
       const newJob: NewJob = {serviceName: backgroundJobQM.getBackgroundJobName(job), when: Date.now() + ttl, jobData: {jobId: job.id}};
-      await backgroundJobQM.add(newJob);
+      await backgroundJobQM.addToQueue(newJob);
     }
     
     public static async cancelPendingBackgroundJob(job: Job, backgroundJobQM: QueueManager): Promise<void>{
