@@ -1,17 +1,18 @@
+import 'module-alias/register';
 import dotenv from 'dotenv';
 import express from 'express';
-import connectDB from './mongo/connect';
-import { logger } from './logger';
-import { stopWorkers, startWorkers, initialiseWorkers } from './workers';
-import { middleware } from './middleware';
-import { config } from './config';
-import { addRoutes } from './routes';
-import { QueueManager } from './bullmq/queues';
 import { Redis } from 'ioredis';
-import { BackgroundJobs } from './constants/services';
-import { ServerErrors } from './constants/errors';
-import { RedisCache } from './utils/data/redis';
-import { Time } from './constants/server';
+import connectDB from '@src/mongo/connect';
+import { logger } from '@src/logger';
+import { stopWorkers, startWorkers, initialiseWorkers } from '@src/workers';
+import { middleware } from '@src/middleware';
+import { config } from '@src/config';
+import { addRoutes } from '@src/routes';
+import { QueueManager } from '@src/bullmq/queues';
+import { BackgroundJobs } from '@src/constants/services';
+import { ServerErrors } from '@src/constants/errors';
+import { RedisCache } from '@src/utils/data/redis';
+import { Time } from '@src/constants/server';
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { AddDocResponse, AddMultipleDocsResponse } from '../../types';
+import { AddDocResponse, AddMultipleDocsResponse } from '@src/types';
 
 export async function addDoc<T>(model: mongoose.Model<T>, doc: Record<string, any>): Promise<AddDocResponse> {
   const session = await mongoose.startSession();

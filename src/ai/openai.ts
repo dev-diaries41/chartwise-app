@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import dotenv from 'dotenv'
-import { aiConfig } from "./config";
-import { ModelErrors } from "./errors";
+import { aiConfig } from "@src/ai/config";
+import { ModelErrors } from "@src/ai/errors";
 import { ChatCompletionContentPartImage } from "openai/resources";
 
 dotenv.config()

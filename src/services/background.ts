@@ -1,11 +1,10 @@
 import { Job } from "bullmq";
-import { BackgroundJobs } from "../constants/services";
-import { manageLogs } from "../utils/logs";
-import { config } from "../config";
-import { chartAnalysisQueue } from "..";
-import { jobLogger } from "../logger";
-import { JobErrors } from "../constants/errors";
-
+import { BackgroundJobs } from "@src/constants/services";
+import { manageLogs } from "@src/utils/logs";
+import { config } from "@src/config";
+import { chartAnalysisQueue } from "@src/index";
+import { jobLogger } from "@src/logger";
+import { JobErrors } from "@src/constants/errors";
 
 export async function runBackgroundJob(job: Partial<Job>): Promise<void> {
     if (!job.name) {

@@ -1,6 +1,6 @@
 import express from 'express';
-import * as ChartAnalysisController from '../controllers/analysis';
-import { checkUsageLimit } from '../middleware/usage';
+import * as ChartAnalysisController from '@src/controllers/analysis';
+import { checkUsageLimit } from '@src/middleware/usage';
 
 const router = express.Router();
 

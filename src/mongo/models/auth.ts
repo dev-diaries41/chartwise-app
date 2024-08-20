@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { roles } from '../../constants/server';
+import { roles } from '@src/constants/server';
 
 const authSchema = new mongoose.Schema({
   userId: {type: String, required:true, unique: true},

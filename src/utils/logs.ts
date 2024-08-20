@@ -1,7 +1,7 @@
 import fs from 'fs';
-import { Time } from '../constants/server';
-import { readFile, saveFile } from './file';
-import { LoggerConfig } from '../types';
+import { Time } from '@src/constants/server';
+import { readFile, saveFile } from '@src/utils/file';
+import { LoggerConfig } from '@src/types';
 
 
 async function removeOldLogs(logFilePaths: string[], durationInMillis: number) {

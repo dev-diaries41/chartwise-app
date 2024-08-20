@@ -4,7 +4,7 @@ import jwtRoute from './jwt'
 import usageRoute from './usage'
 import sharedAnalysisRoute from "./share"
 import journalRoute from "./journal"
-import { Route } from '../types';
+import { Route } from '@src/types';
 
 export function addRoutes(app: express.Application, routes: Route[]) {
     routes.forEach(route => {

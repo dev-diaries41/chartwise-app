@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { jwtService } from '../middleware/jwt';
-import { ServerErrors } from '../constants/errors';
-import { validateUserInfo } from '../utils/validation';
+import { jwtService } from '@src/middleware/jwt';
+import { ServerErrors } from '@src/constants/errors';
+import { validateUserInfo } from '@src/utils/validation';
 
 export async function refreshTokenController(req: Request, res: Response) {
   try {

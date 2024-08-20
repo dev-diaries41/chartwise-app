@@ -1,5 +1,5 @@
 import express from 'express';
-import * as ReferralController from '../controllers/referrals'
+import * as ReferralController from '@src/controllers/referrals'
 
 const router = express.Router();
 

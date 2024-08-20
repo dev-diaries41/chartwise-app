@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { DeleteDocResponse, DeleteDocsResponse } from '../../types';
+import { DeleteDocResponse, DeleteDocsResponse } from '@src/types';
 
 
 export async function deleteDoc<T>(model: mongoose.Model<T>, filter: Record<string, any>): Promise<DeleteDocResponse> {

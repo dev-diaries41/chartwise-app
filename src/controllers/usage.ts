@@ -1,8 +1,8 @@
 
 import { Request, Response } from "express";
-import * as Usage from "../services/usage";
-import { config } from "../config";
-import { cache } from "..";
+import * as Usage from "@src/services/usage";
+import { config } from "@src/config";
+import { cache } from "@src/index";
 
 // Daily usage controller with cache
 export async function dailyUsage(req: Request, res: Response) {

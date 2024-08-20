@@ -1,14 +1,14 @@
-import { WorkerManager } from "../bullmq/worker";
-import { config } from "../config";
 import { Redis } from "ioredis";
-import { runBackgroundJob } from "../services/background";
 import { Job } from "bullmq";
-import { analyseCharts } from "../services/analysis";
-import { IAnalyseCharts, ServiceJobDetails } from "../types";
-import { chartAnalysisHandlers } from "../bullmq/events";
-import { BackgroundJobs } from "../constants/services";
-import { chartAnalysisQueue } from "..";
-import { Time } from "../constants/server";
+import { chartAnalysisQueue } from "@src/index";
+import { config } from "@src/config";
+import { WorkerManager } from "@src/bullmq/worker";
+import { runBackgroundJob } from "@src/services/background";
+import { analyseCharts } from "@src/services/analysis";
+import { IAnalyseCharts, ServiceJobDetails } from "@src/types";
+import { chartAnalysisHandlers } from "@src/bullmq/events";
+import { BackgroundJobs } from "@src/constants/services";
+import { Time } from "@src/constants/server";
 
 
 

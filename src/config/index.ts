@@ -1,9 +1,9 @@
-import { ServerConfig } from '../types/server';
-import { auth } from '../middleware';
-import { chartAnalysisRoute, usageRoute, jwtRoute, sharedAnalysisRoute, journalRoute } from '../routes';
-import { Time } from '../constants/server';
 import dotenv from 'dotenv'
-import { checkToken, issueNewToken } from '../middleware/jwt';
+import { ServerConfig } from '@src/types/server';
+import { auth } from '@src/middleware';
+import { chartAnalysisRoute, usageRoute, jwtRoute, sharedAnalysisRoute, journalRoute } from '@src/routes';
+import { Time } from '@src/constants/server';
+import { checkToken, issueNewToken } from '@src/middleware/jwt';
 
 dotenv.config();
 

@@ -7,8 +7,12 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": "./", 
+    "paths": {
+      "@src/*": ["src/*"]
+    }
   },
   "include": ["src/**/*.ts", "**/*.ts"],
-  "exclude": ["dist", "node_modules"],
+  "exclude": ["dist", "node_modules"]
 }

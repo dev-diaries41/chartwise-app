@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { JwtService } from '../utils/requests/jwt';
 import { JwtPayload } from 'jsonwebtoken';
-import { logger } from '../logger';
-import { AuthErrors } from '../constants/errors';
+import { logger } from '@src/logger';
+import { JwtService } from '@src/utils/requests/jwt';
+import { AuthErrors } from '@src/constants/errors';
 
 declare global {
     namespace Express {

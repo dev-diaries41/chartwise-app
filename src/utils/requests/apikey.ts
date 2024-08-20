@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { randomBytes } from 'crypto';
-import { hash } from '../../utils/cryptography';
-import { Auth } from '../../mongo/models/auth';
-import { User } from '../../mongo/models/user';
-import { createUser } from '../../services/user';
+import { hash } from '@src/utils/cryptography';
+import { Auth } from '@src/mongo/models/auth';
+import { User } from '@src/mongo/models/user';
+import { createUser } from '@src/services/user';
 
 export async function generateApiKey(email: string) {
   const session = await mongoose.startSession();

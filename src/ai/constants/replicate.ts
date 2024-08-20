@@ -1,4 +1,4 @@
-import { ImageGenOpts, TranscribeOpts } from "../../types";
+import { ImageGenOpts, TranscribeOpts } from "@src/types";
 
 export const defaultPromptTemplate = "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nYou are a helpful assistant<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n";
 

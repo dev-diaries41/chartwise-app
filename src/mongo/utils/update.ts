@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { FindOneAndUpdateResponse } from '../../types';
+import { FindOneAndUpdateResponse } from '@src/types';
 
 export async function findOneAndUpdateDoc<T>(model: mongoose.Model<T>, filter: Record<string, any>, update: Record<string, any>): Promise<FindOneAndUpdateResponse<T>> {
   const session = await mongoose.startSession();

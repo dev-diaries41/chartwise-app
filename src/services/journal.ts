@@ -1,7 +1,7 @@
-import { TradeJournal } from "../mongo/models/journal";
-import { addDoc } from "../mongo/utils/add";
-import { getDocs } from "../mongo/utils/get";
-import { AddDocResponse, GetDocsResponse, ITradeJournalEntry } from "../types";
+import { TradeJournal } from "@src/mongo/models/journal";
+import { addDoc } from "@src/mongo/utils/add";
+import { getDocs } from "@src/mongo/utils/get";
+import { AddDocResponse, GetDocsResponse, ITradeJournalEntry } from "@src/types";
 
 export async function addJournalEntry(entry: ITradeJournalEntry): Promise<AddDocResponse>{
     const result = await addDoc(TradeJournal, entry);

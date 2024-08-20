@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { logger } from '../logger';
-import * as ReferralManager from '../services/referrals';
-import { ServerErrors } from '../constants/errors';
+import { logger } from '@src/logger';
+import * as ReferralManager from '@src/services/referrals';
+import { ServerErrors } from '@src/constants/errors';
 
 
 function handleErrors(error: any, res: Response, customMessage: string) {

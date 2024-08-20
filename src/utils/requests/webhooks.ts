@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Webhook } from "../../types";
-import { jobLogger } from "../../logger";
+import { Webhook } from "@src/types";
+import { jobLogger } from "@src/logger";
 
 export async function sendWebhook(webhook: Webhook): Promise<boolean> {
       try {

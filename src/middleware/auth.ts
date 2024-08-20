@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { Auth } from "../mongo/models/auth";
-import { hash } from "../utils/cryptography";
-import { Time } from "../constants/server";
 import ipRangeCheck from 'ip-range-check';
-import { QueueManager } from "../bullmq/queues";
-import { AuthErrors, JobErrors, ServerErrors } from "../constants/errors";
+import { Auth } from "@src/mongo/models/auth";
+import { hash } from "@src/utils/cryptography";
+import { Time } from "@src/constants/server";
+import { QueueManager } from "@src/bullmq/queues";
+import { AuthErrors, JobErrors, ServerErrors } from "@src/constants/errors";
 
 // Ensures that incoming requests have valid and recent timestamps to prevent replay attacks.
 function checkTimestamp(req: Request): boolean {

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { MonitorWorkForceParams } from '../types';
+import { MonitorWorkForceParams } from '@src/types';
 
 // TODO: Add logic to deploy another worker
 function handleScaleUp(){

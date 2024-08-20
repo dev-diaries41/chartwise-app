@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { convertToNumber } from '../../utils/data/format';
-import { GetDocResponse, GetDocsResponse } from '../../types';
+import { GetDocResponse, GetDocsResponse } from '@src/types';
 import { ServerErrors } from '../../constants/errors';
 
 export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string, any>): Promise<GetDocResponse<T>>{

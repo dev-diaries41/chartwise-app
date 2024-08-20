@@ -1,5 +1,5 @@
 import express from 'express';
-import * as JournalController from '../controllers/journal';
+import * as JournalController from '@src/controllers/journal';
 
 const router = express.Router();
 

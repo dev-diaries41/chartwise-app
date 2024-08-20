@@ -1,4 +1,4 @@
-import { AIConfig } from "../types";
+import { AIConfig } from "@src/types";
 import dotenv from 'dotenv';
 dotenv.config();
 

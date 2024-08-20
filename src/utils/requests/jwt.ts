@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { JwtOptions, } from '../../types';
+import { JwtOptions, } from '@src/types';
 
 
 export class JwtService {

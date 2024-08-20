@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Analysis } from '../../types';
+import { Analysis } from '@src/types';
 
 
 

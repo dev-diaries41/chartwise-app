@@ -1,10 +1,10 @@
 
 import { Request, Response } from "express";
-import { AuthErrors, ServerErrors } from "../constants/errors";
-import { logger } from "../logger";
-import { addJournalEntry, getJournalEntries } from "../services/journal";
-import { TradeJournalEntrySchema } from "../utils/validation";
-import { cache } from "..";
+import { AuthErrors, ServerErrors } from "@src/constants/errors";
+import { logger } from "@src/logger";
+import { addJournalEntry, getJournalEntries } from "@src/services/journal";
+import { TradeJournalEntrySchema } from "@src/utils/validation";
+import { cache } from "@src/index";
 
 
 export async function addEntry(req: Request, res: Response) {

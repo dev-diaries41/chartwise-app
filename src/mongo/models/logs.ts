@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { LogEntry } from '../../types';
+import { LogEntry } from '@src/types';
 
 const LogEntrySchema = new mongoose.Schema<LogEntry>({
   category: { type: String, required: true },

@@ -1,11 +1,11 @@
-import { jobLogger } from "../logger";
-import { JobResult, NewJob, ServiceJobDetails, jobReceipt } from '../types'
 import { Redis } from "ioredis";
 import { Job, JobsOptions, Queue } from "bullmq";
-import { onQueueError } from "./events";
-import { JobErrors } from "../constants/errors";
-import { BackgroundJobs } from "../constants/services";
-import { Time } from "../constants/server";
+import { jobLogger } from "@src/logger";
+import { JobResult, NewJob, ServiceJobDetails, jobReceipt } from '@src/types'
+import { onQueueError } from "@src/bullmq/events";
+import { JobErrors } from "@src/constants/errors";
+import { BackgroundJobs } from "@src/constants/services";
+import { Time } from "@src/constants/server";
 
 
 

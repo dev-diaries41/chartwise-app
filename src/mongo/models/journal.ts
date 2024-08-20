@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ITradeJournalEntry } from '../../types';
+import { ITradeJournalEntry } from '@src/types';
 
 
 const TradeJournalEntrySchema = new mongoose.Schema({

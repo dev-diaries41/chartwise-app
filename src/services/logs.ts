@@ -1,12 +1,11 @@
-
-import { QueueManager } from "../bullmq/queues";
-import { logger, metricsLogger } from "../logger";
-import { LogEntryModel } from "../mongo/models/logs";
-import { addDoc } from "../mongo/utils/add";
-import { deleteDocs } from "../mongo/utils/delete";
-import { getDocs } from "../mongo/utils/get";
-import { AddDocResponse, DeleteDocsResponse, DeleteLogsOptions, GetDocsResponse, GetLogsOptions, LogEntry, MetricLog } from "../types";
-import { getFilter } from "../utils/data/queries";
+import { QueueManager } from "@src/bullmq/queues";
+import { logger, metricsLogger } from "@src/logger";
+import { LogEntryModel } from "@src/mongo/models/logs";
+import { addDoc } from "@src/mongo/utils/add";
+import { deleteDocs } from "@src/mongo/utils/delete";
+import { getDocs } from "@src/mongo/utils/get";
+import { AddDocResponse, DeleteDocsResponse, DeleteLogsOptions, GetDocsResponse, GetLogsOptions, LogEntry, MetricLog } from "@src/types";
+import { getFilter } from "@src/utils/data/queries";
 
 // Add docs is handle by an bullmq for robustness of logging
 export async function addLog(newLogJob:{log: LogEntry}): Promise<AddDocResponse>{

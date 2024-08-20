@@ -1,5 +1,5 @@
 import express from 'express';
-import { getSharedAnalysis } from '../controllers/analysis';
+import { getSharedAnalysis } from '@src/controllers/analysis';
 
 const router = express.Router();
 

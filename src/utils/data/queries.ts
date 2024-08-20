@@ -1,4 +1,4 @@
-import { BaseFilterOptions } from "../../types";
+import { BaseFilterOptions } from "@src/types";
 
 export function getDateFilter(filterDate?: string | number): Record<string, any> | undefined {
     if (filterDate === undefined) return undefined;

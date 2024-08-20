@@ -1,10 +1,11 @@
-import { getDoc, getDocs } from '../mongo/utils/get';
-import { AddDocResponse, FindOneAndUpdateResponse, GetDocsResponse, IReferral, IUser } from '../types';
-import { addDoc } from '../mongo/utils/add';
-import { findOneAndUpdateDoc } from '../mongo/utils/update';
-import { User } from '../mongo/models/user';
-import { Referrals } from '../mongo/models/referral';
-import crypto from 'crypto'
+import { getDoc, getDocs } from "@src/mongo/utils/get";
+import { AddDocResponse, FindOneAndUpdateResponse, GetDocsResponse, IReferral, IUser } from "@src/types";
+import { addDoc } from "@src/mongo/utils/add";
+import { findOneAndUpdateDoc } from "@src/mongo/utils/update";
+import { User } from "@src/mongo/models/user";
+import { Referrals } from "@src/mongo/models/referral";
+import crypto from 'crypto';
+
 // DEV ONLY
 const referralUrlPath = 'urlPath';
 

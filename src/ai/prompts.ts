@@ -1,4 +1,4 @@
-import { Analysis, IAnalyseCharts } from "../types";
+import { Analysis, IAnalyseCharts } from "@src/types";
 
 const TASK_MESSAGE = `Please provide the following details based on your analysis of the chart and expert trading knowledge:`
 const TASK_MESSAGE_SAC = `Strongly considering the trader's strategy and criteria, please provide the following details based on your analysis of the chart and expert trading knowledge:`

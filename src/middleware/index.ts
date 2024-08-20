@@ -2,8 +2,8 @@ import express from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
-import { config } from '../config';
-import { RateLimitConfig } from '../types';
+import { config } from '@src/config';
+import { RateLimitConfig } from '@src/types';
 export * from './auth'
 
 export const middleware = {

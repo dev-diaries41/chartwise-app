@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { cache, chartAnalysisQueue } from "../index";
-import { addJob, addRecurringJob, getJobResults } from "./queue";
-import { verifyJobAccess } from "../middleware";
-import { AuthErrors, ServerErrors } from "../constants/errors";
-import { getAnalysis, saveChartAnalysis } from "../services/analysis";
-import { logger } from "../logger";
-import { StoredAnalysisSchema } from "../utils/validation";
+import { cache, chartAnalysisQueue } from "@src/index";
+import { addJob, addRecurringJob, getJobResults } from "@src/controllers/queue";
+import { verifyJobAccess } from "@src/middleware";
+import { AuthErrors, ServerErrors } from "@src/constants/errors";
+import { getAnalysis, saveChartAnalysis } from "@src/services/analysis";
+import { logger } from "@src/logger";
+import { StoredAnalysisSchema } from "@src/utils/validation";
 
 
 export async function analyseChart (req: Request, res: Response){

@@ -1,5 +1,5 @@
 import Redis, { RedisOptions } from 'ioredis';
-import { CacheOptions } from '../../types';
+import { CacheOptions } from '@src/types';
 
 export class RedisCache {
   private redis: Redis;

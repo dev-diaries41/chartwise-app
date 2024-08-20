@@ -1,13 +1,13 @@
 import { Job } from "bullmq";
-import { jobLogger, logger } from "../logger";
-import { sendWebhook } from "../utils/requests/webhooks";
-import { WorkerEventHandlers } from "../types";
-import { QueueManager } from "./queues";
-import { addUsage } from "../services/usage";
-import { backgroundJobsQueue, chartAnalysisQueue } from "..";
-import { Time } from "../constants/server";
-import { AuthErrors } from "../constants/errors";
-import { logChartAnalysisMetrics } from "../services/logs";
+import { jobLogger, logger } from "@src/logger";
+import { sendWebhook } from "@src/utils/requests/webhooks";
+import { WorkerEventHandlers } from "@src/types";
+import { QueueManager } from "@src/bullmq/queues";
+import { addUsage } from "@src/services/usage";
+import { backgroundJobsQueue, chartAnalysisQueue } from "@src/index";
+import { Time } from "@src/constants/server";
+import { AuthErrors } from "@src/constants/errors";
+import { logChartAnalysisMetrics } from "@src/services/logs";
 
 // On job complete optionally send result to webhook url if provided
 export async function onComplete(job: Job){

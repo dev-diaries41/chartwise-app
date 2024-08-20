@@ -1,7 +1,7 @@
-import { ServiceJob, WorkerEventHandlers } from '../types'
 import { Redis } from "ioredis";
 import { Worker, WorkerOptions } from "bullmq";
-import { defaultHandlers } from "./events";
+import { defaultHandlers } from "@src/bullmq/events";
+import { ServiceJob, WorkerEventHandlers } from '@src/types'
 
 export class WorkerManager {
     public worker: Worker;

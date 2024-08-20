@@ -1,9 +1,9 @@
 import Stripe from "stripe";
-import { ServiceUsageErrors } from "../constants/errors";
-import { ServiceUsage } from "../mongo/models/usage";
-import { addDoc } from "../mongo/utils/add";
-import { countDocs } from "../mongo/utils/count";
-import { FREE_MONTHLY_LIMIT } from "../constants/services";
+import { ServiceUsageErrors } from "@src/constants/errors";
+import { ServiceUsage } from "@src/mongo/models/usage";
+import { addDoc } from "@src/mongo/utils/add";
+import { countDocs } from "@src/mongo/utils/count";
+import { FREE_MONTHLY_LIMIT } from "@src/constants/services";
 
 
 export async function addUsage(userId: string, service: string){

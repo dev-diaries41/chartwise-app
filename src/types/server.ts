@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { RedisOptions } from 'ioredis';
-import { QueueManager } from '../bullmq/queues';
-import { roles } from '../constants/server';
+import { QueueManager } from '@src/bullmq/queues';
+import { roles } from '@src/constants/server';
 
 export type Route  = {
   path: string;

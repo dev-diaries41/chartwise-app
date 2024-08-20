@@ -1,9 +1,9 @@
-import { logger} from "../logger";
-import { validateJob } from "../utils/validation";
-import { hash } from "../utils/cryptography";
-import { AuthErrors, JobErrors, ServerErrors } from "../constants/errors";
-import { NewJob, QueueController } from "../types";
-import { backgroundJobsQueue } from "..";
+import { logger} from "@src/logger";
+import { validateJob } from "@src/utils/validation";
+import { hash } from "@src/utils/cryptography";
+import { AuthErrors, JobErrors, ServerErrors } from "@src/constants/errors";
+import { NewJob, QueueController } from "@src/types";
+import { backgroundJobsQueue } from "@src/index";
 
 
 export async function addJob({ req, res, queueManager }: QueueController) {
