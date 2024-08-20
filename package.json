@@ -12,8 +12,8 @@
   "author": "d41dev",
   "license": "ISC",
   "_moduleAliases": {
-  "@src": "dist" 
-},
+    "@src": "dist"
+  },
   "dependencies": {
     "axios": "^1.5.1",
     "bullmq": "^5.4.4",
@@ -31,7 +31,6 @@
     "nodemon": "^3.0.2",
     "notify-utils": "^1.0.0",
     "openai": "^4.52.2",
-    "p-limit": "^3.1.0",
     "replicate": "^0.30.2",
     "stripe": "^16.2.0",
     "winston": "^3.11.0",
@@ -41,8 +40,8 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/module-alias": "^2.0.4",
     "@types/node": "^20.11.29",
-    "@types/node-cron": "^3.0.11",
     "@types/uuid": "^10.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
