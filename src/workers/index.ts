@@ -12,11 +12,11 @@ import { Time } from "@src/constants/server";
 
 
 
-export async function stopWorkers(workers: WorkerManager[] = []) {
+export async function stopWorkers(workers: WorkerManager[] = []): Promise<void> {
   await Promise.all(workers.map((worker) => worker.stopWorker()));
 }
 
-export function startWorkers(workerManagers: WorkerManager[]) {
+export function startWorkers(workerManagers: WorkerManager[]): void {
   workerManagers.forEach((workerManager) => {
     if(workerManager.worker.name === config.queues?.chartAnalysis){
       workerManager.startWorker(chartAnalysisHandlers)
@@ -26,12 +26,11 @@ export function startWorkers(workerManagers: WorkerManager[]) {
   });
 }
 
-export function initialiseWorkers(redis: Redis) {
-  const backgroundWorker = new WorkerManager(
-    config?.queues?.backgroundJobs!,
-    async (job: Job) => await runBackgroundJob(job),
-    redis
-  )
+export function initialiseWorkers(redis: Redis): {
+  backgroundWorker: WorkerManager;
+  chartAnalysisWorker: WorkerManager;
+} {
+  const backgroundWorker = new WorkerManager(config?.queues?.backgroundJobs!, runBackgroundJob, redis);
 
   const chartAnalysisWorker = new WorkerManager(
     config?.queues?.chartAnalysis!, 

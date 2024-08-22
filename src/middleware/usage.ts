@@ -5,6 +5,7 @@ import * as Usage from "@src/services/usage";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { FREE_DAILY_LIMIT } from "@src/constants/services";
+import { cache } from "@src/index";
 
 
 export async function checkUsageLimit(req: Request, res: Response, next: NextFunction) {
@@ -14,8 +15,8 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
             return res.status(400).json({ message: AuthErrors.INVALID_USER_ID });
         }
 
-        const {subscription} = await getSubscription(userId) || {};
-        const maxMonthlyUsage = Usage.getMaxMonthlyUsage(subscription?.items.data[0]?.plan?.amount, subscription?.status);
+        const {amount, status} = await getSubscription(userId) || {};
+        const maxMonthlyUsage = Usage.getMaxMonthlyUsage(amount, status);
         const dailyUsage = await Usage.getDailyUsageCount(userId, config?.queues?.chartAnalysis!);
         const monthlyUsage = await Usage.getMonthlyUsageCount(userId, config?.queues?.chartAnalysis!);
 
@@ -26,7 +27,7 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
 
             // Define usage limits and errors
             const limits = {
-                daily: subscription?.status !== 'active' ? FREE_DAILY_LIMIT : null,
+                daily: status !== 'active' ? FREE_DAILY_LIMIT : null,
                 monthly: maxMonthlyUsage,
             };
 
@@ -45,6 +46,7 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
                 logger.error({ message: errors.monthly, userId, monthlyUsage });
                 return res.status(403).json({ message: errors.monthly });
             }
+            
 
         next();
     } catch (error: any) {

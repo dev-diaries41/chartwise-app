@@ -8,7 +8,6 @@ import { BackgroundJobs } from "@src/constants/services";
 import { Time } from "@src/constants/server";
 
 
-
 export class QueueManager {
   public queue: Queue;
   private readonly jobOptions: JobsOptions;
