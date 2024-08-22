@@ -5,7 +5,6 @@ import * as Usage from "@src/services/usage";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { FREE_DAILY_LIMIT } from "@src/constants/services";
-import { cache } from "@src/index";
 
 
 export async function checkUsageLimit(req: Request, res: Response, next: NextFunction) {
@@ -31,22 +30,16 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
                 monthly: maxMonthlyUsage,
             };
 
-            const errors = {
-                daily: ServiceUsageErrors.EXCEEDED_FREE_LIMIT,
-                monthly: ServiceUsageErrors.EXCEEDED_PLAN_LIMIT,
-            };
-
             // Check usage limits
             if (limits.daily && dailyUsage + 1 > limits.daily) {
-                logger.error({ message: errors.daily, userId, dailyUsage });
-                return res.status(403).json({ message: errors.daily });
+                logger.error({ message: ServiceUsageErrors.EXCEEDED_FREE_LIMIT, userId, dailyUsage });
+                return res.status(403).json({ message: ServiceUsageErrors.EXCEEDED_FREE_LIMIT });
             }
 
             if (limits.monthly && monthlyUsage + 1 > limits.monthly) {
-                logger.error({ message: errors.monthly, userId, monthlyUsage });
-                return res.status(403).json({ message: errors.monthly });
+                logger.error({ message: ServiceUsageErrors.EXCEEDED_PLAN_LIMIT, userId, monthlyUsage });
+                return res.status(403).json({ message: ServiceUsageErrors.EXCEEDED_PLAN_LIMIT });
             }
-            
 
         next();
     } catch (error: any) {
