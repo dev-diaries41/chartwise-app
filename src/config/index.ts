@@ -10,7 +10,7 @@ dotenv.config();
 
 export const config: ServerConfig = {
   port: parseInt(process.env.PORT ?? '10000'),
-  databaseUrl: process.env.TEST_MONGO_URL!,
+  databaseUrl: process.env.MONGODB_URL!,
   logger: {
     logFilePaths: ['logs/error.log', 'logs/combined.log', 'logs/job.log', 'logs/metrics.log'],
     rentionTime: 7,

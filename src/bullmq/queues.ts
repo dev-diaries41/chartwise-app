@@ -57,6 +57,7 @@ export class QueueManager {
       } 
   }
 
+  // Must use a unique job name
   public async addRecurringJob(name: string, jobData: Record<string, any> = {}, pattern = '0 0 * * * *'): Promise<void> {
       const existingBackgroundJob = await this.findJobByName(name);
       if(!existingBackgroundJob){    
@@ -68,14 +69,17 @@ export class QueueManager {
   }
 
   public async findJobByName(name: string): Promise<Job<any> | null> {
-      const jobs = await this.queue.getJobs(['wait', 'active', 'completed', 'failed', 'delayed']);
-      for (const job of jobs) {
-          if (job.name === name) {
-              return job;
-          }
-      }
-      return null;
-  }
+    // Check 'delayed', 'wait', and 'active' jobs first since primary use case for cancelling jobs
+    let jobs = await this.queue.getJobs(['delayed', 'wait', 'active']);
+    const job = jobs?.find(job => job.name === name);
+    
+    if (job) return job;
+
+    jobs = await this.queue.getJobs(['completed', 'failed']);
+    return jobs?.find(job => job.name === name) || null;
+}
+
+
 
   public async getResults(jobId: string, backgroundQueue?: QueueManager): Promise<JobResult>{
       const job = await this.queue.getJob(jobId);
@@ -109,6 +113,18 @@ export class QueueManager {
       jobLogger.error({ message: `Error cancelling job`, jobId, details: error.message });
     }
   }
+
+  public async cancelJobByName(name: string): Promise<void> {
+    try {
+      const job = await this.findJobByName(name);
+      if (!job) throw new Error(JobErrors.JOB_NOT_FOUND);
+      await job.remove();
+      jobLogger.info({ message: `Cancelled job`, jobName: name});
+    } catch (error: any) {
+      jobLogger.error({ message: `Error cancelling job`, jobName: name, details: error.message });
+    }
+  }
+
 
   private getDelay(when: number) {
       const delay = when - Date.now();
