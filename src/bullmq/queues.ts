@@ -70,16 +70,13 @@ export class QueueManager {
 
   public async findJobByName(name: string): Promise<Job<any> | null> {
     // Check 'delayed', 'wait', and 'active' jobs first since primary use case for cancelling jobs
-    let jobs = await this.queue.getJobs(['delayed', 'wait', 'active']);
-    const job = jobs?.find(job => job.name === name);
-    
+    const pendingJobs = await this.queue.getJobs(['delayed', 'wait', 'active']);
+    const job = pendingJobs?.find(job => job.name === name);
     if (job) return job;
 
-    jobs = await this.queue.getJobs(['completed', 'failed']);
-    return jobs?.find(job => job.name === name) || null;
+    const finishedJobs = await this.queue.getJobs(['completed', 'failed']);
+    return finishedJobs?.find(job => job.name === name) || null;
 }
-
-
 
   public async getResults(jobId: string, backgroundQueue?: QueueManager): Promise<JobResult>{
       const job = await this.queue.getJob(jobId);
