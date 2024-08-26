@@ -46,8 +46,7 @@ export class QueueManager {
   public async addToQueue(newJob: NewJob): Promise<jobReceipt> {
       try {
           const job = await this.addJob(newJob);
-          const jobReceipt = await this.getJobReceipt(job);
-          return jobReceipt;
+          return await this.getJobReceipt(job);
       } catch (error: any) {
           jobLogger.error({message: JobErrors.JOB_NOT_ADDED, details: error.message});
           throw new Error(JobErrors.JOB_NOT_ADDED);
@@ -57,8 +56,7 @@ export class QueueManager {
   public async addBatchToQueue(newJobs: NewJob[]): Promise<jobReceipt[]> {
     try {
         const jobs = await this.addBatchJobs(newJobs);
-        const jobReceipts = await this.getJobReceipts(jobs);
-        return jobReceipts;
+        return await this.getJobReceipts(jobs);
     } catch (error: any) {
         jobLogger.error({message: JobErrors.JOB_NOT_ADDED, details: error.message});
         throw new Error(JobErrors.JOB_NOT_ADDED);
@@ -68,8 +66,7 @@ export class QueueManager {
   public async removeCompletedJob(jobId: string): Promise<void> {
       const job = await this.queue.getJob(jobId);
       if (job && job.finishedOn !== undefined) {
-        await job.remove();
-        return;
+        return await job.remove();
       } 
   }
 

@@ -1,7 +1,6 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { cache, chartAnalysisQueue } from "@src/index";
 import { addJob, addRecurringJob, getJobResults } from "@src/controllers/queue";
-import { verifyJobAccess } from "@src/middleware";
 import { AuthErrors, ServerErrors } from "@src/constants/errors";
 import { getAnalysis, saveChartAnalysis } from "@src/services/analysis";
 import { logger } from "@src/logger";
@@ -25,9 +24,7 @@ export async function getAnalysisResult(req: Request, res: Response){
   })
 };
 
-export async function authAnalysisResults(req: Request, res: Response, next: NextFunction){ 
-  await verifyJobAccess(req, res, next, chartAnalysisQueue)
-}
+
 
 export async function analyseChartRecurring (req: Request, res: Response){
   await addRecurringJob({

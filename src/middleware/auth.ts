@@ -6,6 +6,7 @@ import { AuthErrors, JobErrors, ServerErrors } from "@src/constants/errors";
 import { JwtPayload } from 'jsonwebtoken';
 import { logger } from '@src/logger';
 import { JwtService } from '@src/utils/requests/jwt';
+import { chartAnalysisQueue } from "@src/index";
 
 
 
@@ -59,13 +60,18 @@ export function issueNewToken(req: Request, res: Response, next: NextFunction) {
 
 
 
-export async function verifyJobAccess(req: Request, res: Response, next: NextFunction, queueManager : QueueManager) {
+async function verifyJobAccess(req: Request, res: Response, next: NextFunction, queueManager : QueueManager) {
   const { jobId } = req.params;
   const apiKey = req.headers['api-key'];
+  const userId = req.jwtPayload?.userId;
 
   if (!jobId) {
       return res.status(400).json({ message: JobErrors.INVALID_JOB_ID });
   }
+
+  if (!userId) {
+    return res.status(401).json({ message: AuthErrors.INVALID_USER_ID });
+}
   try {
       const job = await queueManager.queue.getJob(jobId);
 
@@ -73,7 +79,7 @@ export async function verifyJobAccess(req: Request, res: Response, next: NextFun
           return res.status(404).json({ message: JobErrors.JOB_NOT_FOUND });
       }
       const hashedApiKey = hash(apiKey as string);
-      if (job.returnvalue && job.returnvalue.initiatedBy !== hashedApiKey) {
+      if (!job.returnvalue || job.returnvalue.initiatedBy !== hashedApiKey || job.returnvalue.userId !== userId) {
           return res.status(401).json({ message: AuthErrors.UNAUTHORIZED });
       }
       next();
@@ -81,6 +87,11 @@ export async function verifyJobAccess(req: Request, res: Response, next: NextFun
       console.error('Error in authJobRetrieval:', error.message);
       return res.status(500).json({ message: ServerErrors.INTERNAL_SERVER });
   }
+}
+
+
+export async function authAnalysisResults(req: Request, res: Response, next: NextFunction){ 
+  await verifyJobAccess(req, res, next, chartAnalysisQueue)
 }
 
 export async function apiKeyAuth(req: Request, res: Response, next: NextFunction) {
