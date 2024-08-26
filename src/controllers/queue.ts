@@ -14,13 +14,13 @@ export async function addJob({ req, res, queueManager }: QueueController) {
       return res.status(400).json({message: validationResult.error});
     }
 
-    const { when, jobData } = validationResult.data;
+    const { opts, data } = validationResult.data;
     const {userId} = req.jwtPayload || {};
     const apiKey = req.headers['api-key'];
     if (!apiKey) throw new Error(AuthErrors.MISSING_API_KEY);
 
     const initiatedBy = hash(apiKey as string);
-    const newJob: NewJob = { serviceName: queueManager.queue.name, when, jobData: { ...jobData, initiatedBy, userId }};
+    const newJob: NewJob = { name: queueManager.queue.name, data: { ...data, initiatedBy, userId }, opts};
     const jobReceipt = await queueManager.addToQueue(newJob);
     return res.status(200).json({data: jobReceipt});
   } catch (error:any) {

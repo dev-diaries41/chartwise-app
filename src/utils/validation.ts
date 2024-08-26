@@ -2,8 +2,10 @@ import { z } from 'zod';
 import { Request } from 'express';
 
 const serviceJobSchema = z.object({
-  when: z.number().optional().describe('When must be a valid number in milliseconds').default(() => Date.now()),
-  jobData: z.record(z.any()).optional().describe('Params must be an object with any properties').default({})
+  opts: z.object({
+    delay: z.number().describe('Delay must be a valid number in milliseconds').default(0),
+  }).optional(),
+  data: z.record(z.any()).optional().describe('Job data must be an object').default({})
 });
 
 export function validateJob (req: Request){

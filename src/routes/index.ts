@@ -1,6 +1,6 @@
 import express from 'express';
 import chartAnalysisRoute from './analysis';
-import jwtRoute from './jwt'
+import jwtRoute from './auth'
 import usageRoute from './usage'
 import sharedAnalysisRoute from "./share"
 import journalRoute from "./journal"

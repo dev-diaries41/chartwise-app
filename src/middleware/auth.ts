@@ -1,39 +1,60 @@
 import { NextFunction, Request, Response } from "express";
-import ipRangeCheck from 'ip-range-check';
 import { Auth } from "@src/mongo/models/auth";
 import { hash } from "@src/utils/cryptography";
-import { Time } from "@src/constants/server";
 import { QueueManager } from "@src/bullmq/queues";
 import { AuthErrors, JobErrors, ServerErrors } from "@src/constants/errors";
+import { JwtPayload } from 'jsonwebtoken';
+import { logger } from '@src/logger';
+import { JwtService } from '@src/utils/requests/jwt';
 
-// Ensures that incoming requests have valid and recent timestamps to prevent replay attacks.
-function checkTimestamp(req: Request): boolean {
-  const timestamp = req.headers['timestamp'];
 
-  if (!timestamp) {
-    return false; 
+
+declare global {
+    namespace Express {
+      interface Request {
+        jwtPayload?: JwtPayload & {userId: string};
+      }
+    }
   }
 
-  const currentTime = Math.floor(Date.now() / 1000);
-  const requestTime = parseInt(timestamp as string);
+export const jwtService = new JwtService({
+  expiresIn: '1h',
+  secret: 'your_jwt_secret',
+});
 
-  if (isNaN(requestTime) || Math.abs(currentTime - requestTime) > 5 * Time.min) {
-    return false; // Request timestamp is too old or too far in the future
+// Middleware to check JWT token
+export function checkToken(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers['authorization']?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: AuthErrors.INVALID_TOKEN });
   }
 
-  return true; 
+  try {
+    const jwtPayload = jwtService.verifyToken(token);
+    ['iat', 'exp'].forEach(keyToRemove => {
+      delete jwtPayload[keyToRemove];
+    })
+    req.jwtPayload = jwtPayload as JwtPayload & {userId: string}
+    next();
+  } catch (error: any) {
+    logger.error(error.message)
+    if(error.message === AuthErrors.EXPIRED_TOKEN){
+      return res.status(401).json({ message: AuthErrors.EXPIRED_TOKEN });
+    }
+    return res.status(401).json({ message: AuthErrors.INVALID_TOKEN });
+  }
 }
 
-// Checks if the client's IP address is within the specified IP range(s).
-function checkIp(req: Request, ipRange: string | string[]): boolean {
-  // Retrieve the client's IP address from the request object
-  const clientIP = req.ip;
-
-  if (!clientIP || !ipRangeCheck(clientIP as string, ipRange)) {
-    return false; // Client IP is not within the specified range(s)
+// Middleware to issue a new token
+export function issueNewToken(req: Request, res: Response, next: NextFunction) {
+  if (!req.jwtPayload) {
+    return res.status(401).json({ message: 'User information is missing' });
   }
 
-  return true; 
+  const newToken = jwtService.issueToken(req.jwtPayload);
+  res.setHeader('Authorization', `Bearer ${newToken}`);
+  next();
 }
 
 
@@ -62,7 +83,7 @@ export async function verifyJobAccess(req: Request, res: Response, next: NextFun
   }
 }
 
-export async function auth(req: Request, res: Response, next: NextFunction) {
+export async function apiKeyAuth(req: Request, res: Response, next: NextFunction) {
   const apiKey = req.headers['api-key'];
 
   if(!apiKey){

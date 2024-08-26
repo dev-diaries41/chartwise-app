@@ -3,12 +3,12 @@ import { chartAnalysisMultiPrompt, chartAnalysisPrompt } from "@src/ai/prompts";
 import { ChartAnalysis } from "@src/mongo/models/analysis";
 import { addDoc } from "@src/mongo/utils/add";
 import { getDoc } from "@src/mongo/utils/get";
-import { ServiceJobDetails, AddDocResponse, Analysis, IAnalyseCharts } from "@src/types";
+import { ServiceJobData, AddDocResponse, Analysis, IAnalyseCharts } from "@src/types";
 import { uploadMultiple } from "@src/utils/data/cloudinary";
 import { AnalysisJobScehma } from "@src/utils/validation";
 
 
-export async function analyseCharts(analysisJobDetails: IAnalyseCharts & ServiceJobDetails): Promise<{output: string} & Partial<ServiceJobDetails>> {
+export async function analyseCharts(analysisJobDetails: IAnalyseCharts & ServiceJobData): Promise<{output: string} & ServiceJobData> {
     const validatedAnalysis = AnalysisJobScehma.safeParse(analysisJobDetails);
     if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
     const prompt = analysisJobDetails.chartUrls.length > 0? chartAnalysisMultiPrompt(analysisJobDetails.metadata): chartAnalysisPrompt(analysisJobDetails.metadata);

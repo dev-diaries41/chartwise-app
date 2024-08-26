@@ -1,5 +1,5 @@
 services:
-  app:
+  chartwise:
     build: .
     ports:
       - "3000:3000"
@@ -36,7 +36,7 @@ services:
 #       - caddy_data:/data
 #       - caddy_config:/config
 #     depends_on:
-#       - app
+#       - chartwise
 
 # volumes:
 #   caddy_data:

@@ -70,12 +70,6 @@ export type Webhook = {
   payload: any;
 }
 
-export interface ServiceJobDetails {
-  userId?: string
-  initiatedBy: string;
-  webhookUrl?: string;
-}
-
 export type NotificationRecipient = {
   telegramChatId?: string;
   discordWebhookUrl?: string;

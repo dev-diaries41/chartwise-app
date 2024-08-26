@@ -1,7 +1,7 @@
 import { Redis } from "ioredis";
 import { Job, JobsOptions, Queue } from "bullmq";
 import { jobLogger } from "@src/logger";
-import { JobResult, NewJob, ServiceJobDetails, jobReceipt } from '@src/types'
+import { JobResult, NewJob, ServiceJobData, jobReceipt } from '@src/types'
 import { onQueueError } from "@src/bullmq/events";
 import { JobErrors } from "@src/constants/errors";
 import { BackgroundJobs } from "@src/constants/services";
@@ -25,10 +25,12 @@ export class QueueManager {
   }
 
   private async addJob(newJob: NewJob): Promise<Job> {
-    const { serviceName, jobData, when } = newJob;
-    const delay = this.getDelay(when);
-    const jobOptions = { delay,...this.jobOptions };
-    return await this.queue.add(serviceName, jobData, jobOptions);
+    const { name, data, opts = {} } = newJob;
+    return await this.queue.add(name, data, { ...opts,...this.jobOptions });
+  }
+
+  private async addBatchJobs(newJobs: NewJob[]): Promise<Job[]> {
+    return await this.queue.addBulk(newJobs);
   }
   
   private async getJobReceipt(job: Job): Promise<jobReceipt> {
@@ -36,17 +38,31 @@ export class QueueManager {
     return { jobId: job.id, delay: job.opts.delay!, status, queue: await this.queue.count(), when: job.timestamp, jobName: job.name };
   }
 
+  private async getJobReceipts(jobs: Job[]): Promise<jobReceipt[]> {
+   return await Promise.all(jobs.map(job => this.getJobReceipt(job)));
+  }
+
   public async addToQueue(newJob: NewJob): Promise<jobReceipt> {
       try {
           const job = await this.addJob(newJob);
           const jobReceipt = await this.getJobReceipt(job);
-          jobLogger.info({jobReceipt});
           return jobReceipt;
       } catch (error: any) {
           jobLogger.error({message: JobErrors.JOB_NOT_ADDED, details: error.message});
           throw new Error(JobErrors.JOB_NOT_ADDED);
       }
   }
+
+  public async addBatchToQueue(newJobs: NewJob[]): Promise<jobReceipt[]> {
+    try {
+        const jobs = await this.addBatchJobs(newJobs);
+        const jobReceipts = await this.getJobReceipts(jobs);
+        return jobReceipts;
+    } catch (error: any) {
+        jobLogger.error({message: JobErrors.JOB_NOT_ADDED, details: error.message});
+        throw new Error(JobErrors.JOB_NOT_ADDED);
+    }
+}
 
   public async removeCompletedJob(jobId: string): Promise<void> {
       const job = await this.queue.getJob(jobId);
@@ -94,7 +110,7 @@ export class QueueManager {
     }
 }
 
-  private filterJobReturnValue(returnValue: object & Partial<ServiceJobDetails>): Partial<ServiceJobDetails> {
+  private filterJobReturnValue(returnValue: object & Partial<ServiceJobData>): Partial<ServiceJobData> {
     const { initiatedBy, userId, ...filteredData } = returnValue;
     return filteredData;
   }
@@ -121,12 +137,6 @@ export class QueueManager {
     }
   }
 
-
-  private getDelay(when: number) {
-      const delay = when - Date.now();
-      return delay > 0 ? delay : 0;
-  }
-
   public async getJobCompletionTime(jobId: string): Promise<number | null> {
     const job = await this.queue.getJob(jobId);
     return (!job || !job.finishedOn)? null: job.finishedOn - job.timestamp; 
@@ -138,7 +148,7 @@ export class QueueManager {
   }
 
   public static async removeExpiredJob(job: Job, backgroundJobQM: QueueManager, ttl: number = Time.min){
-    const newJob: NewJob = {serviceName: backgroundJobQM.getBackgroundJobName(job), when: Date.now() + ttl, jobData: {jobId: job.id}};
+    const newJob: NewJob = {name: backgroundJobQM.getBackgroundJobName(job), data: {jobId: job.id}, opts: {delay: ttl}};
     await backgroundJobQM.addToQueue(newJob);
   }
   

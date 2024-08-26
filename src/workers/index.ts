@@ -5,7 +5,7 @@ import { config } from "@src/config";
 import { WorkerManager } from "@src/bullmq/worker";
 import { runBackgroundJob } from "@src/services/background";
 import { analyseCharts } from "@src/services/analysis";
-import { IAnalyseCharts, ServiceJobDetails } from "@src/types";
+import { IAnalyseCharts, ServiceJobData } from "@src/types";
 import { chartAnalysisHandlers } from "@src/bullmq/events";
 import { BackgroundJobs } from "@src/constants/services";
 import { Time } from "@src/constants/server";
@@ -38,7 +38,7 @@ export function initialiseWorkers(redis: Redis): {
      if(job.name.startsWith(BackgroundJobs.REMOVE_EXPIRED_JOBS) && job.id){
       return await chartAnalysisQueue.removeCompletedJob(job.id);
      }   
-      return await analyseCharts(job.data as IAnalyseCharts & ServiceJobDetails)
+      return await analyseCharts(job.data as IAnalyseCharts & ServiceJobData)
     }, 
     redis,
     {

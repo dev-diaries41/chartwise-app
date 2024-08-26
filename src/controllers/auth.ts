@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { jwtService } from '@src/middleware/jwt';
+import { jwtService } from '@src/middleware';
 import { ServerErrors } from '@src/constants/errors';
 import { validateUserInfo } from '@src/utils/validation';
 

@@ -9,11 +9,16 @@ export type MonitorWorkForceParams = {
 
 export type ServiceJob = ((jobData: any) => any | void) | ((jobData: any) => Promise<any>);
 
+export interface ServiceJobData extends Record<string,any> {
+  userId?: string;
+  initiatedBy?: string;
+  webhookUrl?: string;}
+
+
 export interface NewJob { 
-    serviceName: string;
-    jobData: Record<string, any>;
-    when: number;
-    webhookUrl?: string;
+    name: string;
+    data: ServiceJobData
+    opts?: {delay: number};
   }
 
 export interface JobResult { 
