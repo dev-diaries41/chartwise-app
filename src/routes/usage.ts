@@ -3,8 +3,8 @@ import * as UsageController from '@src/controllers/usage';
 
 const router = express.Router();
 
-router.get('/daily/:userId', UsageController.dailyUsage);
-router.get('/monthly/:userId', UsageController.monthlyUsage);
+router.get('/today/:userId', UsageController.todaysUsage);
+router.get('/month/:userId', UsageController.monthlyUsage);
 router.get('/total/:userId', UsageController.totalUsage);
 
 

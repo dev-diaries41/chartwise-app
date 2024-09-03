@@ -1,24 +1,12 @@
 import { z } from 'zod';
-import { Request } from 'express';
 
-const serviceJobSchema = z.object({
+export const ServiceJobSchema = z.object({
   opts: z.object({
     delay: z.number().describe('Delay must be a valid number in milliseconds').default(0),
   }).optional(),
   data: z.record(z.any()).optional().describe('Job data must be an object').default({})
 });
 
-export function validateJob (req: Request){
-    return serviceJobSchema.safeParse(req.body);
-};
-
-const userInfoSchema = z.object({
-  userId: z.string().min(1).describe('A valid userId is required'),
-});
-
-export function validateUserInfo (req: Request){
-   return userInfoSchema.safeParse(req.body);
-};
 
 export const StoredAnalysisSchema = z.object({
   analysis: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
@@ -111,4 +99,17 @@ export const TradeJournalEntrySchema = z.object({
     required_error: 'Updated At is required',
     invalid_type_error: 'Updated At must be a valid date',
   })),
+});
+
+
+export const UserSchema = z.object({
+  name: z.string().optional(),
+  username: z.string().optional(),
+  email: z.string()
+    .email({ message: 'A valid email address is required.' })
+    .regex(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      { message: 'The email must follow the correct syntax (e.g., user@example.com).' }
+    ),
+  password: z.string().min(8, { message: 'Password must be at least 8 characters long.' })
 });

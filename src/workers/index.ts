@@ -2,11 +2,11 @@ import { Redis } from "ioredis";
 import { Job } from "bullmq";
 import { chartAnalysisQueue } from "@src/index";
 import { config } from "@src/config";
-import { WorkerManager } from "@src/bullmq/worker";
-import { runBackgroundJob } from "@src/services/background";
+import { WorkerManager, ServiceJobData } from "qme";
+import { handleBackgroundJob } from "@src/services/background";
 import { analyseCharts } from "@src/services/analysis";
-import { IAnalyseCharts, ServiceJobData } from "@src/types";
-import { chartAnalysisHandlers } from "@src/bullmq/events";
+import { IAnalyseCharts } from "@src/types";
+import { chartAnalysisHandlers, defaultHandlers } from "@src/bullmq/events";
 import { BackgroundJobs } from "@src/constants/services";
 import { Time } from "@src/constants/server";
 
@@ -19,10 +19,9 @@ export async function stopWorkers(workers: WorkerManager[] = []): Promise<void> 
 export function startWorkers(workerManagers: WorkerManager[]): void {
   workerManagers.forEach((workerManager) => {
     if(workerManager.worker.name === config.queues?.chartAnalysis){
-      workerManager.startWorker(chartAnalysisHandlers)
-      return;
+     return  workerManager.startWorker(chartAnalysisHandlers);
     }
-    workerManager.startWorker()
+    return workerManager.startWorker(defaultHandlers);
   });
 }
 
@@ -30,7 +29,7 @@ export function initialiseWorkers(redis: Redis): {
   backgroundWorker: WorkerManager;
   chartAnalysisWorker: WorkerManager;
 } {
-  const backgroundWorker = new WorkerManager(config?.queues?.backgroundJobs!, runBackgroundJob, redis);
+  const backgroundWorker = new WorkerManager(config?.queues?.backgroundJobs!, handleBackgroundJob, redis);
 
   const chartAnalysisWorker = new WorkerManager(
     config?.queues?.chartAnalysis!, 

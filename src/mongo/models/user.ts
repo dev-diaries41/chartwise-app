@@ -4,10 +4,10 @@ import { IUser } from '@src/types';
 
 const userSchema = new mongoose.Schema({
   name: { type: String, },
-  email: { type: String, required: true },
-  referralCode: { type: String, required: true, unique: true },
-  referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  referredUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  username: { type: String, },
+  email: { type: String, required: true, unique: true },
+  hashedPassword: { type: String, required: true },
+  salt: { type: String, required: true },
 });
 
 

@@ -1,6 +1,6 @@
 {
   "name": "chartwise-server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Backend for chartwise a tool to analyse charts",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
-    "bullmq": "^5.4.4",
     "cloudinary": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -31,6 +30,7 @@
     "nodemon": "^3.0.2",
     "notify-utils": "^1.0.0",
     "openai": "^4.52.2",
+    "qme": "^1.0.4",
     "replicate": "^0.30.2",
     "stripe": "^16.2.0",
     "winston": "^3.11.0",

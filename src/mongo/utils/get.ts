@@ -9,7 +9,6 @@ export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string
   try {
     const options = { session };
     const document = await model.findOne(filter, null, options).session(session);
-
     if (!document) {
       await session.abortTransaction();
       session.endSession();

@@ -1,41 +1,26 @@
 import { Job } from "bullmq";
 import { jobLogger, logger } from "@src/logger";
 import { sendWebhook } from "@src/utils/requests/webhooks";
-import { WorkerEventHandlers } from "@src/types";
-import { QueueManager } from "@src/bullmq/queues";
+import { QueueManager, WorkerEventHandlers} from "qme";
 import { addUsage } from "@src/services/usage";
 import { backgroundJobsQueue, chartAnalysisQueue } from "@src/index";
 import { Time } from "@src/constants/server";
 import { AuthErrors } from "@src/constants/errors";
-import { logChartAnalysisMetrics } from "@src/services/logs";
+import { logChartAnalysisMetrics, logQueueMetrics } from "@src/services/logs";
 
-// On job complete optionally send result to webhook url if provided
-export async function onComplete(job: Job){
+async function onComplete(job: Job){
     if(job.returnvalue?.webhookUrl){
         const success = await sendWebhook({url: job.returnvalue.webhookUrl, payload: {...job.returnvalue, jobId: job.id}})
     }
     jobLogger.info({message: 'Complete job', jobName: job.name, jobId: job.id});
 }
 
-export async function onCompleteRemoveJobTTL(job: Job, backgroundJobQM: QueueManager, ttl: number = Time.min){
+export async function onCompleteRemoveJobTTL(job: Job, backgroundJobQM: QueueManager, ttl: number = 30 * 1000 * 60){
     try {
         await onComplete(job);
         await QueueManager.removeExpiredJob(job, backgroundJobQM, ttl)
     } catch (error: any) {
         jobLogger.error({message: "Error in onCompleteRemoveJobTTL", details: error.message})
-    }
-}
-
-export async function onCompleteUpdateUsage(job: Job){
-    try {
-        const {userId} = job.returnvalue || {};
-        if(!userId) throw new Error(AuthErrors.INVALID_USER_ID)
-        const result = await addUsage(userId, job.queueName);
-        if(!result.success){
-            logger.error({error: result.message, userId})
-        }
-    } catch (error: any) {
-        jobLogger.error({message: "Error in onCompleteUpdateUsage", details: error.message})
     }
 }
 
@@ -67,11 +52,35 @@ export const defaultHandlers: WorkerEventHandlers = {
     onDrained,
 }
 
+async function updateUsage(job: Job){
+    try {
+        const {userId} = job.returnvalue || {};
+        if(!userId) throw new Error(AuthErrors.INVALID_USER_ID)
+        const result = await addUsage(userId, job.queueName);
+        if(!result.success){
+            logger.error({error: result.message, userId})
+        }
+    } catch (error: any) {
+        jobLogger.error({message: "Error in updateUsage", details: error.message})
+    }
+}
+
+async function removeCompletedJobTTL(job: Job, backgroundJobQM: QueueManager, ttl: number = Time.min * 30){
+    try {
+        await QueueManager.removeExpiredJob(job, backgroundJobQM, ttl)
+    } catch (error: any) {
+        jobLogger.error({message: "Error in removeCompletedJobTTL", details: error.message})
+    }
+}
+
+
 async function onChartAnalysisComplete(job: Job){
-    await onCompleteUpdateUsage(job);
-    await onCompleteRemoveJobTTL(job, backgroundJobsQueue);
+    await onComplete(job);
+    await updateUsage(job);
+    await removeCompletedJobTTL(job, backgroundJobsQueue);
     if(job.id){
         await logChartAnalysisMetrics(job.id, chartAnalysisQueue);
+        await logQueueMetrics(job.id, chartAnalysisQueue);
     }
 }
 

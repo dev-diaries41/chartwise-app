@@ -67,8 +67,3 @@ export interface TranscribeOpts {
   }
   
 
-export  interface EventHandler {
-    event: string;
-    handler: (args: any) => void;
-}
-  

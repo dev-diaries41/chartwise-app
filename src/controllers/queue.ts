@@ -1,21 +1,22 @@
+import {NewJob} from "qme";
 import { logger} from "@src/logger";
-import { validateJob } from "@src/utils/validation";
 import { hash } from "@src/utils/cryptography";
 import { AuthErrors, JobErrors, ServerErrors } from "@src/constants/errors";
-import { NewJob, QueueController } from "@src/types";
+import { QueueController } from "@src/types";
 import { backgroundJobsQueue } from "@src/index";
+import { ServiceJobSchema } from "@src/constants/schemas";
 
 
 export async function addJob({ req, res, queueManager }: QueueController) {
   try {
-    const validationResult = validateJob(req);
+    const validationResult = ServiceJobSchema.safeParse(req.body);
 
     if (!validationResult.success) {
       return res.status(400).json({message: validationResult.error});
     }
 
     const { opts, data } = validationResult.data;
-    const {userId} = req.jwtPayload || {};
+    const userId = req.jwtPayload?.email;
     const apiKey = req.headers['api-key'];
     if (!apiKey) throw new Error(AuthErrors.MISSING_API_KEY);
 
@@ -34,7 +35,7 @@ export async function addJob({ req, res, queueManager }: QueueController) {
 
 export async function addRecurringJob({ req, res, queueManager }: QueueController) {
   try {
-    const validationResult = validateJob(req);
+    const validationResult = ServiceJobSchema.safeParse(req.body);
 
     if (!validationResult.success) {
       return res.status(400).json(validationResult);
@@ -52,7 +53,6 @@ export async function addRecurringJob({ req, res, queueManager }: QueueControlle
     res.status(500).json({ message: ServerErrors.INTERNAL_SERVER });
   }
 }
-
 
 export async function getJobResults({ req, res, queueManager }: QueueController) {
   try {

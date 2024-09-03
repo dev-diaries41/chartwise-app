@@ -4,7 +4,7 @@ import { addJob, addRecurringJob, getJobResults } from "@src/controllers/queue";
 import { AuthErrors, ServerErrors } from "@src/constants/errors";
 import { getAnalysis, saveChartAnalysis } from "@src/services/analysis";
 import { logger } from "@src/logger";
-import { StoredAnalysisSchema } from "@src/utils/validation";
+import { StoredAnalysisSchema } from "@src/constants/schemas";
 
 
 export async function analyseChart (req: Request, res: Response){
@@ -15,7 +15,6 @@ export async function analyseChart (req: Request, res: Response){
   });
 };
 
-
 export async function getAnalysisResult(req: Request, res: Response){
   await getJobResults({
     req,
@@ -23,8 +22,6 @@ export async function getAnalysisResult(req: Request, res: Response){
     queueManager: chartAnalysisQueue,
   })
 };
-
-
 
 export async function analyseChartRecurring (req: Request, res: Response){
   await addRecurringJob({
@@ -36,7 +33,7 @@ export async function analyseChartRecurring (req: Request, res: Response){
 
 export async function saveAnalysis(req: Request, res: Response) {
   try {
-    const userId = req.jwtPayload?.userId ;
+    const userId = req.jwtPayload?.email ;
     const {analysis} = req.body;
     if(!userId) return res.status(400).json({ message: AuthErrors.INVALID_USER_ID});
 

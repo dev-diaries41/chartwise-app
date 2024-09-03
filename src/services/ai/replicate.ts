@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
-import { ModelErrors } from '@src/ai/errors';
-import { aiConfig } from '@src/ai/config';
-import { defaultPromptTemplate } from '@src/ai/constants/replicate';
-import { defaultImageGenOpts, defaultTranscribeOpts } from '@src/ai/constants/replicate';
-import { ImageGenOpts, ReplicateRunParams, TranscribeOpts } from '@src/types';
 import Replicate from 'replicate';
+import { ModelErrors } from './errors';
+import { aiConfig } from './config';
+import { defaultPromptTemplate } from './constants/replicate';
+import { defaultImageGenOpts, defaultTranscribeOpts } from './constants/replicate';
+import { ImageGenOpts, ReplicateRunParams, TranscribeOpts } from '@src/types';
 
 dotenv.config();
 

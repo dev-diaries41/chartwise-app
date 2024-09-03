@@ -1,5 +1,6 @@
-import { AIConfig } from "@src/types";
 import dotenv from 'dotenv';
+import { AIConfig } from "@src/types";
+
 dotenv.config();
 
 export const aiConfig: AIConfig = {

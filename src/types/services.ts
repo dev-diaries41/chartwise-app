@@ -1,3 +1,5 @@
+import { Metrics } from "bullmq";
+
 interface IBaseAnalysis {
   chartUrls: string[];
   metadata?: {
@@ -7,8 +9,7 @@ interface IBaseAnalysis {
   };
 }
 
-
-export interface IAnalyseCharts extends Omit<IBaseAnalysis, 'chartUrl'> {
+export interface IAnalyseCharts extends IBaseAnalysis {
 }
 
 export interface Analysis extends IBaseAnalysis {
@@ -59,7 +60,22 @@ export interface GetLogsOptions extends BaseFilterOptions {
 
 export interface DeleteLogsOptions extends BaseFilterOptions {}
 
-export type MetricLog = {
+export type ServiceMetricLog = {
   completionTime: number;
   serviceName: string;
+}
+
+export interface IUser {
+  name?: string;
+  username?: string;
+  email: string;
+  hashedPassword: string;
+  salt: string;
+}
+
+export interface NewUser {
+  name?: string;
+  username?: string;
+  email: string;
+  password: string;
 }

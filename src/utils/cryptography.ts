@@ -39,18 +39,17 @@ export function rsaDecrypt(privateKey: crypto.RsaPrivateKey | crypto.KeyLike, en
 
 
 // General purpose hasing
-export function hash(valueToHash: string){
-    return crypto.createHash('sha512').update(valueToHash).digest('hex');
+export function hash(value: string){
+    return crypto.createHash('sha512').update(value).digest('hex');
 }
 
-export function hmacHash(key: any, valueToHash: string){
-    return crypto.createHmac('sha512', key).update(valueToHash).digest('hex');
+export function hmacHash(key: any, value: string, algo = 'sha256'){
+    return crypto.createHmac(algo, key).update(value).digest('hex');
 }
 
-// For secure password hashing
-export function hashPassword(password: string, salt: any){
-    const hashedPassword = crypto.scryptSync(password, salt, 64);
-    return hashedPassword;
+export function hashPassword(password: string, salt: string): string {
+    const hashedPasswordBuffer = crypto.scryptSync(password, salt, 64);
+    return hashedPasswordBuffer.toString('hex');
 }
 
 

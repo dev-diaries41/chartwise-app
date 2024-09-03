@@ -1,8 +1,8 @@
-import OpenAI from "openai";
 import dotenv from 'dotenv'
-import { aiConfig } from "@src/ai/config";
-import { ModelErrors } from "@src/ai/errors";
+import OpenAI from "openai";
 import { ChatCompletionContentPartImage } from "openai/resources";
+import { aiConfig } from "./config";
+import { ModelErrors } from "./errors";
 
 dotenv.config()
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});

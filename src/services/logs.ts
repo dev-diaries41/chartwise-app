@@ -1,10 +1,10 @@
-import { QueueManager } from "@src/bullmq/queues";
+import { QueueManager } from "qme";
 import { logger, metricsLogger } from "@src/logger";
 import { LogEntryModel } from "@src/mongo/models/logs";
 import { addDoc } from "@src/mongo/utils/add";
 import { deleteDocs } from "@src/mongo/utils/delete";
 import { getDocs } from "@src/mongo/utils/get";
-import { AddDocResponse, DeleteDocsResponse, DeleteLogsOptions, GetDocsResponse, GetLogsOptions, LogEntry, MetricLog } from "@src/types";
+import { AddDocResponse, DeleteDocsResponse, DeleteLogsOptions, GetDocsResponse, GetLogsOptions, LogEntry, ServiceMetricLog } from "@src/types";
 import { getFilter } from "@src/utils/data/queries";
 
 // Add docs is handle by an bullmq for robustness of logging
@@ -42,22 +42,49 @@ export async function addLog(newLogJob:{log: LogEntry}): Promise<AddDocResponse>
   }
   
 
-  function logMetrics(logData: MetricLog){
-    metricsLogger.info(logData);
-}
-
-export async function logChartAnalysisMetrics(jobId: string, chartAnalysisQM: QueueManager): Promise<void>{
-    const completionTime = await chartAnalysisQM.getJobCompletionTime(jobId);
-    if(completionTime){
-        const data = {completionTime, serviceName: chartAnalysisQM.queue.name}
-        logMetrics(data);
-        await addLog({
-            log: {
-                category: 'metrics',
-                formatVersion: 1,
-                data: data,
-                timestamp: Date.now(),
-            }
-        })
+  async function logMetrics(
+    category: string, 
+    data: Record<string, any>
+  ): Promise<void> {
+    try {
+      metricsLogger.info(data);
+      await addLog({
+        log: {
+          category,
+          formatVersion: 2,
+          data,
+          timestamp: Date.now(),
+        },
+      });
+    } catch (error: any) {
+      logger.error({ message: `Error logging ${category}.`, details: error.message });
     }
-}
+  }
+  
+  export async function logQueueMetrics(jobId: string, chartAnalysisQM: QueueManager): Promise<void> {
+    try {
+      const parsedJobId = parseInt(jobId, 10);
+      const shouldLogQueueMetrics = !isNaN(parsedJobId) && parsedJobId >= 10 && parsedJobId % 10 === 0; // wait till atleast 1- jobs have processed before logging again
+      if (!shouldLogQueueMetrics) return;
+  
+      const completedQueueMetrics = await chartAnalysisQM.queue.getMetrics('completed');
+      const failedQueueMetrics = await chartAnalysisQM.queue.getMetrics('failed');
+      const queueMetrics = {
+        completed: completedQueueMetrics,
+        failed: failedQueueMetrics,
+      };
+  
+      await logMetrics('q-metrics', queueMetrics);
+    } catch (error: any) {
+      logger.error({ message: 'Error logging queue metrics.', details: error.message });
+    }
+  }
+  
+  export async function logChartAnalysisMetrics(jobId: string, chartAnalysisQM: QueueManager): Promise<void> {
+    const completionTime = await chartAnalysisQM.getJobCompletionTime(jobId);
+    if (!completionTime) return;
+
+    const data: ServiceMetricLog = {completionTime, serviceName: chartAnalysisQM.queue.name};
+    await logMetrics('metrics', data);
+  }
+  

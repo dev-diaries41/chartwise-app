@@ -33,7 +33,7 @@ export async function getMonthlyUsageCount(userId: string, service: string): Pro
   }
 }
 
-export async function getDailyUsageCount(userId: string, service: string): Promise<number> {
+export async function getTodaysUsageCount(userId: string, service: string): Promise<number> {
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
   const filter = { userId, service, usageDate: { $gte: startOfDay } };

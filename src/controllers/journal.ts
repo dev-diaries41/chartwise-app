@@ -3,13 +3,13 @@ import { Request, Response } from "express";
 import { AuthErrors, ServerErrors } from "@src/constants/errors";
 import { logger } from "@src/logger";
 import { addJournalEntry, getJournalEntries } from "@src/services/journal";
-import { TradeJournalEntrySchema } from "@src/utils/validation";
 import { cache } from "@src/index";
+import { TradeJournalEntrySchema } from "@src/constants/schemas";
 
 
 export async function addEntry(req: Request, res: Response) {
     try {
-      const userId = req.jwtPayload?.userId ;
+      const userId = req.jwtPayload?.email ;
       const {entry} = req.body;
       if(!userId) return res.status(400).json({ message: AuthErrors.INVALID_USER_ID});
   
@@ -24,10 +24,8 @@ export async function addEntry(req: Request, res: Response) {
     }
 }
 
-
- 
 export async function getEntries(req: Request, res: Response) {
-    const userId = req.jwtPayload?.userId;
+    const userId = req.jwtPayload?.email;
     if(!userId) return res.status(400).json({ message: AuthErrors.INVALID_USER_ID});
     try {
       const {page, perPage } = req.query;

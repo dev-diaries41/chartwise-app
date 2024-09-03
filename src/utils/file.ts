@@ -4,15 +4,12 @@ import https from 'http';
 
 
 export function saveFile(data: string | Buffer | Uint8Array, filename: string, encoding?: BufferEncoding)  {
-    // Extract the directory from the filename
     const dir = path.dirname(filename);
 
-    // Ensure the directory exists
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
     }
 
-    // Create the write stream and save the data
     const writeStream = fs.createWriteStream(filename, {encoding});
     writeStream.write(data,);
     writeStream.end();

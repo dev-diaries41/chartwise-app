@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { ServerConfig } from '@src/types/server';
 import { apiKeyAuth } from '@src/middleware';
-import { chartAnalysisRoute, usageRoute, jwtRoute, sharedAnalysisRoute, journalRoute } from '@src/routes';
+import { chartAnalysisRoute, usageRoute, authRoute, sharedAnalysisRoute, journalRoute } from '@src/routes';
 import { Time } from '@src/constants/server';
 import { checkToken, issueNewToken } from '@src/middleware';
 
@@ -26,11 +26,11 @@ export const config: ServerConfig = {
     allowedOrigins: []
   },
   routes: [
-    {path: '/api/v1/analysis', routeHandlers: [apiKeyAuth, checkToken, issueNewToken, chartAnalysisRoute]},
-    {path: '/api/v1/journal', routeHandlers: [apiKeyAuth, checkToken, issueNewToken, journalRoute]},
-    {path: '/api/v1/share', routeHandlers: [apiKeyAuth, sharedAnalysisRoute]},
+    {path: '/api/v1/analysis', routeHandlers: [apiKeyAuth, checkToken, chartAnalysisRoute]},
+    {path: '/api/v1/journal', routeHandlers: [apiKeyAuth, checkToken, journalRoute]},
     {path: '/api/v1/usage', routeHandlers: [apiKeyAuth, usageRoute]},
-    {path: '/api/v1/auth/token', routeHandlers: [apiKeyAuth, jwtRoute]},
+    {path: '/api/v1/share', routeHandlers: [apiKeyAuth, sharedAnalysisRoute]},
+    {path: '/api/v1/auth', routeHandlers: [apiKeyAuth, authRoute]},
   ],
   queues:{
     backgroundJobs: 'background-jobs',

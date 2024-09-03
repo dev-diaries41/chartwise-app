@@ -5,6 +5,7 @@ export enum AuthErrors {
   INVALID_USER_ID= 'Invalid user',
   INVALID_TOKEN= 'Invalid token',
   EXPIRED_TOKEN= 'jwt expired',
+  INVALID_LOGIN_CRED='Invalid login credentials'
 };
   
 export enum ServerErrors{

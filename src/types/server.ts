@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { RedisOptions } from 'ioredis';
-import { QueueManager } from '@src/bullmq/queues';
+import { QueueManager } from 'qme';
 import { roles } from '@src/constants/server';
 
 export type Route  = {
@@ -39,7 +39,6 @@ export interface NotifyConfig {
   };
 }
 
-
 export interface ServerConfig {
   port: number;
   databaseUrl: string;
@@ -50,19 +49,6 @@ export interface ServerConfig {
   trustProxy?: number | string;
   redis?: RedisOptions;
   notifications?: NotifyConfig;
-}
-
-
-export interface ContainerStats {
-  containerId: string;
-  name: string;
-  cpuPercent: number;
-  memUsage: string;
-  memLimit: string;
-  memPercent: number;
-  netIO: string;
-  blockIO: string;
-  pids: number;
 }
 
 export type Webhook = {
@@ -94,14 +80,47 @@ export interface ServiceUsageParams {
 
 export type Roles = keyof typeof roles
 
-
-export interface TokenPayload {
-  userId: string;
-  username: string;
-  // Add more claims as needed
-}
-
 export interface JwtOptions {
   expiresIn: string;
   secret: string;
 }
+
+
+export interface BaseResponse  {
+  success: boolean;
+  message?: string;
+}
+
+export interface DataResponse<T> extends BaseResponse {
+  data?: T;
+}
+
+export interface PaginatedResponse extends BaseResponse {   
+  totalDocuments?: number;
+  page?: number;
+  perPage?: number
+}
+
+export interface GetDocsResponse<T> extends PaginatedResponse {
+  data?: T[];
+}
+
+export interface GetDocResponse<T> extends DataResponse<T> {}
+
+
+export interface FindOneAndUpdateResponse<T> extends BaseResponse {
+  updatedDoc?: T;
+}
+
+export interface AddDocResponse extends BaseResponse {
+  id?: string; 
+}
+
+export interface AddMultipleDocsResponse extends BaseResponse {
+  insertedCount?: number; 
+}
+
+export interface DeleteDocResponse extends BaseResponse {}
+
+export interface DeleteDocsResponse extends BaseResponse {}
+

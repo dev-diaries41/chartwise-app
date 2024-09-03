@@ -8,7 +8,7 @@ import { FREE_DAILY_LIMIT } from "@src/constants/services";
 
 
 export async function checkUsageLimit(req: Request, res: Response, next: NextFunction) {
-    const {userId} = req.jwtPayload || {};
+    const userId = req.jwtPayload?.email;
     try {
         if (!userId) {
             return res.status(400).json({ message: AuthErrors.INVALID_USER_ID });
@@ -16,11 +16,11 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
 
         const {amount, status} = await getSubscription(userId) || {};
         const maxMonthlyUsage = Usage.getMaxMonthlyUsage(amount, status);
-        const dailyUsage = await Usage.getDailyUsageCount(userId, config?.queues?.chartAnalysis!);
+        const todaysUsage = await Usage.getTodaysUsageCount(userId, config?.queues?.chartAnalysis!);
         const monthlyUsage = await Usage.getMonthlyUsageCount(userId, config?.queues?.chartAnalysis!);
 
         // user doesnt exist yet or hasnt used any tools today or this month
-        if (dailyUsage === 0 || monthlyUsage === 0) {
+        if (todaysUsage === 0 || monthlyUsage === 0) {
             return next();
         }
 
@@ -31,8 +31,8 @@ export async function checkUsageLimit(req: Request, res: Response, next: NextFun
             };
 
             // Check usage limits
-            if (limits.daily && dailyUsage + 1 > limits.daily) {
-                logger.error({ message: ServiceUsageErrors.EXCEEDED_FREE_LIMIT, userId, dailyUsage });
+            if (limits.daily && todaysUsage + 1 > limits.daily) {
+                logger.error({ message: ServiceUsageErrors.EXCEEDED_FREE_LIMIT, userId, todaysUsage });
                 return res.status(403).json({ message: ServiceUsageErrors.EXCEEDED_FREE_LIMIT });
             }
 

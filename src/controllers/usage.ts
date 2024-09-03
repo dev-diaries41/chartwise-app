@@ -5,9 +5,9 @@ import { config } from "@src/config";
 import { cache } from "@src/index";
 
 // Daily usage controller with cache
-export async function dailyUsage(req: Request, res: Response) {
+export async function todaysUsage(req: Request, res: Response) {
   const { userId } = req.params;
-  const cacheKey = `dailyUsage:${userId}`;
+  const cacheKey = `todaysUsage:${userId}`;
   
   try {
     const cachedData = await cache.get<number>(cacheKey);
@@ -15,11 +15,11 @@ export async function dailyUsage(req: Request, res: Response) {
       return res.status(200).json({ data: cachedData });
     }
 
-    const dailyUsage = await Usage.getDailyUsageCount(userId, config?.queues?.chartAnalysis!);
-    await cache.set(cacheKey, dailyUsage);
-    return res.status(200).json({ data: dailyUsage });
+    const todaysUsage = await Usage.getTodaysUsageCount(userId, config?.queues?.chartAnalysis!);
+    await cache.set(cacheKey, todaysUsage);
+    return res.status(200).json({ data: todaysUsage });
   } catch (error: any) {
-    console.error(`Error in dailyUsage controller: ${error.message}`);
+    console.error(`Error in todaysUsage controller: ${error.message}`);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
