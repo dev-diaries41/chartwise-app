@@ -1,7 +1,6 @@
 import React from 'react';
-import LoaderIndicator from '@/app/ui/utilities/loading-indicator';
-import { themes } from '../../constants/layout/theme';
-import { positions } from '@/app/constants/layout/style';
+import LoaderIndicator from '@/app/ui/common/loading-indicator';
+import { positions } from '@/app/constants/style';
 import { LoaderDialogProps } from '@/app/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +8,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 export default function LoaderDialog ({ title, description, position ='BOTTOM_RIGHT', onMinimize }:LoaderDialogProps) {
   return (
     <div
-      className={`fixed ${positions[position]} flex flex-col animate-fadeIn text-left items-left p-6 rounded-md shadow-lg shadow-black opacity-95 bg-${themes.dark.secondary} z-[100]`}
+      className={`fixed ${positions[position]} flex flex-col animate-fadeIn text-left items-left p-6 rounded-md shadow-lg shadow-black opacity-95 bg-gray-800 z-[100]`}
       style={{
         width: 'calc(100% - 2rem)',
         maxWidth: '400px',

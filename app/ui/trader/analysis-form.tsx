@@ -1,14 +1,13 @@
 'use client'
 import { AcceptedImgFiles, AcceptedImgMimes } from "@/app/constants/app";
-import {CarouselImageViewer, FileUploader, InfoDisplay} from "@/app/ui/";
+import {CarouselImageViewer, FileUploader, InfoDisplay, SliderInput} from "@/app/ui/";
 import {faCopy, faMagnifyingGlassChart, faPaperclip, faShareNodes, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {SliderInput} from "@/app/ui";
 import { useChartwise } from "@/app/providers/chartwise";
-import { analyseChartSchema } from "@/app/constants/schemas";
+import { AnalyseChartSchema } from "@/app/constants/schemas";
 import ActionRow from "../common/action-row";
-import { copyTextToClipboard } from "@/app/lib/utils/ui";
+import { copyTextToClipboard } from "@/app/lib/utils";
 
 
 interface AnalysisFormProps {
@@ -25,7 +24,7 @@ interface AnalysisFormProps {
     
     const AnalysisActionRow = () => {
         const {user} = useUser();
-        const userId = user?.email;
+        const userId = user?.email || 'testuser';
     
     
         const handleAnalyseChart = async () => {
@@ -35,13 +34,11 @@ interface AnalysisFormProps {
             }
             setLoading(true);
         
-            const formData = new FormData();
-            const validatedAnalysis = analyseChartSchema.safeParse(anaylsisParams);
+            const validatedAnalysis = AnalyseChartSchema.safeParse(anaylsisParams);
             if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
-            formData.append('analysis', JSON.stringify(validatedAnalysis.data));
         
             try {
-              const jobId = await analyseChart(userId, formData);
+              const jobId = await analyseChart(validatedAnalysis.data, userId);
               handleJobInProgress(jobId);
             } catch (error: any) {
               handleFailedJobStart(error);

@@ -7,21 +7,14 @@ import { IAnalyseCharts } from "@/app/types";
 
 export async function POST(req: NextRequest) {
   try {
-    const formdata = await req.formData();
-    const analysis = formdata.get('analysis') as string | null;
-    let currentToken = req.headers?.get('Authorization')?.split(' ')[1];
+    const analysis = await req.json() as IAnalyseCharts;
+    const token = req.headers?.get('Authorization')?.split(' ')[1];
 
     if (!analysis) return NextResponse.json({ message: 'Invalid analysis input', status: 400},{status:400} );
-    if (!currentToken) return NextResponse.json({ message: AuthErrors.MISSING_JWT_TOKEN, status: 401},{status:401} );
+    if (!token) return NextResponse.json({ message: AuthErrors.MISSING_JWT_TOKEN, status: 401},{status:401} );
 
-    let jsonAnalysis = JSON.parse(analysis) as IAnalyseCharts;
-    chartwiseAPI.token = currentToken;
-    const { data, token } = await chartwiseAPI.analyse(jsonAnalysis);
-    const nextResponse = NextResponse.json({data});
-    if(token) {
-      nextResponse.headers.append('Authorization', `Bearer ${token}`);
-    }
-    return nextResponse; 
+    const { data } = await chartwiseAPI.analyse(analysis);
+    return NextResponse.json({data});; 
   } catch (error: any) {
    return handleError(error)
   }

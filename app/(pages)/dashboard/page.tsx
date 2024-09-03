@@ -2,43 +2,19 @@
 import React from 'react';
 import {ChartAnalyser, Spacer, SuspenseFallback} from '@/app/ui';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useChartwise } from '@/app/providers/chartwise';
-import Switch from '@/app/ui/common/switch';
-import TradingViewWidget from '@/app/ui/trader/tv-charts';
+import TradingViewWidget from '@/app/ui/trader/tradingview';
 
 export default function Page() {
   const {isLoading} = useUser();
-  const {toggleMode, mode, newAnalysis} = useChartwise();
+  const {mode, newAnalysis} = useChartwise();
 
 
   if(isLoading){
     return <SuspenseFallback/>
   }
-
-  const TopActionRow = () => {
-    return (
-      <div className='absolute ml-auto md:top-0 right-0 left-0  flex flex-row justify-between items-center p-2 z-10 '>
-        { mode === 'analysis' && (
-          <button
-              className="flex w-auto items-center justify-center text-sm mr-auto font-semibold gap-1"
-              onClick={newAnalysis}
-            >
-              <FontAwesomeIcon icon={faPlusCircle} className="w-4 md:w-4 h-4 md:h-4"  />
-              <span className="">New Analysis</span>
-          </button>
-        )}
-            <div className='flex flex-row items-center justify-center ml-auto  text-sm font-medium focus:cursor-pointer'>
-              Chart mode
-              <Switch value={mode ==='analysis'? false:true} onChange={toggleMode} />
-            </div>
-        </div>
-    )
-  }
-
-
   return (
     <div className='relative flex-1 max-w-full mx-auto w-full'>
         {

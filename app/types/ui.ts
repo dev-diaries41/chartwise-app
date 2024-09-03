@@ -1,6 +1,6 @@
 import { IconDefinition, } from "@fortawesome/free-solid-svg-icons";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
-import { positions } from "../constants/layout/style";
+import { positions } from "../constants/style";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface WhatsIncludedItem {
@@ -196,4 +196,19 @@ export interface ActionItem {
 
 export interface ActionRowProps {
   actions: ActionItem[];
+}
+
+export interface TradeJournalEntry {
+  entryId: number;
+  tradeDate: Date;
+  symbol: string;
+  type: 'buy' | 'sell';
+  quantity: number;
+  entryPrice: number;
+  stopLoss?: number;
+  takeProfit?: number;
+  comments?: string;
+  sentiment?: 'bullish' | 'bearish' | 'neutral';
+  createdAt: Date;
+  updatedAt: Date;
 }

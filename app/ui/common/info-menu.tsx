@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import NavLinks from '@/app/ui/nav/side_navbar/sidenav-links';
-import { footerLinks } from '@/app/constants/navigation';
+import { navLinks } from '@/app/constants/navigation';
 
 export default function InformationMenu () {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ export default function InformationMenu () {
     setIsOpen(!isOpen);
   };
 
-  const filteredFooterLinks = footerLinks.filter(footerLink => !['Pricing'].includes(footerLink.name))
+  const filteredFooterLinks = navLinks.filter(footerLink => !['Pricing', 'Home'].includes(footerLink.name))
 
 
   return (

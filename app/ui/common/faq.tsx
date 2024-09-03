@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faqData } from '@/app/constants/content/faq';
+import { faqData } from '@/app/constants/content';
 
 export default function Faq(){
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);

@@ -1,11 +1,13 @@
-import { faCreditCard, faHome, faInfoCircle, faLightbulb, faQuestionCircle, faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBookJournalWhills, faCreditCard, faHome, faInfoCircle, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { NavItem } from "../types";
 
-export const navLinks: NavItem[] = [
-    { name: 'Home', link: '/', icon: faHome },
-  ];
+
+export const dashboardLinks: NavItem[] = [
+  { name: 'Journal', link: '/dashboard/journal', icon: faBookJournalWhills },
+];
   
-  export const footerLinks: NavItem[] = [
+  export const navLinks: NavItem[] = [
+    { name: 'Home', link: '/', icon: faHome },
     { name: 'Support', link: '/support', icon: faQuestionCircle},
     { name: 'Guidelines', link: '/guide', icon: faInfoCircle},
     { name: 'Pricing', link: '/#pricing', icon: faCreditCard},
@@ -13,18 +15,4 @@ export const navLinks: NavItem[] = [
     { name: 'License', link: '/license'},
     { name: 'Privacy Policy', link: '/privacy'},
   ];
-  
-
-  export const headerLinks: NavItem[] = [
-    { name: 'Support', link: '/support', icon: faQuestionCircle},
-    { name: 'Pricing', link: '/#pricing', icon: faCreditCard},
-  ];
-
-  export const accountNav: NavItem[] = [
-    { name: 'Usage', link: '/account', icon: faUser},
-    { name: 'Sign out', link: '/api/auth/logout', icon: faSignOut},
-  ];
-  
-
-  
   

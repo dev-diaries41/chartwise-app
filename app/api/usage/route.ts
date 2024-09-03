@@ -1,28 +1,22 @@
 import { AuthErrors, ServiceUsageErrors } from "@/app/constants/errors";
-import {FPF_LABS_API_KEY, USAGE_URL } from "@/app/constants/app";
-import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
+import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";
+import { UsagePeriod } from "@/app/types";
+import { handleError } from "@/app/lib/requests/next-api-errors";
 
 
 export async function GET(req: NextRequest) {
   try {
     const userId = req.nextUrl.searchParams.get('userId')
+    const period = req.nextUrl.searchParams.get('period')
+    if (!userId) throw new Error(AuthErrors.INVALID_USER_ID);
+    if (!period) throw new Error('Invalid usage period');
 
-    const headers = {
-      'api-key': FPF_LABS_API_KEY
-    }
+    const {data} = await chartwiseAPI.getUsage(userId, period as UsagePeriod)
+    if(!data)throw new Error(ServiceUsageErrors.FAILED_USAGE_CHECK + ` for ${period}`);
 
-    const response = await axios.get(`${USAGE_URL}/${userId}`, {headers});
-    const monthlyUsage = response.data as {data: number};
-
-    if(!monthlyUsage)throw new Error(ServiceUsageErrors.FAILED_MONTHLY_USAGE_CHECK);
-
-    const nextResponse = NextResponse.json(monthlyUsage);
-    return nextResponse; 
+    return  NextResponse.json({data}, {status:200});; 
   } catch (error: any) {
-    console.error(ServiceUsageErrors.FAILED_MONTHLY_USAGE_CHECK, error.message)
-    const status = error.response?.status || 500;
-    const message = error.response?.data?.message || 'Internal Server Error';
-    return NextResponse.json({ message, status, success: false }, { status }) 
+   return handleError(error)
   }
 };

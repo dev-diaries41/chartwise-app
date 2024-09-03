@@ -1,6 +1,6 @@
 import { useState, useEffect } from'react';
-import { Polling } from '@/app/lib/utils/polling';
 import { PollOptions } from '@/app/types';
+import {Polling} from 'devtilities'
 
 const usePolling = (callback: () => void, pollingOptions: PollOptions) => {
   const [polling, setPolling] = useState<Polling | null>(null);

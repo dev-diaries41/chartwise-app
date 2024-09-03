@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from '@/app/lib/utils/ui';
+import { capitalizeFirstLetter } from '@/app/lib/utils';
 import { AnalysisUsageProps, Usage, UsageType } from '@/app/types';
 import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';

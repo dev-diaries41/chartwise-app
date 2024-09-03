@@ -5,10 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ListCard from './ui/cards/list-card';
 import List from './ui/common/list';
-import { ChartWiseBenefits, HowItWorksGuide, TraderProblems } from './constants/content/landing-page';
+import { ChartWiseBenefits, HowItWorksGuide, TraderProblems } from './constants/content';
 import { faChartGantt } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
-
 
 
 const Hero = () => {
@@ -37,7 +36,7 @@ const Hero = () => {
             <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
             ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
             <Link
-                href='/trader'
+                href={'/dashboard'}
                 className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
                 {'Get started for free'}
             </Link>

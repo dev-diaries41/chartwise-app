@@ -1,4 +1,4 @@
-import { copyTextToClipboard } from '@/app/lib/utils/ui';
+import { copyTextToClipboard } from '@/app/lib/ui';
 import { ActionRowProps, ActionItem } from '@/app/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';

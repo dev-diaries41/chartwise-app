@@ -2,10 +2,10 @@
 import React, { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { sendNotification } from '@/app/lib/actions';
-import InputError from '../forms/form-error';
+import InputError from '@/app/ui/common/form-error';
 import { toast } from 'react-toastify';
 import { DefaultToastOptions } from '@/app/constants/app';
-import { SubmitButton } from '../buttons/button';
+import { SubmitButton } from '@/app/ui/common/button';
 
 const supportOptions: {value:string, name: string}[] = [
   {

@@ -13,7 +13,7 @@ export function copyTextToClipboard(text: string | null) {
   }
 
 
-  export const shouldHide = (pathname: string, paths: string[]) => paths.includes(pathname)
+  export const shouldHide = (pathname: string, pathsToHide: string[]) => pathsToHide.some(pathToHide => pathname.includes(pathToHide))
 
   export function capitalizeFirstLetter(string: string) {
     if (!string) return '';

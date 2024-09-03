@@ -4,11 +4,11 @@ import { NavBar } from '../..';
 import Link from 'next/link';
 import Logo from '../../logo';
 import { usePathname } from 'next/navigation';
-import { shouldHide } from '@/app/lib/utils/ui';
+import { shouldHide } from '@/app/lib/utils';
 
 export default function Header({...props}) {
   const pathname = usePathname();
-  const pathsToHide = ['/trader', '/account']
+  const pathsToHide = ['/dashboard'];
 
   if(shouldHide(pathname, pathsToHide))return null;
   
@@ -23,7 +23,6 @@ export default function Header({...props}) {
       </Link>
     <NavBar/>
       </div>
-     
     </div>
   );
 };

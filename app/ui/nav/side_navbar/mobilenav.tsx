@@ -5,7 +5,7 @@ import Link from 'next/link';
 import NavLinks from './sidenav-links';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
-import { navLinks, footerLinks } from '@/app/constants/navigation';
+import { navLinks, dashboardLinks } from '@/app/constants/navigation';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import {Logo, RecentAnalyses, UserPlanWidget} from '@/app/ui';
 import UserProfileWidget from '../../user/user-profile';
@@ -59,27 +59,26 @@ onToggleMenu
         </div>
 
         {isOpen && (
-        <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-800 border border-r-1 border-gray-700 pt-24  p-2 z-40 ">
-        <NavLinks navItems={[...navLinks, ...footerLinks.filter(link => !['License', 'Terms', 'Privacy Policy', 'Pricing'].includes(link.name))]} />
-        <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1">
-          <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
-        </div>
-        {/* <button onClick={() => {
-          toggleSettings();
-          onToggleMenu()
-          }}className='flex flex-row items-center justify-start gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer'>
-          <FontAwesomeIcon icon={faGear} className='w-4 h-4'/>
-          Settings
-        </button> */}
-        <div className='mt-auto'>
-        <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
-
-        </div>
-        <div className="bg-gray-700 p-2 rounded-md mt-auto">
-          <UserProfileWidget userId={user?.email} isLoading={isLoading} />
-        </div>
-    </div>
-      )}
+        <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2 z-40 ">
+          <NavLinks navItems={[...dashboardLinks, ...navLinks.filter(link => !['License', 'Terms', 'Privacy Policy', 'Pricing', 'Home'].includes(link.name))]} />
+          <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1">
+            <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
+          </div>
+          {/* <button onClick={() => {
+            toggleSettings();
+            onToggleMenu()
+            }}className='flex flex-row items-center justify-start gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer'>
+            <FontAwesomeIcon icon={faGear} className='w-4 h-4'/>
+            Settings
+          </button> */}
+          <div className='mt-auto'>
+            <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
+          </div>
+          <div className="bg-gray-700 p-2 rounded-md mt-3">
+            <UserProfileWidget userId={user?.email} isLoading={isLoading} />
+          </div>
+      </div>
+        )}
     </div>
     )
 }

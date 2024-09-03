@@ -1,6 +1,5 @@
 User-Agent: *
 Allow: /
-Disallow: /trader/
+Disallow: /dashboard/*
 Disallow: /order
 Disallow: /share
-Disallow: /account

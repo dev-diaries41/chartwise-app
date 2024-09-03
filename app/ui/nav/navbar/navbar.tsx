@@ -1,7 +1,7 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { NavItems } from '../nav-items';
-import { footerLinks, headerLinks, navLinks } from '@/app/constants/navigation';
+import { navLinks } from '@/app/constants/navigation';
 import NavLinks from '../side_navbar/sidenav-links';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +14,8 @@ export default function NavBar() {
     setIsOpen(prev => !prev)
   };
 
-  const filteredHeaderLinks = footerLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guidelines'].includes(footerLink.name))
+  const filteredHeaderLinks = navLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guidelines', 'Home'].includes(footerLink.name))
+  const filteredMobHeaderLinks = navLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guidelines'].includes(footerLink.name))
 
 
   return (
@@ -22,7 +23,7 @@ export default function NavBar() {
       <div className="md:hidden">
         <div className='flex flex-row justify-center items-center gap-4'>
         <Link
-          href={'/trader'}
+          href={'/dashboard'}
           className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 rounded-full shadow-md"
         >
           {'Analyse chart'}
@@ -38,15 +39,15 @@ export default function NavBar() {
        
 
         {/* Dropdown menu */}
-       {isOpen&&  <div className="absolute top-0 right-0 w-full bg-gray-800 border border-r-1 border-gray-700 pt-24 p-4 z-40" id='navbar-menu'>
-          <NavLinks navItems={[...navLinks, ...filteredHeaderLinks]} />
+       {isOpen&&  <div className="absolute top-0 right-0 w-full bg-gray-800 border border-r-1 border-gray-700 pt-16 p-4 z-40" id='navbar-menu'>
+          <NavLinks navItems={filteredMobHeaderLinks} />
         </div>}
 
       </div>
       <div className="md:flex items-center gap-5 hidden">
-        <NavItems navItems={headerLinks} />
+        <NavItems navItems={filteredHeaderLinks} />
         <Link
-          href={'/trader'}
+          href={'/dashboard'}
           className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 px-4 rounded-full shadow-md"
         >
           {'Analyse chart'}

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import NavLinks from './sidenav-links';
-import { navLinks } from '@/app/constants/navigation';
+import { dashboardLinks } from '@/app/constants/navigation';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import {RecentAnalyses, UserPlanWidget, Logo} from '@/app/ui';
 import { usePathname } from 'next/navigation';
@@ -18,7 +18,7 @@ export default React.memo(function  SideNav(){
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading } = useUser();
   const pathName = usePathname();
-  const showRecentAnalyses = pathName === '/trader';
+  const isTraderPage = pathName === '/dashboard';
   const {recentAnalyses, deleteAnalysis, viewAnalysis, mode, toggleMode} = useChartwise();
   // const {toggleSettings} = useSettings();
  
@@ -36,23 +36,19 @@ export default React.memo(function  SideNav(){
             height={100}
           />
         </Link>
-        <div className='flex flex-row items-center ml-auto justify-between text-sm p-3 font-medium focus:cursor-pointer text-gray-400'>
+        {isTraderPage && 
+       ( <div className='flex flex-row items-center ml-auto justify-between text-sm p-3 font-medium focus:cursor-pointer text-gray-400'>
           Chart mode
           <Switch value={mode ==='analysis'? false:true} onChange={toggleMode} />
         </div>
+      )}
         <div className='flex h-full flex-col justify-between'>
-          <NavLinks navItems={navLinks} />
-          {showRecentAnalyses && <div className="flex-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
-          { showRecentAnalyses && (
-
-          <div className='mr-auto p-1'>
-          <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis}/>
-
+          <NavLinks navItems={dashboardLinks} />
+          <div className="flex-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
+            <div className='mr-auto p-1'>
+              <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis}/>
+            </div>
           </div>
-          )}
-          </div>
-          }
-         
           <div className="absolute bottom-0 right-0 left-0 p-3 flex flex-col gap-4">
           <a
             href={user ? '/api/auth/logout' : '/api/auth/login'}

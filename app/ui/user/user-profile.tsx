@@ -12,7 +12,7 @@ export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
   
   return (
     <div className="w-full flex flex-row items-center p-1 justify-center">
-      <Link href={'/account'} className='w-full flex flex-row gap-2 items-center text-left mr-auto'>
+      <Link href={'/dashboard/account'} className='w-full flex flex-row gap-2 items-center text-left mr-auto'>
         <FontAwesomeIcon icon={faUserCircle} className='w-4 h-4 rounded-full' />
         <div className='flex flex-col w-full gap-0 items-start overflow-hidden'>
           {userId && <p className='w-full text-sm font-medium overflow-hidden overflow-ellipsis'>{userId}</p>}

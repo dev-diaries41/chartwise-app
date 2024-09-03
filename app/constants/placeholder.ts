@@ -1,4 +1,4 @@
-import { CardProps } from "@/app/types"
+import { TradeJournalEntry } from "@/app/types"
 
 
 export const PLACEHOLDER_ANALYSIS = `# Key Takeaways
@@ -105,30 +105,75 @@ If the criteria includes a risk to reward ratio. Do not artificially create the 
 
 `
 
-export const tools: CardProps[] = [
-    {
-      title: 'Trading assistant',
-      description:'Need help analysing chart? Try out the trading assitant tool to analyses charts and build trade setups.',
-      link:'/trader',
-      cta: 'Try now',
-      tags: ['# finance'],
-      metadata: ['Freemium']
-    },
-      {
-        title: 'Visualize data',
-        description:'Do you already have your own data? Try out the chart generator tool to visualize the data.',
-        link:'/charts',
-        cta: 'Try now',
-        tags: ['# data', '# data analysis'],
-        metadata: ['Free']
-      },
-      {
-        title: 'API tester',
-        description:'Want to test your APIs? Try out the API tester tool to stress test your APIs and analyse performance.',
-        link:'/api-tester',
-        cta: 'Try now',
-        tags: ['# developer tool'],
-        metadata: ['Free']
-  
-      },
-    ]
+export const placeholderEntries: TradeJournalEntry[] = [
+  {
+    entryId: 1,
+    tradeDate: new Date('2024-01-01'),
+    symbol: 'AAPL',
+    type: 'buy',
+    quantity: 50,
+    entryPrice: 150,
+    stopLoss: 145,
+    takeProfit: 160,
+    comments: 'Good entry point based on technical analysis.',
+    sentiment: 'bullish',
+    createdAt: new Date('2024-01-01T10:00:00Z'),
+    updatedAt: new Date('2024-01-01T10:00:00Z')
+  },
+  {
+    entryId: 2,
+    tradeDate: new Date('2024-02-15'),
+    symbol: 'TSLA',
+    type: 'sell',
+    quantity: 20,
+    entryPrice: 700,
+    stopLoss: 680,
+    takeProfit: 720,
+    comments: 'Short-term trade based on earnings report.',
+    sentiment: 'bearish',
+    createdAt: new Date('2024-02-15T10:00:00Z'),
+    updatedAt: new Date('2024-02-15T10:00:00Z')
+  },
+  {
+    entryId: 3,
+    tradeDate: new Date('2024-03-10'),
+    symbol: 'GOOGL',
+    type: 'buy',
+    quantity: 10,
+    entryPrice: 2800,
+    stopLoss: 2750,
+    takeProfit: 2950,
+    comments: 'Investing in the tech giant for long-term growth.',
+    sentiment: 'bullish',
+    createdAt: new Date('2024-03-10T10:00:00Z'),
+    updatedAt: new Date('2024-03-10T10:00:00Z')
+  },
+  {
+    entryId: 4,
+    tradeDate: new Date('2024-04-05'),
+    symbol: 'AMZN',
+    type: 'sell',
+    quantity: 5,
+    entryPrice: 3300,
+    stopLoss: 3280,
+    takeProfit: 3350,
+    comments: 'Short-term trade after quarterly earnings.',
+    sentiment: 'neutral',
+    createdAt: new Date('2024-04-05T10:00:00Z'),
+    updatedAt: new Date('2024-04-05T10:00:00Z')
+  },
+  {
+    entryId: 5,
+    tradeDate: new Date('2024-05-20'),
+    symbol: 'MSFT',
+    type: 'buy',
+    quantity: 30,
+    entryPrice: 250,
+    stopLoss: 245,
+    takeProfit: 260,
+    comments: 'Entering on a dip, expecting rebound.',
+    sentiment: 'bullish',
+    createdAt: new Date('2024-05-20T10:00:00Z'),
+    updatedAt: new Date('2024-05-20T10:00:00Z')
+  }
+];

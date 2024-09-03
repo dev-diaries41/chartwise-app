@@ -3,7 +3,8 @@ export enum AuthErrors  {
     UNAUTHORIZED = 'Unauthorized access',
     MISSING_JWT_TOKEN = 'missing JWT token',
     EXPIRED_TOKEN = 'jwt expired',
-    INVALID_USER_ID = 'Invalid user'
+    INVALID_USER_ID = 'Invalid user',
+    INVALID_LOGIN_CRED='Invalid login credentials'
   }
 
   export enum JobErrors {
@@ -15,7 +16,9 @@ export enum AuthErrors  {
   export enum RequestErrors  {
     REQUEST_ERROR = 'Failed to make request',
     POLLING_ERROR = 'Failed to poll',
-    MISSING_IMAGE = 'Missing image'
+    MISSING_IMAGE = 'Missing image',
+    NO_DOCS_FOUND = 'No documents found matching the query'
+
   }
 
   export enum ServiceUsageErrors {

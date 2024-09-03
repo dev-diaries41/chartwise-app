@@ -4,12 +4,12 @@ import React from 'react';
 import FooterLinks from './footer-links';
 import InformationMenu from '@/app/ui/common/info-menu';
 import { usePathname } from 'next/navigation';
-import { shouldHide } from '@/app/lib/utils/ui';
+import { shouldHide } from '@/app/lib/utils';
 
 
 export default function Footer() {
   const pathname = usePathname();
-  const pathsToHide = ['/trader', '/account']
+  const pathsToHide = ['/dashboard']
   const hide = shouldHide(pathname, pathsToHide)
   
   return (

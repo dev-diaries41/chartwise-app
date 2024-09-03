@@ -1,8 +1,8 @@
 'use client'
 import {SideNav} from '@/app/ui'
-import { ChartwiseProvider } from '../providers/chartwise'
-import { SubscriptionProvider } from '../providers/subscription'
-import { SettingsProvider } from '../providers/settings'
+import { ChartwiseProvider } from '../../providers/chartwise'
+import { SubscriptionProvider } from '../../providers/subscription'
+import { SettingsProvider } from '../../providers/settings'
 
 export default function Layout({
   children,
@@ -17,8 +17,8 @@ export default function Layout({
         <SideNav />
         <div className="flex flex-col bg-gray-900 lg:pl-[200px]">{children}</div>
       </div>
-      </ChartwiseProvider>
-      </SettingsProvider> 
-      </SubscriptionProvider>
+    </ChartwiseProvider>
+    </SettingsProvider> 
+    </SubscriptionProvider>
   )
 }

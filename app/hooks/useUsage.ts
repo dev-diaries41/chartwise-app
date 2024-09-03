@@ -1,10 +1,10 @@
 import { useLayoutEffect, useState } from 'react';
 import { Usage } from '@/app/types';
 import * as ChartwiseClient from '@/app/lib/requests/chartwise-client';
-import { RetryHandler } from '@/app/lib/utils/retry';
+import { RetryHandler } from 'devtilities';
 import { StorageKeys, Time } from '../constants/app';
 import {SessionStorage} from '@/app/lib/storage'
-
+ 
 export function useUsage(userId: string | null | undefined) {
   const [usage, setUsage] = useState<Usage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ export function useUsage(userId: string | null | undefined) {
       }
         const fetchedUsage = await retryHandler.retry(
           async () => await ChartwiseClient.getAllUsage(userId),
-          (error)=>ChartwiseClient.refreshOnError(error, userId)
+          (error)=>ChartwiseClient.refreshOnError(error as Error, userId)
         );
         setUsage(fetchedUsage);
         if(fetchedUsage){

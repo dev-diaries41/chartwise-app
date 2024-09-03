@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { footerLinks } from '@/app/constants/navigation';
+import { navLinks } from '@/app/constants/navigation';
 
-const filteredFooterLinks = footerLinks.filter(footerLink => !['Support', 'Pricing', 'Guidelines'].includes(footerLink.name))
+const filteredFooterLinks = navLinks.filter(footerLink => !['Home', 'Support', 'Pricing', 'Guidelines'].includes(footerLink.name))
 
 const FooterLinks = () => {
   return (

@@ -1,8 +1,8 @@
 import React, { createContext, useState, useContext, useEffect, useLayoutEffect } from 'react';
-import { ProviderProps, SettingCategory, Settings } from '@/app/types';
+import { ProviderProps, Settings } from '@/app/types';
 import { StorageKeys, Time } from '../constants/app';
 import {LocalStorage} from "@/app/lib/storage";
-import { defaultSettings } from '../constants/settings';
+import { defaultSettings } from '../constants/app';
  
 interface SettingsContextProps {
     settings: Settings;

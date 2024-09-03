@@ -3,7 +3,7 @@ import { ProviderProps, IAnalysisUrl, Mode, IAnalyseCharts } from '@/app/types';
 import { StorageKeys } from '../constants/app';
 import {LocalStorage} from "@/app/lib/storage"
 import * as ChartwiseClient from '../lib/requests/chartwise-client';
-import { RetryHandler } from '../lib/utils/retry';
+import { RetryHandler } from 'devtilities';
 import { useRouter } from 'next/navigation';
 
 
@@ -38,7 +38,7 @@ const ChartwiseProvider = ({ children }: ProviderProps) => {
   const [strategyAndCriteria, setStrategyAndCriteria] = useState(''); 
   const [risk, setRisk] = useState<number>(25);
   const [mode, setMode] = useState<Mode>('analysis');
-  const router = useRouter()
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -200,11 +200,11 @@ const getRiskTolerance = () => {
 }
 
 
-const analyseChart = async (userId: string, formData: FormData) => {
+const analyseChart = async (analysis: IAnalyseCharts, userId: string) => {
     try {
       const jobId = await retryHandler.retry(
-        async () => await ChartwiseClient.submitAnalysisRequest(formData),
-        async(error)=> await ChartwiseClient.refreshOnError(error, userId)
+        async () => await ChartwiseClient.submitAnalysisRequest(analysis),
+        async(error)=> await ChartwiseClient.refreshOnError(error as Error, userId)
       );
       return jobId;
     } catch (error) {

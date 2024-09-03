@@ -6,14 +6,12 @@ import Faq from "./common/faq";
 import CarouselImageViewer from "./common/image-carousel";
 import InfoDisplay from "./common/markdown-viewer";
 import InformationMenu from "./common/info-menu";
-import LoadingIndicator from "./utilities/loading-indicator";
+import LoadingIndicator from "./common/loading-indicator";
 import LoaderDialog from "./common/loading-dialog";
 import PopUp from "./common/usage-popup";
-import DragAndDropUpload from "./forms/drag-upload";
-import FileUploader from "./forms/upload";
-import InputError from "./forms/form-error";
-import MoreOptions from "./forms/more-options";
-import Selector from "./forms/selectors";
+import DragAndDropUpload from "./common/drag-upload";
+import FileUploader from "./common/upload";
+import InputError from "./common/form-error";
 import Logo from "./logo";
 import SideNav from "./nav/side_navbar/sidenav";
 import NavBar from "./nav/navbar/navbar";
@@ -26,13 +24,13 @@ import { ReceiptSkeleton } from "./skeletons/receipt";
 import ContactForm from "./support/contact";
 import { ChartAnalyser } from "./trader/analysis";
 import {Background} from "./common/bg";
-import Spacer from "./utilities/spacer";
-import RecentAnalyses from "./trader/recent-trades";
-import UserPlanWidget from "./pricing/user-plan";
+import Spacer from "./common/spacer";
+import RecentAnalyses from "./trader/recent-analyses";
+import UserPlanWidget from "./user/user-plan";
 import ActionRow from "./common/action-row";
 import Settings from "./common/settings";
 import SuspenseFallback from "./common/suspense";
-import SliderInput from "./forms/slider";
+import SliderInput from "./common/slider";
 import AnalysisForm from "./trader/analysis-form";
 
 export {
@@ -51,8 +49,6 @@ export {
     DragAndDropUpload,
     FileUploader,
     InputError,
-    MoreOptions,
-    Selector,
     Logo,
     SideNav,
     OrderComplete,

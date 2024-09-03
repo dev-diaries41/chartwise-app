@@ -4,7 +4,7 @@ import React from 'react';
 import { useFormStatus } from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faArrowRight, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { AnchorProps, ButtonProps } from "@/app/types";
 
 

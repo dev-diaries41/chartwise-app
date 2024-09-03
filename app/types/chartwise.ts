@@ -1,10 +1,3 @@
-export interface MoreOptionsProps  {
-  webhookUrl: string,
-  telegramUsername: string,
-  handleWebhookUrlChange: (e: any) => void;
-  handleTelegramUsernameChange: (e: any) => void;
- }
-
 
 export type IAnalysisUrl = {
   name: string;

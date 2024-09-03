@@ -9,8 +9,7 @@ export async function GET(req: NextRequest) {
     if (!id) return NextResponse.json({ message: 'invalid analysis id', status: 400},{status:400} );
     const {data} = await chartwiseAPI.getSharedAnalysis(id);
     const savedAnalysis = data as StoredAnalysis;
-    const nextResponse = NextResponse.json({data: savedAnalysis});
-    return nextResponse; 
+    return  NextResponse.json({data: savedAnalysis}); 
   } catch (error: any) {
     return handleError(error)
   }

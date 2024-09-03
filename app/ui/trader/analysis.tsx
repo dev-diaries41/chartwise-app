@@ -6,7 +6,7 @@ import { PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { getJobStatus } from "@/app/lib/requests/chartwise-client";
 import { useRouter } from "next/navigation";
-import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content/usage";
+import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content";
 import { usePopUp, usePolling, useLoading } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { useChartwise } from "@/app/providers/chartwise";

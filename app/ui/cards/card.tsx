@@ -1,9 +1,8 @@
 import React from 'react';
-import { NavButton } from '../buttons/button';
+import { NavButton } from '@/app/ui/common/button';
 import { CardProps } from '@/app/types';
-import { faLink, faPlay, faPlayCircle, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Spacer from '../utilities/spacer';
 
 export default function Card ({ 
   cta, 
