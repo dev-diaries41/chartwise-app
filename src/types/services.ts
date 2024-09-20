@@ -66,16 +66,13 @@ export type ServiceMetricLog = {
 }
 
 export interface IUser {
-  name?: string;
-  username?: string;
   email: string;
   hashedPassword: string;
   salt: string;
-}
-
-export interface NewUser {
   name?: string;
   username?: string;
-  email: string;
+}
+
+export interface NewUser extends Omit<IUser,'hashedPassword' | 'salt'>{
   password: string;
 }

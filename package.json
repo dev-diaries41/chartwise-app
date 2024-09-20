@@ -1,6 +1,6 @@
 {
   "name": "chartwise-server",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "Backend for chartwise a tool to analyse charts",
   "main": "dist/index.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/module-alias": "^2.0.4",
     "@types/node": "^20.11.29",
+    "@types/node-telegram-bot-api": "^0.64.7",
     "@types/uuid": "^10.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"

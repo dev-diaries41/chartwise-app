@@ -4,10 +4,10 @@ import { chartAnalysisQueue } from "@src/index";
 import { config } from "@src/config";
 import { WorkerManager, ServiceJobData } from "qme";
 import { handleBackgroundJob } from "@src/services/background";
-import { analyseCharts } from "@src/services/analysis";
+import { analyseCharts, analyseChartTelegram } from "@src/services/analysis";
 import { IAnalyseCharts } from "@src/types";
 import { chartAnalysisHandlers, defaultHandlers } from "@src/bullmq/events";
-import { BackgroundJobs } from "@src/constants/services";
+import { BackgroundJobs, CHART_ANALYSIS_TG } from "@src/constants/services";
 import { Time } from "@src/constants/server";
 
 
@@ -36,7 +36,10 @@ export function initialiseWorkers(redis: Redis): {
     async(job: Job)=> {
      if(job.name.startsWith(BackgroundJobs.REMOVE_EXPIRED_JOBS) && job.id){
       return await chartAnalysisQueue.removeCompletedJob(job.id);
-     }   
+     }
+     if(job.name.startsWith(CHART_ANALYSIS_TG) && job.id){
+      return await analyseChartTelegram(job.data);
+     }     
       return await analyseCharts(job.data as IAnalyseCharts & ServiceJobData)
     }, 
     redis,

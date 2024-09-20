@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
 import { ServerConfig } from '@src/types/server';
 import { apiKeyAuth } from '@src/middleware';
-import { chartAnalysisRoute, usageRoute, authRoute, sharedAnalysisRoute, journalRoute } from '@src/routes';
+import { chartAnalysisRoute, usageRoute, authRoute, sharedAnalysisRoute, journalRoute, webhooksRoute } from '@src/routes';
 import { Time } from '@src/constants/server';
-import { checkToken, issueNewToken } from '@src/middleware';
+import { checkToken } from '@src/middleware';
 
 dotenv.config();
 
@@ -31,6 +31,7 @@ export const config: ServerConfig = {
     {path: '/api/v1/usage', routeHandlers: [apiKeyAuth, usageRoute]},
     {path: '/api/v1/share', routeHandlers: [apiKeyAuth, sharedAnalysisRoute]},
     {path: '/api/v1/auth', routeHandlers: [apiKeyAuth, authRoute]},
+    {path: '/webhooks', routeHandlers: [webhooksRoute]},
   ],
   queues:{
     backgroundJobs: 'background-jobs',

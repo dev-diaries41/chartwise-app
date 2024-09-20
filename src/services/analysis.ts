@@ -8,7 +8,13 @@ import { addDoc } from "@src/mongo/utils/add";
 import { getDoc } from "@src/mongo/utils/get";
 import { AddDocResponse, Analysis, IAnalyseCharts } from "@src/types";
 import { uploadMultiple } from "@src/utils/data/cloudinary";
+import TelegramBot from "node-telegram-bot-api";
+import { Bot } from "@src/telegram";
+import { config } from "@src/config";
+import { SlashCommands } from "@src/telegram/chartwise/messages";
+import { webhookHandlers } from "@src/telegram/chartwise/events";
 
+export const chartAnalysisBot = new Bot(config.notifications?.telegramConfig!, SlashCommands);
 
 export async function analyseCharts(analysisJobDetails: IAnalyseCharts & ServiceJobData): Promise<{output: string} & ServiceJobData> {
     const wait = async(duration: number) => await new Promise(resolve => setTimeout(resolve, duration));
@@ -26,6 +32,10 @@ export async function analyseCharts(analysisJobDetails: IAnalyseCharts & Service
     const output = 'This is a simulated analysis.';
     if(!output)throw new Error('INVALID_AI_RESPONSE_ERROR');
     return {output, ...serviceJobData};
+}
+
+export async function analyseChartTelegram({update }: {update:  TelegramBot.Update}){
+    await chartAnalysisBot.handleWebhookUpdate(update, webhookHandlers);
 }
 
 export async function saveChartAnalysis(analysis: Analysis): Promise<AddDocResponse>{

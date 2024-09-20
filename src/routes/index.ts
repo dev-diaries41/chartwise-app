@@ -4,6 +4,7 @@ import authRoute from './auth'
 import usageRoute from './usage'
 import sharedAnalysisRoute from "./share"
 import journalRoute from "./journal"
+import webhooksRoute from "./webhooks";
 import { Route } from '@src/types';
 
 export function addRoutes(app: express.Application, routes: Route[]) {
@@ -17,5 +18,6 @@ export {
     sharedAnalysisRoute,
     usageRoute,
     authRoute,
-    journalRoute
+    journalRoute,
+    webhooksRoute
 }
