@@ -23,12 +23,16 @@ export const config: ServerConfig = {
       windowMs: 15 * Time.min,
       max: 50,
     },
-    allowedOrigins: []
+    allowedOrigins: [
+      'http://localhost:3001',
+      'http://127.0.0.1:3001',
+      'http://127.0.0.0:3001'
+    ]
   },
   routes: [
     {path: '/api/v1/analysis', routeHandlers: [apiKeyAuth, checkToken, chartAnalysisRoute]},
     {path: '/api/v1/journal', routeHandlers: [apiKeyAuth, checkToken, journalRoute]},
-    {path: '/api/v1/usage', routeHandlers: [apiKeyAuth, usageRoute]},
+    {path: '/api/v1/usage', routeHandlers: [apiKeyAuth, checkToken, usageRoute]},
     {path: '/api/v1/share', routeHandlers: [apiKeyAuth, sharedAnalysisRoute]},
     {path: '/api/v1/auth', routeHandlers: [apiKeyAuth, authRoute]},
     {path: '/webhooks', routeHandlers: [webhooksRoute]},

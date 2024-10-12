@@ -8,7 +8,6 @@ export const TelegramWebhook = {
     secret: process.env.TELEGRAM_SECRET!,
 }
 
-export const CHART_ANALYSIS_TG = 'chart-analysis-tg'
-
+export const CHART_ANALYSIS_TG = 'chart-analysis-tg';
 export const FREE_DAILY_LIMIT = 5;
 export const FREE_MONTHLY_LIMIT = 10

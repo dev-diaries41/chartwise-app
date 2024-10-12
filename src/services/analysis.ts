@@ -9,12 +9,8 @@ import { getDoc } from "@src/mongo/utils/get";
 import { AddDocResponse, Analysis, IAnalyseCharts } from "@src/types";
 import { uploadMultiple } from "@src/utils/data/cloudinary";
 import TelegramBot from "node-telegram-bot-api";
-import { Bot } from "@src/telegram";
-import { config } from "@src/config";
-import { SlashCommands } from "@src/telegram/chartwise/messages";
 import { webhookHandlers } from "@src/telegram/chartwise/events";
 
-export const chartAnalysisBot = new Bot(config.notifications?.telegramConfig!, SlashCommands);
 
 export async function analyseCharts(analysisJobDetails: IAnalyseCharts & ServiceJobData): Promise<{output: string} & ServiceJobData> {
     const wait = async(duration: number) => await new Promise(resolve => setTimeout(resolve, duration));
@@ -27,16 +23,16 @@ export async function analyseCharts(analysisJobDetails: IAnalyseCharts & Service
     const simDuration = (min: number = 10, max: number = 20): number => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    const durartion = simDuration()
+    const durartion = simDuration();
     await wait (Time.sec * durartion);
-    const output = 'This is a simulated analysis.';
+    const output = `This is a simulated analysis ${Date.now()}.`;
     if(!output)throw new Error('INVALID_AI_RESPONSE_ERROR');
     return {output, ...serviceJobData};
 }
 
-export async function analyseChartTelegram({update }: {update:  TelegramBot.Update}){
-    await chartAnalysisBot.handleWebhookUpdate(update, webhookHandlers);
-}
+// export async function analyseChartTelegram({update }: {update:  TelegramBot.Update}){
+//     await chartAnalysisTelegramBot.handleWebhookUpdate(update, webhookHandlers);
+// }
 
 export async function saveChartAnalysis(analysis: Analysis): Promise<AddDocResponse>{
         const uploadOpts = {folder: 'chart_analysis'};

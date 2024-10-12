@@ -33,7 +33,7 @@ export async function analyseChartRecurring (req: Request, res: Response){
 
 export async function saveAnalysis(req: Request, res: Response) {
   try {
-    const userId = req.jwtPayload?.email ;
+    const userId = req.jwtPayload?.email;
     const {analysis} = req.body;
     if(!userId) return res.status(400).json({ message: AuthErrors.INVALID_USER_ID});
 

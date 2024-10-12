@@ -3,7 +3,6 @@ import { randomBytes } from 'crypto';
 import { hash } from '@src/utils/cryptography';
 import { Auth } from '@src/mongo/models/auth';
 import { User } from '@src/mongo/models/user';
-import { registerUser } from '@src/services/auth';
 
 export async function generateApiKey(email: string) {
   const session = await mongoose.startSession();

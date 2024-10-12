@@ -54,3 +54,30 @@ export async function getDocs<T>(model: mongoose.Model<T>, filter: Record<string
     return { success: false, message: error.message };
   }
 }
+
+
+export async function aggregate<T>(model: mongoose.Model<T>,pipeline: mongoose.PipelineStage[],session: mongoose.ClientSession | null = null): Promise<GetDocsResponse<T>> {
+  const aggregationSession = session || await mongoose.startSession();
+  aggregationSession.startTransaction();
+  
+  try {
+    const options = { session: aggregationSession };
+    const data = await model.aggregate(pipeline, options);
+
+    if (!data || data.length === 0) {
+      await aggregationSession.abortTransaction();
+      aggregationSession.endSession();
+      return { success: false, message: ServerErrors.NO_DOCS_FOUND };
+    }
+
+    await aggregationSession.commitTransaction();
+    aggregationSession.endSession();
+    
+    return { success: true, data };
+  } catch (error: any) {
+    await aggregationSession.abortTransaction();
+    aggregationSession.endSession();
+    console.error(`Error executing aggregation: ${error.message}`);
+    return { success: false, message: error.message };
+  }
+}

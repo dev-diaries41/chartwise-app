@@ -33,6 +33,9 @@ export async function checkToken(req: Request, res: Response, next: NextFunction
   }
 }
 
+
+
+
 // Middleware to issue a new token
 export function issueNewToken(req: Request, res: Response, next: NextFunction) {
   if (!req.jwtPayload) {

@@ -13,7 +13,7 @@ import { BackgroundJobs, TelegramWebhook } from '@src/constants/services';
 import { ServerErrors } from '@src/constants/errors';
 import { RedisCache } from '@src/utils/data/redis';
 import { Time } from '@src/constants/server';
-import { chartAnalysisBot } from '@src/services/analysis';
+
 
 dotenv.config();
 
@@ -41,7 +41,6 @@ async function startServer() {
 
     await connectDB(config.databaseUrl);
     startWorkers(Object.values(workers));
-    await chartAnalysisBot.setWebHook(TelegramWebhook.url, {secret_token: TelegramWebhook.secret});
     await backgroundJobsQueue.addRecurringJob(BackgroundJobs.MANAGE_LOGS, config.logger, config.logger.cron);
     app.listen(config.port, () => {console.log(`Server started on port ${config.port}`)});
   } catch (error) {
