@@ -9,7 +9,7 @@ export const ServiceJobSchema = z.object({
 
 
 export const StoredAnalysisSchema = z.object({
-  analysis: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
+  output: z.string().min(100, { message: "Analysis must be at least 100 characters long." }),
   chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
   userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
   formatVersion: z.number().optional(),
@@ -20,9 +20,9 @@ export const AnalyseChartSchema = z.object({
   chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
   metadata: z.object({
     strategyAndCriteria: z.string().optional(),
-    risk: z.string().optional(),
+    risk: z.number().optional(),
   }).refine((data) => typeof data.strategyAndCriteria === 'undefined' || typeof data.strategyAndCriteria === 'string', { message: "strategyAndCriteria must be a string" })
-    .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'string', { message: "risk must be a string" })
+    .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'number', { message: "risk must be a number" })
 });
 
 

@@ -4,7 +4,7 @@ interface IBaseAnalysis {
   chartUrls: string[];
   metadata?: {
     strategyAndCriteria?: string;
-    risk?: string;
+    risk?: number;
     [key: string]: any; 
   };
 }
@@ -13,7 +13,7 @@ export interface IAnalyseCharts extends IBaseAnalysis {
 }
 
 export interface Analysis extends IBaseAnalysis {
-  analysis: string;
+  output: string;
   userId: string;
   formatVersion?: number;
 }

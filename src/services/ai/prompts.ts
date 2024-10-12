@@ -3,15 +3,14 @@ import { Analysis, IAnalyseCharts } from "@src/types";
 const TASK_MESSAGE = `Please provide the following details based on your analysis of the chart and expert trading knowledge:`
 const TASK_MESSAGE_SAC = `Strongly considering the trader's strategy and criteria, please provide the following details based on your analysis of the chart and expert trading knowledge:`
 
-const getRiskTolerance = (risk?:string) => {
-  if(!risk || isNaN(parseInt(risk || '')))return null;
-  const parsedRisk = parseInt(risk)
+const getRiskTolerance = (risk?:number) => {
+  if(!risk || isNaN(risk))return null;
   switch(true){
-    case parsedRisk <= 0.33 * 100:
+    case risk <= 0.33 * 100:
       return 'Low risk';
-    case parsedRisk <= 0.66 * 100 && parsedRisk > 0.33 * 100:
+    case risk <= 0.66 * 100 && risk > 0.33 * 100:
       return 'Med risk';
-    case parsedRisk > 0.66 * 100:
+    case risk > 0.66 * 100:
       return 'High risk';
     default:
       return 'Risk';
