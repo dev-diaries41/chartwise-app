@@ -11,7 +11,7 @@ export default function Footer() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
-  const pathsToHide = ['/dashboard'];
+  const pathsToHide = ['/dashboard', '/login', '/register'];
   
   const hide = (shouldHide(pathname, pathsToHide) || (callbackUrl && new URL(callbackUrl).pathname === '/dashboard'))
 

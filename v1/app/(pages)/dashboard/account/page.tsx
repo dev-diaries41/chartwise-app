@@ -12,8 +12,6 @@ import { cookies } from "next/headers";
 export const revalidate = 60;
 
 async function getAllUsage(userId: string, token: string | undefined): Promise<Usage> {
-    // Set the token for the chartwise API
-    console.log({token})
     chartwiseAPI.token = token;
 
     const [todayData, monthData, totalData] = await Promise.all([

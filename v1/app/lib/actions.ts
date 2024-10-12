@@ -7,6 +7,7 @@ import { FeedbackState, NewUser, RegistrationState } from '@/app/types';
 import { stripe } from '../stripe';
 import { signIn, signUp, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation'
 
 const notify = new Notify(NOTIFICATIONS_CONFIG)
 
@@ -27,10 +28,14 @@ export async function authenticate(
     }
     throw error;
   }
+  redirect('/dashboard')
 }
 
 export async function logout(){
-  await signOut({redirectTo: '/'})
+  await signOut({
+    redirect: true,
+    redirectTo: '/'
+  })
 }
 
 

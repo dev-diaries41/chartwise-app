@@ -9,19 +9,19 @@ const PlanAmount = {
     elite: 2999,
 }
 
-async function getUserPlan(userId: string|null|undefined): Promise<UserPlan>{
-    if(!userId)return 'Free';
+async function getUserPlan(email: string|null|undefined): Promise<UserPlan>{
+    if(!email)return 'Free';
 
     try {
-      const cachedPlanInfo = SessionStorage.get<UserProfileInfo>(StorageKeys.subscription);
-      if (cachedPlanInfo && typeof cachedPlanInfo === 'object') {
-        const { userPlan, expiresAt } = cachedPlanInfo;
-        if (expiresAt > Date.now() && userPlan) {
-          return userPlan;
-        }
-      }
+      // const cachedPlanInfo = SessionStorage.get<UserProfileInfo>(StorageKeys.subscription);
+      // if (cachedPlanInfo && typeof cachedPlanInfo === 'object') {
+      //   const { userPlan, expiresAt } = cachedPlanInfo;
+      //   if (expiresAt > Date.now() && userPlan) {
+      //     return userPlan;
+      //   }
+      // }
   
-      const {subscription} = await getSubscription(userId) || {};
+      const {subscription} = await getSubscription(email) || {};
       if(!subscription)return 'Free';
   
       const subscriptionAmount = subscription?.items.data[0]?.plan?.amount;

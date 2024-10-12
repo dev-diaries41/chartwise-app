@@ -52,13 +52,12 @@ export const Time = {
 
 
 export const StorageKeys = {
+  cwauth: 'cwauth',
   jobId: 'jobId',
-  token: 'token',
   recentAnalyses: 'recent-analyses',
   recentCharts: 'recent-charts',
   subscription: 'stripe-subscription',
   settings: 'settings',
-  usage: 'usage',
   encrypt: 'encrypt'
 }
 

@@ -18,9 +18,7 @@ export default React.memo(function  SideNav(){
   const { data: session, status } = useSession();
   const email = session?.user?.email;
   const isLoading = status === 'loading';
-  console.log({email})
-  console.log('Status: ', status)
-  console.log({isLoading})
+
 
   const {recentAnalyses, deleteAnalysis, viewAnalysis} = useChartwise();
   // const {toggleSettings} = useSettings();

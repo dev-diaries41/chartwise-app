@@ -1,26 +1,46 @@
 'use client'
 import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/app";
 import {PopUp, LoaderDialog, AnalysisForm} from "@/app/ui/";
-import {LocalStorage} from "@/app/lib/storage"
+import {LocalStorage, SessionStorage} from "@/app/lib/storage"
 import { PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
-import { getJobStatus } from "@/app/lib/requests/chartwise-client";
-import { useRouter } from "next/navigation";
+import { getJobStatus, getNewToken } from "@/app/lib/requests/chartwise-client";
+import { usePathname, useRouter } from "next/navigation";
 import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content";
 import { usePopUp, usePolling, useLoading } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { useChartwise } from "@/app/providers/chartwise";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useLayoutEffect } from "react";
 
 const LOADER_DESCRIPTION = "Chart analysis in progress. This can take a few seconds. Please do not refresh the page.";
 const LOADER_TITLE = "Analysing chart...";
 
 export function ChartAnalyser ({email}: {email: string | null | undefined}){
   const router = useRouter();
+  const pathname = usePathname();
   const {onAnalysisComplete, newAnalysis} = useChartwise();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle} = usePopUp();
   const { loading, setLoading, minimizeLoader, showLoadingDialog } = useLoading();
+
+
+  useLayoutEffect(() => {
+    if(pathname !== '/dashboard'){
+      router.push('/dashboard')
+    }
+  }, [])
+
+  // Handle cwauth on first render
+  useEffect(() => {
+    const cwauth = SessionStorage.get<string>(StorageKeys.cwauth);
+    if(cwauth === 'initialised') return;
+    if(email){
+      getNewToken({userId: email}).then(() => console.log('cwauth initialised'))
+    }
+
+    SessionStorage.set(StorageKeys.cwauth, 'initialised');
+  }, [])
 
   const onJobFinished = () => {
     stopPolling();

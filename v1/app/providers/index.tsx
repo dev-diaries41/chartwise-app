@@ -2,6 +2,7 @@
 
 import { PropsWithChildren } from "react";
 import { SessionProvider } from 'next-auth/react';
+import { JournalProvider } from "./journal";
 
 
 export function Providers({
@@ -9,7 +10,10 @@ export function Providers({
 }: PropsWithChildren ) {
   return (
     <SessionProvider>
+      <JournalProvider>
         {children}
+      </JournalProvider>
     </SessionProvider>
+    
   );
 }

@@ -1,4 +1,5 @@
 import { CHART_ANALYSIS_RESULTS_URL, CHART_ANALYSIS_URL, SAVE_ANALYSIS_URL, SHARED_ANALYSIS_URL, JOURNAL_URL, USAGE_URL, FPF_LABS_API_KEY, REFRESH_TOKEN_URL } from "@/app/constants/app";
+import { RequestErrors } from "@/app/constants/errors";
 import { IAnalyseCharts, JobReceipt, JobResult, StoredAnalysis, TradeJournalEntry, Usage, UsagePeriod } from "@/app/types";
 import { APIResponse, GetDocsResponse } from "@/app/types/response";
 import axios from "axios";
@@ -48,10 +49,18 @@ export class ChartWiseAPI {
     return response.data;
   }
 
-  public async getJournalEntries(page: string| number, perPage: string| number):Promise<APIResponse<GetDocsResponse<TradeJournalEntry>>>{
+  public async getJournalEntries(page: string| number, perPage: string| number):Promise<APIResponse<GetDocsResponse<TradeJournalEntry>> | null>{
     const headers = this.getHeaders();
-    const response = await axios.get(`${JOURNAL_URL}`, {headers, params: {page, perPage}});
-    return response.data;
+    try{
+      const response = await axios.get(`${JOURNAL_URL}`, {headers, params: {page, perPage}});
+      return response.data;
+    }catch(error: any){
+      console.error(error.message);
+      if(error.message === RequestErrors.NO_DOCS_FOUND){
+        return null
+      }
+      throw error;
+    }
   }
 
   public async addJournalEntry( entry: TradeJournalEntry): Promise<APIResponse<null>>{

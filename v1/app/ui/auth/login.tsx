@@ -3,10 +3,9 @@
 import { faArrowRight, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
-import { Button } from '../common/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
- 
+
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
  
@@ -89,7 +88,7 @@ function LoginButton() {
     aria-disabled={pending}
     disabled={pending}
     >
-      {pending? 'Log in...' : 'Log in'} <FontAwesomeIcon icon={faArrowRight} className="h-5 w-5 text-gray-50 " />
+      {pending? 'Log in...' : 'Log in'} 
     </button>
   );
 }

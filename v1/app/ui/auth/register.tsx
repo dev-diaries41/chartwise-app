@@ -100,8 +100,7 @@ function RegisterButton() {
     className="mt-4 w-full flex  gap-2 items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
     aria-disabled={pending}
     disabled={pending}
-    >      Sign up 
-      <FontAwesomeIcon icon={faArrowRight} className="h-5 w-5 text-gray-50 " />
+    > {pending? 'Sign up...' : 'Sign up'} 
     </button>
   );
 }

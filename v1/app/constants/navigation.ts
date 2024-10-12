@@ -1,4 +1,4 @@
-import { faBookJournalWhills, faChartBar, faChartColumn, faCreditCard, faHome, faInfoCircle, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBookJournalWhills, faBoxOpen, faChartBar, faChartColumn, faCreditCard, faExternalLink, faHome, faInfoCircle, faQuestionCircle, faShare, faShareAltSquare, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 import { NavItem } from "../types";
 
 
@@ -11,10 +11,10 @@ export const dashboardLinks: NavItem[] = [
   export const navLinks: NavItem[] = [
     { name: 'Home', link: '/', icon: faHome },
     { name: 'Support', link: '/support', icon: faQuestionCircle},
-    { name: 'Guidelines', link: '/guide', icon: faInfoCircle},
     { name: 'Pricing', link: '/#pricing', icon: faCreditCard},
-    { name: 'Terms', link: '/terms'},
-    { name: 'License', link: '/license'},
-    { name: 'Privacy Policy', link: '/privacy'},
+    { name: 'Guidelines', link: '/guide', icon: faExternalLink, newPage: true},
+    { name: 'Terms', link: '/terms', icon: faExternalLink, newPage: true},
+    { name: 'License', link: '/license', icon: faExternalLink, newPage: true},
+    { name: 'Privacy Policy', link: '/privacy', icon: faExternalLink, newPage: true},
   ];
   
