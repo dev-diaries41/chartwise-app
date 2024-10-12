@@ -7,13 +7,13 @@ import { UserProfileWidgetProps } from '@/app/types';
 import { useSubscription } from '@/app/providers/subscription';
 
 
-export default function UserPlanWidget({userId, isLoading}: UserProfileWidgetProps) {
+export default function UserPlanWidget({userId}: UserProfileWidgetProps) {
   const {userPlan} = useSubscription()
-  const hideUpgradeWidget = !userId || isLoading || userPlan !== 'Free';
+  const hideUpgradeWidget = !userId  || userPlan !== 'Free';
   if(hideUpgradeWidget)return null
 
   return (
-    <div className='flex flex-col items-center p-1 bg-transparent text-gray-200  rounded-lg'>
+    <div className='flex flex-col items-center p-1 bg-transparent  rounded-lg'>
     <Link href={'/#pricing'} className="w-full flex flex-row items-center gap-1">
         <FontAwesomeIcon icon={faLevelUpAlt} className="w-4 h-4"/>
       <div className='flex flex-col gap-0'>

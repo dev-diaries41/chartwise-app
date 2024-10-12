@@ -12,7 +12,7 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
 
 const Hero = () => {
   return (
-    <section className='relative w-full h-screen'>
+    <section className='relative w-full h-screen bg-gray-900'>
       <Image
         src={'/background.jpg'}
         alt='bg'
@@ -22,18 +22,14 @@ const Hero = () => {
         className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-20 object-cover'
       />
       <div className="animate-fadeIn relative flex flex-col max-w-5xl  w-full mx-auto items-center  text-center opacity-90 p-8 h-full">
-        {/* <Background /> */}
-        <div className="absolute top-0 left-0 w-[80%] h-[80%]">
-          <div className="absolute inset-0 bg-gradient-radial from-gray-800 to-gray-900 opacity-50 blur-xl"></div>
-        </div> 
-        <div className="w-full z-[10] flex flex-col py-16 justify-center items-center">
+        <div className="w-full z-[10] flex flex-col py-16 pt-16 md:pt-48 justify-center items-center ">
           <h1 className="text-center lg:text-7xl md:text-5xl text-5xl my-4 px-3 font-bold text-gray-200">
             Chart analysis made easy! <span className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-transparent bg-clip-text">Upload</span>.{" "}
             <span className="bg-gradient-to-r from-red-400 to-red-600 text-transparent bg-clip-text">Analyse</span>
           </h1>
          
           <div className='absolute bottom-48 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
-            <p className="text-md md:text-md lg:text-lg text-gray-200 mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
+            <p className="text-md md:text-lg lg:text-xl font-medium mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
             ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
             <Link
                 href={'/dashboard'}
@@ -50,9 +46,9 @@ const Hero = () => {
 
 const Pricing = () => {
   return (
-    <section id='pricing' className="relative  flex flex-col bg-gray-800 w-full mx-auto items-center justify-center text-center py-16 mb-16">
+    <section id='pricing' className="relative  flex flex-col bg-neutral-100 dark:bg-gray-800 w-full mx-auto items-center justify-center text-center py-16 mb-16">
     <h1 className="text-center text-3xl my-4 px-3 font-bold">Pricing</h1>
-    <p className="max-w-5xl text-gray-200 mb-5 px-3">
+    <p className="max-w-5xl mb-5 px-3">
     Invest in your trading success, start your subscription now!    
     </p>
     <div className='container justify-center py-16'>
@@ -64,7 +60,7 @@ const Pricing = () => {
 
 const Benefits = () => {
   return (
-    <section id='benefits' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-gray-900 to-gray-800">
+    <section id='benefits' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-white to-gray-200 dark:from-gray-900 dark:to-gray-800">
       <h1 className="text-center text-3xl my-4 px-3 font-bold">Looking to improve your trading success?</h1>
       <div className="flex flex-col  md:flex-row w-full max-w-7xl justify-center items-center gap-8 my-8 p-4">
         <ListCard
@@ -88,7 +84,7 @@ const Benefits = () => {
 
 const HowItWorks = () => {
   return (
-    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-gray-900 to-gray-800" >
+    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-white to-gray-200 dark:from-gray-900 dark:to-gray-800" >
       <h1 className="text-center text-3xl my-4 px-3 font-bold">How to analyse charts with ChartWise?</h1>
       <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
           <CarouselImageViewer images={['/chartwise-chart-mode.png', '/chartwise-analysis-mode.png']}  switchInterval={5000}/>

@@ -1,6 +1,5 @@
 import React from 'react';
 import  {ContactForm}  from '@/app/ui/';
-import Faq from '@/app/ui/common/faq';
 
 export default function Page () {
   return (

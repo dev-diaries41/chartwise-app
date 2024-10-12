@@ -6,28 +6,24 @@ import NavLinks from './sidenav-links';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { navLinks, dashboardLinks } from '@/app/constants/navigation';
-import { UserProfile } from '@auth0/nextjs-auth0/client';
 import {Logo, RecentAnalyses, UserPlanWidget} from '@/app/ui';
 import UserProfileWidget from '../../user/user-profile';
 import { useChartwise } from '@/app/providers/chartwise';
 import { faClose, faGear } from '@fortawesome/free-solid-svg-icons';
 import { useSettings } from '@/app/providers/settings';
-import Switch from '../../common/switch';
 
 interface MobileNavProps {
-    user: UserProfile | undefined;
+    email: string | null | undefined;
     isOpen: boolean;
-    isLoading: boolean;
     onToggleMenu: () => void;
 }
 export default function MobileNav({ 
-user,
+email,
 isOpen,
-isLoading,
 onToggleMenu
 
 }: MobileNavProps){
-  const {recentAnalyses, deleteAnalysis, viewAnalysis, mode, toggleMode} = useChartwise();
+  const {recentAnalyses, deleteAnalysis, viewAnalysis} = useChartwise();
   const {toggleSettings}=useSettings()
   
     return(
@@ -45,10 +41,6 @@ onToggleMenu
             />
           </Link>
           <div className='flex flex-row justify-end items-center ml-auto'>
-          <div className='flex flex-row items-center ml-auto justify-between text-sm p-3 font-medium focus:cursor-pointer text-gray-400'>
-          Chart mode
-          <Switch value={mode ==='analysis'? false:true} onChange={toggleMode} />
-        </div>
             <button
               className={`flex text-gray-200 hover:text-gray-200 z-50`}
               onClick={onToggleMenu}
@@ -72,10 +64,10 @@ onToggleMenu
             Settings
           </button> */}
           <div className='mt-auto'>
-            <UserPlanWidget userId={user?.email} isLoading={isLoading}/>
+            <UserPlanWidget userId={email}/>
           </div>
           <div className="bg-gray-700 p-2 rounded-md mt-3">
-            <UserProfileWidget userId={user?.email} isLoading={isLoading} />
+            <UserProfileWidget userId={email} />
           </div>
       </div>
         )}

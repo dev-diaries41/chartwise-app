@@ -28,14 +28,7 @@ const usePolling = (callback: () => void, pollingOptions: PollOptions) => {
     }
   };
 
-  const restartPolling = () => {
-    if (polling) {
-      polling.stop();
-      polling.start();
-    }
-  };
-
-  return { startPolling, stopPolling, restartPolling };
+  return { startPolling, stopPolling };
 };
 
 export default usePolling;

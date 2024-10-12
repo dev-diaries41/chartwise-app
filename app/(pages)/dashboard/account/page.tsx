@@ -1,24 +1,38 @@
-'use client';
-import React from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import React, { Suspense } from 'react';
 import UsageDashboard from '@/app/ui/user/usage';
-import { SuspenseFallback } from '@/app/ui/';
-import { useUsage } from '@/app/hooks/useUsage';
+import { auth } from '@/auth';
+import { chartwiseAPI } from '@/app/lib/requests/chartwise-api';
+import { Usage } from '@/app/types';
+import Loading from './loading';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import Error from './error';
+import { NextRequest } from 'next/server';
+import { cookies } from "next/headers";
 
-export default function Page() {
-  const { user, isLoading } = useUser();
-  const userId = user?.email;
-  const { usage, loading } = useUsage(userId);
+export const revalidate = 60;
 
-  if (isLoading || loading) {
-    return <SuspenseFallback />;
-  }
+async function getAllUsage(userId: string, token: string | undefined): Promise<Usage> {
+    chartwiseAPI.token = token;
 
-  return (
-    <div className="relative flex-1 max-w-7xl mx-auto w-full">
-      <div className="relative w-full flex flex-col max-w-5xl mx-auto lg:min-h-screen items-center text-center py-8 px-4">
-        <UsageDashboard usage={usage} />
-      </div>
-    </div>
-  );
+    const [todayData, monthData, totalData] = await Promise.all([
+        chartwiseAPI.getUsage(userId, 'today'),
+        chartwiseAPI.getUsage(userId, 'month'),
+        chartwiseAPI.getUsage(userId, 'total'),
+    ]);
+    return { today: todayData.data, month: monthData.data, total: totalData.data };
+}
+
+export default async function Page({ req }: { req: NextRequest }) {
+    const cookiesStore = cookies()
+    const token = cookiesStore.get('jwt')?.value; 
+    const session = await auth();
+    const usage = await getAllUsage(session?.user?.email!, token);
+
+    return (
+        <ErrorBoundary errorComponent={Error}>
+            <Suspense fallback={<Loading />}>
+                <UsageDashboard usage={usage} />
+            </Suspense>
+        </ErrorBoundary>
+    );
 }

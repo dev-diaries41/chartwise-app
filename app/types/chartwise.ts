@@ -11,18 +11,16 @@ export interface RecentAnalysesProps {
 }
 
 
-export interface StoredAnalysis {
-  analysis: string ;
-  chartUrls: string[];
+export interface IAnalyse extends AnalysisParams {
+  output: string ;
   userId: string;
   formatVersion?: number;
-  metadata?: Record<string, any>;
 }
 
-export interface IAnalyseCharts {
+export interface AnalysisParams {
   chartUrls: string[];
   metadata: {
     strategyAndCriteria?: string;
-    risk?: string;
+    risk?: number;
   }
 }

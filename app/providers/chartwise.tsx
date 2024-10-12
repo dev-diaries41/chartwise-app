@@ -1,5 +1,6 @@
+'use client'
 import React, { createContext, useState, useContext, useEffect, ChangeEvent, } from 'react';
-import { ProviderProps, IAnalysisUrl, Mode, IAnalyseCharts } from '@/app/types';
+import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalyse } from '@/app/types';
 import { StorageKeys } from '../constants/app';
 import {LocalStorage} from "@/app/lib/storage"
 import * as ChartwiseClient from '../lib/requests/chartwise-client';
@@ -12,32 +13,30 @@ interface TradeContextProps {
   setRecentAnalyses: React.Dispatch<React.SetStateAction<IAnalysisUrl[]>>; 
   analysisToView: IAnalysisUrl | null;
   setAnalysisToView: React.Dispatch<React.SetStateAction<IAnalysisUrl|null>>; 
-  chartUrls: string[], 
-  setChartUrls: React.Dispatch<React.SetStateAction<string[]>>;
-  analysisResult: string | null, 
-  setChartAnalysisResult: React.Dispatch<React.SetStateAction<string | null>>;
+  analysis: Omit<IAnalyse, 'userId'>; 
+  setAnalysis: React.Dispatch<React.SetStateAction<Omit<IAnalyse, 'userId'>>>; 
   shareUrl: string | null, 
   setShareUrl:  React.Dispatch<React.SetStateAction<string | null>>;
-  strategyAndCriteria: string, 
-  setStrategyAndCriteria : React.Dispatch<React.SetStateAction<string>>;
-  risk: number, 
-  setRisk: React.Dispatch<React.SetStateAction<number>>;
-  mode: Mode; 
-  setMode: React.Dispatch<React.SetStateAction<Mode>>;
 }
 
 const ChartwiseContext = createContext<TradeContextProps | undefined>(undefined);
 const retryHandler = new RetryHandler(1); // Allow only 1 retry to handle expired token
 
+
+const DefaultAnalysis: Omit<IAnalyse, 'userId'> = {
+  output: '',
+  chartUrls: [],
+  metadata:{
+    risk: 25,
+    strategyAndCriteria: ''
+  }
+}
+
 const ChartwiseProvider = ({ children }: ProviderProps) => {
   const [recentAnalyses, setRecentAnalyses] = useState<IAnalysisUrl[]>([]);
   const [analysisToView, setAnalysisToView] = useState<IAnalysisUrl | null>(null);
-  const [chartUrls, setChartUrls] = useState<string[] >([]);
-  const [analysisResult, setChartAnalysisResult] = useState<string | null>(null);
+  const [analysis, setAnalysis] = useState<Omit<IAnalyse, 'userId'>>(DefaultAnalysis);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
-  const [strategyAndCriteria, setStrategyAndCriteria] = useState(''); 
-  const [risk, setRisk] = useState<number>(25);
-  const [mode, setMode] = useState<Mode>('analysis');
   const router = useRouter();
 
 
@@ -46,16 +45,15 @@ const ChartwiseProvider = ({ children }: ProviderProps) => {
       LocalStorage.append(StorageKeys.recentAnalyses, analysis);
       setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysis])
     }
-    if(chartUrls.length > 0 && analysisResult){
-      const analysisToStore = {analysis: analysisResult, chartUrls, metadata: {risk, strategyAndCriteria}};
-      ChartwiseClient.saveAnalysis(analysisToStore).then(url => {
+    if(analysis.chartUrls.length > 0 && analysis.output){
+      ChartwiseClient.saveAnalysis(analysis).then(url => {
         if(url){
           setShareUrl(url);
           addRecentAnalysis({name:`Analysis-${Date.now()}`, analyseUrl: url});
         }
       });
     }
-  }, [chartUrls, analysisResult]);
+  }, [analysis]);
 
 
   useEffect(() => {
@@ -82,18 +80,10 @@ useEffect(() => {
       recentAnalyses, 
       setRecentAnalyses,
       setAnalysisToView,
-      analysisResult, 
-      setChartAnalysisResult,
+      analysis,
+      setAnalysis,
       shareUrl, 
       setShareUrl,
-      strategyAndCriteria, 
-      setStrategyAndCriteria,
-      risk, 
-      setRisk,
-      mode, 
-      setMode,
-      chartUrls, 
-      setChartUrls,
       }}>
       {children}
     </ChartwiseContext.Provider>
@@ -107,29 +97,14 @@ const useChartwise = () => {
   }
   const {
     analysisToView,
-    recentAnalyses,
     setAnalysisToView,
+    recentAnalyses,
     setRecentAnalyses,
-    analysisResult,
-    setChartAnalysisResult,
+    analysis,
+    setAnalysis,
     shareUrl,
-    strategyAndCriteria,
-    setStrategyAndCriteria,
-    risk,
-    setRisk,
-    mode,
-    setMode,
-    chartUrls,
-    setChartUrls
   } = context;
 
-  const anaylsisParams: IAnalyseCharts = {
-    chartUrls,
-    metadata: {risk: risk.toString(), 
-      strategyAndCriteria
-    },
-  }
-  
   
   const viewAnalysis = (analysis: IAnalysisUrl) => {
     setAnalysisToView(analysis)
@@ -140,26 +115,23 @@ const useChartwise = () => {
     setRecentAnalyses(prevAnalyses => prevAnalyses.filter((storedAnaysis: IAnalysisUrl) => storedAnaysis.name!== analysis.name))
   }
 
-  const toggleMode = () => {
-    setMode(prevMode => prevMode === 'analysis'? 'chart' : 'analysis')
-  }
-
 
 const removeAnalysis = () => {
-    setChartAnalysisResult(null);
+    setAnalysis(prevAnalysis => ({...prevAnalysis, output: ''}))
     setAnalysisToView(null);
   }
   
 const onStrategyAndCriteriaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-  setStrategyAndCriteria(event.target.value);
+  setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, strategyAndCriteria: event.target.value}}))
 };
 
 const onRiskChange = (value: any) => {
-  setRisk(value);
+  setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, risk: value}}))
+
 };
 
 const removeCharts = () => {
-    setChartUrls([]);
+    setAnalysis(prevAnalysis => ({...prevAnalysis, chartUrls: []}))
     removeAnalysis();
 };
 
@@ -179,7 +151,7 @@ const uploadCharts = async (files: File[]) => {
 
   try {
     const urls = await Promise.all(fileReaders);
-    setChartUrls(urls);
+    setAnalysis(prevAnalysis => ({...prevAnalysis, chartUrls: urls}))
   } catch (error) {
     console.error('Failed to read files:', error);
   }
@@ -188,11 +160,11 @@ const uploadCharts = async (files: File[]) => {
 
 const getRiskTolerance = () => {
   switch(true){
-    case risk <= 0.33 * 100:
+    case analysis.metadata?.risk! <= 0.33 * 100:
       return 'Low risk';
-    case risk <= 0.66 * 100 && risk > 0.33 * 100:
+    case analysis.metadata?.risk! <= 0.66 * 100 && analysis.metadata?.risk! > 0.33 * 100:
       return 'Med risk';
-    case risk > 0.66 * 100:
+    case analysis.metadata?.risk! > 0.66 * 100:
       return 'High risk';
     default:
       return 'Risk';
@@ -200,7 +172,7 @@ const getRiskTolerance = () => {
 }
 
 
-const analyseChart = async (analysis: IAnalyseCharts, userId: string) => {
+const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     try {
       const jobId = await retryHandler.retry(
         async () => await ChartwiseClient.submitAnalysisRequest(analysis),
@@ -213,28 +185,20 @@ const analyseChart = async (analysis: IAnalyseCharts, userId: string) => {
   };
 
   const newAnalysis = () => {
-    setStrategyAndCriteria('')
-    setChartAnalysisResult(null);
-    setChartUrls([]);
-    setRisk(25);
+   setAnalysis(DefaultAnalysis)
   }
 
   const onAnalysisComplete = (output: string) => {
-    setChartAnalysisResult(output);
+    setAnalysis(prevAnalysis => ({...prevAnalysis, output}))
     LocalStorage.remove(StorageKeys.jobId);
   }
 
 
   return {
-    anaylsisParams,
+    analysis,
     analysisToView,
     recentAnalyses,
-    risk,
-    analysisResult,
-    strategyAndCriteria,
     shareUrl,
-    mode,
-    chartUrls,
     newAnalysis,
     viewAnalysis,
     deleteAnalysis,
@@ -245,7 +209,6 @@ const analyseChart = async (analysis: IAnalyseCharts, userId: string) => {
     onAnalysisComplete,
     onRiskChange,
     getRiskTolerance,
-    toggleMode,
     uploadCharts
   };
 };

@@ -16,7 +16,7 @@ export default function Error({
  
   return (
     <div>
-        <DefaultError title="500 | Error getting usage"  reset={reset}/>
+        <DefaultError title={`500 | Error getting usage`}  reset={reset}/>
     </div>
   )
 }

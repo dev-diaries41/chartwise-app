@@ -3,11 +3,10 @@ import React, { useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { register } from '@/app/lib/actions';
 import InputError from '@/app/ui/common/form-error';
-import { Button } from '@/app/ui/common/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 export default function RegistrationForom(){
@@ -78,11 +77,11 @@ export default function RegistrationForom(){
           />
         </div>
         <p className='my-2' >
-             Already have an account?{' '}
-              <Link href="/login" className="text-blue-500 hover:underline">
-                Login
-              </Link>
-            </p>   
+          Already have an account?{' '}
+          <Link href="/login" className="text-blue-500 hover:underline">
+            Login
+          </Link>
+        </p>   
         <div className='flex justify-center ml-auto w-[100%]'>
           <RegisterButton/>
         </div>

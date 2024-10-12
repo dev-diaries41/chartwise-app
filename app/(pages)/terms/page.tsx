@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div id="terms" className="py-8 ">
+    <div id="terms" className="py-8 pt-24">
       <div className="max-w-5xl mx-auto">
         <div className="p-5">
           <h1 className="text-3xl font-bold pb-6">Terms and Conditions</h1>

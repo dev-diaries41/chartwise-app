@@ -14,13 +14,13 @@ export default function ListCard ({
   }: ListCardProps & { titleClassName?: string }) {
   return (
     <div
-      className="flex flex-col min-h-[300px] w-full h-full bg-gray-900 p-6 rounded-lg transform hover:scale-105 transition-transform duration-300 ease-in-out shadow-black shadow-lg hover:shadow-xl border border-gray-700"
+      className="flex flex-col min-h-[300px] w-full h-full bg-neutral-300 dark:bg-gray-900 p-6 rounded-lg transform hover:scale-105 transition-transform duration-300 ease-in-out shadow-black shadow-lg hover:shadow-xl"
       {...props}
     >
       <div className="text-left flex-grow">
         <div className='flex flex-row items-center gap-2 mb-2'>
         { icon && <FontAwesomeIcon icon={icon} color={iconColor} className='w-6 h-6'/>}
-        <h2 className={` text-xl font-semibold ${titleClassName}`}>
+        <h2 className={` text-2xl font-semibold ${titleClassName}`}>
           {title}
         </h2>
         </div>

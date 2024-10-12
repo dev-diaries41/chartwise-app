@@ -36,9 +36,9 @@ import { z } from 'zod';
     chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
     metadata: z.object({
       strategyAndCriteria: z.string().optional(),
-      risk: z.string().optional(),
+      risk: z.number().optional(),
     }).refine((data) => typeof data.strategyAndCriteria === 'undefined' || typeof data.strategyAndCriteria === 'string', { message: "strategyAndCriteria must be a string" })
-      .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'string', { message: "risk must be a string" })
+      .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'number', { message: "risk must be a number" })
   });
 
   export const TradeJournalEntrySchema = z.object({
@@ -117,4 +117,18 @@ import { z } from 'zod';
       ),
     password: z.string().min(8, { message: 'Password must be at least 8 characters long.' })
   });
+
+  export const RegistrationFormSchema = z.object({
+    name: z.string().optional(),
+    username: z.string().optional(),
+    email: z.string()
+      .email({ message: 'A valid email address is required.' })
+      .regex(
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        { message: 'The email must follow the correct syntax (e.g., user@example.com).' }
+      ),
+    password: z.string().min(8, { message: 'Password must be at least 8 characters long.' }),
+    confirmPassword: z.string().min(8, { message: 'Password must be at least 8 characters long.' })
+  });
+  
   

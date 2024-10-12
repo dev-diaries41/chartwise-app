@@ -39,9 +39,17 @@ export type Usage = {
     count: number;
   }
 
-  export interface User {
-    name?: string;
-    username?: string;
+  export interface NewUser {
     email: string;
     password: string;
+    name?: string;
+    username?: string;
+  }
+
+  export interface User {
+    email: string;
+    salt: string, 
+    hashedPassword: string;
+    name?: string;
+    username?: string;
   }

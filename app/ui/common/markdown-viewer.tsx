@@ -3,27 +3,27 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
-interface InfoDisplayProps {
-  title?: string;
-  info: string;
+interface MarkdownViewProps {
+  content: string;
 }
 
-export default function InfoDisplay({ info, title = 'Information' }: InfoDisplayProps) {
+export default function MarkdownView({ content }: MarkdownViewProps) {
   return (
     <div className="relative w-full flex flex-col max-w-[90%] mx-auto animate-fadeIn mt-4 rounded-md text-gray-200 text-left ">
       <div className="markdown-container p-4 ">
         <ReactMarkdown
-          children={info}
+          children={content}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
           components={{
-            p: ({ node, ...props }) => <p className="leading-relaxed mb-2" {...props} />,
-            ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-1" {...props} />,
-            ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-1" {...props} />,
-            h1: ({ node, ...props }) => <h1 className="text-lg font-bold mb-4 mt-8" {...props} />,
-            h2: ({ node, ...props }) => <h2 className="text-md font-bold mb-3 mt-6" {...props} />,
-            h3: ({ node, ...props }) => <h3 className="text-sm font-semibold mb-1 mt-2" {...props} />,
-            blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-600 pl-4 italic mb-2" {...props} />,
+            p: ({ node, ...props }) => <p className="leading-relaxed mb-6 text-md md:text-lg" {...props} />,
+            ul: ({ node, ...props }) => <ul className="list-disc list-inside text-md md:text-lg mb-6" {...props} />,
+            li: ({ node, ...props }) => <li className="mb-3" {...props} />,
+            ol: ({ node, ...props }) => <ol className="list-decimal list-inside text-md md:text-lg mb-6" {...props} />,
+            h1: ({ node, ...props }) => <h1 className="text-3xl md:text-5xl font-bold mb-6 mt-8" {...props} />,
+            h2: ({ node, ...props }) => <h2 className="text-xl md:text-3xl font-bold mb-4 mt-6" {...props} />,
+            h3: ({ node, ...props }) => <h3 className="text-lg md:text-xl font-semibold mb-3 mt-4" {...props} />,
+            blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-600 pl-4 italic mb-4" {...props} />,
           }}
         />
       </div>

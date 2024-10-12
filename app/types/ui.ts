@@ -39,9 +39,10 @@ export interface WhatsIncludedItem {
     };
     
     
-    export interface NavItem {
+    export type NavItem =  {
       name: string;
       link: string;
+      newPage?: boolean;
       icon?: any
     } 
     
@@ -92,6 +93,16 @@ export interface WhatsIncludedItem {
       feedbackType?: string[];
       email?: string[];
       feedback?: string[];
+    };
+    message: string | null;
+  };
+
+
+  export type RegistrationState = {
+    errors?: {
+      email?: string[];
+      passowrd?: string[];
+      confirmPassword?: string[];
     };
     message: string | null;
   };
@@ -152,7 +163,6 @@ export interface ProviderProps {
 
 export interface UserProfileWidgetProps {
   userId: string | undefined | null;    //email/uid/username
-  isLoading: boolean
 } 
 
 export interface ActionRowProps {

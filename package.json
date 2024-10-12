@@ -1,6 +1,6 @@
 {
   "name": "chartwise",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,20 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^3.5.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "aes-js": "^3.1.2",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "devtilities": "^1.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1",
     "next": "^14.2.3",
+    "next-auth": "^5.0.0-beta.4",
     "notify-utils": "^1.0.0",
     "react": "^18",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18",
-    "react-dropzone": "^14.2.3",
+    "react-dropzone": "^14.2.9",
     "react-markdown": "^9.0.1",
     "react-toastify": "^10.0.5",
     "rehype-raw": "^7.0.0",

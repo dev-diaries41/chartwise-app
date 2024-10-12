@@ -3,22 +3,22 @@ import React from 'react';
 import AddEntryPopup from '@/app/ui/trader/journal-entry';
 import { useJournal } from '@/app/providers/journal';
 import TradeJournalTable from './journal-table';
-import SuspenseFallback from '../common/suspense';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { TradeJournalEntry } from '@/app/types';
 
-export default function TradeJournal() {
-  const { showAddEntryPopup, entries, loading, selectedEntry, toggleAddEntry, deleteEntry, submitEntry, openEntry, closePopUp } = useJournal();
-  const {user} = useUser();
-  const userId = user?.email;
-
-  if(loading)return <SuspenseFallback/>
+export default function TradeJournal({
+  email, 
+  iniitalEntries = []}: {
+    email: string | null | undefined;
+    iniitalEntries: TradeJournalEntry[] | undefined
+  }) {
+  const { showAddEntryPopup, entries, selectedEntry, toggleAddEntry, deleteEntry, submitEntry, openEntry, closePopUp } = useJournal();
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center pt-8 px-4 overflow-auto">
-      <TradeJournalTable entries={entries} onAddEntry={toggleAddEntry} onDeleteEntry={deleteEntry} onOpenEntry={openEntry}/>
+    <div className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center px-4 overflow-auto">
+      <TradeJournalTable entries={entries.length === 0? iniitalEntries : entries} onAddEntry={toggleAddEntry} onDeleteEntry={deleteEntry} onOpenEntry={openEntry}/>
       {(showAddEntryPopup  || selectedEntry)&& (
         <AddEntryPopup
-          onSubmit={(entry)=>submitEntry(entry, userId)}
+          onSubmit={(entry)=>submitEntry(entry, email)}
           onClose={closePopUp}
           numberOfEntries={entries.length}
         />

@@ -24,9 +24,9 @@ export default React.memo(function LoadingIndicator ({
       }}
     >
       <div className="loading-indicator-inner " >
-      <div className="loading-indicator-circle" style={{backgroundColor: color,  width: `${size * SCALE_RATIO}px`,height: `${size * SCALE_RATIO}px`}}/>      
-      <div className="loading-indicator-circle" style={{backgroundColor: color,  width: `${size * SCALE_RATIO}px`,height: `${size * SCALE_RATIO}px`}}/>      
-      <div className="loading-indicator-circle" style={{backgroundColor: color,  width: `${size * SCALE_RATIO}px`,height: `${size * SCALE_RATIO}px`}}/>      
+        <div className="loading-indicator-circle" style={{backgroundColor: color,  width: `${size * SCALE_RATIO}px`,height: `${size * SCALE_RATIO}px`}}/>      
+        <div className="loading-indicator-circle" style={{backgroundColor: color,  width: `${size * SCALE_RATIO}px`,height: `${size * SCALE_RATIO}px`}}/>      
+        <div className="loading-indicator-circle" style={{backgroundColor: color,  width: `${size * SCALE_RATIO}px`,height: `${size * SCALE_RATIO}px`}}/>      
       </div>
     </div>
   );

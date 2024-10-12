@@ -4,12 +4,11 @@ import Header  from "./nav/navbar/header";
 import DropDownMenu from "./common/dropdown-menu";
 import Faq from "./common/faq";
 import CarouselImageViewer from "./common/image-carousel";
-import InfoDisplay from "./common/markdown-viewer";
+import MarkdownView from "./common/markdown-viewer";
 import InformationMenu from "./common/info-menu";
 import LoadingIndicator from "./common/loading-indicator";
 import LoaderDialog from "./common/loading-dialog";
 import PopUp from "./common/usage-popup";
-import DragAndDropUpload from "./common/drag-upload";
 import FileUploader from "./common/upload";
 import InputError from "./common/form-error";
 import Logo from "./logo";
@@ -22,7 +21,7 @@ import { PriceTable } from "./pricing/price-table";
 import { OrderCompleteSkeleton } from "./skeletons/order-complete";
 import { ReceiptSkeleton } from "./skeletons/receipt";
 import ContactForm from "./support/contact";
-import { ChartAnalyser } from "./trader/analysis";
+import { ChartAnalyser } from "./trader/analyser";
 import {Background} from "./common/bg";
 import Spacer from "./common/spacer";
 import RecentAnalyses from "./trader/recent-analyses";
@@ -41,12 +40,11 @@ export {
     DropDownMenu,
     Faq,
     CarouselImageViewer,
-    InfoDisplay,
+    MarkdownView,
     InformationMenu,
     LoaderDialog,
     LoadingIndicator,
     PopUp,
-    DragAndDropUpload,
     FileUploader,
     InputError,
     Logo,

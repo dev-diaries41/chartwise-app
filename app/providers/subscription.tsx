@@ -1,38 +1,28 @@
-import React, { createContext, useState, useContext, useLayoutEffect } from 'react';
+'use client'
+import React, { createContext, useState, useContext } from 'react';
 import { ProviderProps, UserPlan } from '@/app/types';
-import { cacheUserPlan, getPlanFromPlanAmount, handleGetSubscriptionInfo } from '../lib/user';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { cacheUserPlan, getPlanFromPlanAmount } from '../lib/user';
 import Stripe from 'stripe';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface SubscriptionContextProps {
-  userPlan: UserPlan | null;
-  setUserPlan: React.Dispatch<React.SetStateAction<UserPlan | null>>;
-  limit: number | null;
-  setLimit: React.Dispatch<React.SetStateAction<number | null>>;
+  userPlan: UserPlan;
+  setUserPlan: React.Dispatch<React.SetStateAction<UserPlan>>;
+  limit: number;
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   checkOutDetails: Partial<Stripe.Response<Stripe.Checkout.Session>> | null;
   setCheckoutDetails: React.Dispatch<React.SetStateAction<Partial<Stripe.Response<Stripe.Checkout.Session>> | null>>;
 }
 
 const SubscriptionContext = createContext<SubscriptionContextProps | undefined>(undefined);
 
-const SubscriptionProvider = ({ children }: ProviderProps) => {
-  const [userPlan, setUserPlan] = useState<UserPlan|null>(null);
-  const [limit, setLimit] = useState<number|null>(null);
+const SubscriptionProvider = ({ children, planInfo }: ProviderProps &  {planInfo: {
+  limit: number;
+  plan: UserPlan;
+}}) => {
+  const [userPlan, setUserPlan] = useState<UserPlan>(planInfo.plan);
+  const [limit, setLimit] = useState<number>(planInfo.limit);
   const [checkOutDetails, setCheckoutDetails] = useState<Partial<Stripe.Response<Stripe.Checkout.Session>>|null>(null);
-  const {user, isLoading} = useUser();
-  const userId = user?.email;
-
-
-  useLayoutEffect(() => {
-    if (!isLoading && userId)  {
-      handleGetSubscriptionInfo(userId).then(info =>{ 
-        setUserPlan(info.plan);
-        setLimit(info.limit);
-      });
-    }
-  }, [isLoading, userId]);
-
 
   return (
     <SubscriptionContext.Provider value={{

@@ -17,12 +17,12 @@ export default function InformationMenu () {
     <div className="relative hidden md:block">
       <button
         onClick={toggleMenu}
-        className="bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center text-2xl focus:outline-none shadow-md shadow-black"
+        className="border border-gray-700 invert dark:invert-0 text-white rounded-full w-8 h-8 flex items-center justify-center text-xl focus:outline-none shadow-md shadow-black mt-auto"
       >
         ?
       </button>
       {isOpen && (
-        <div className="absolute bottom-12 right-0 p-2 bg-gray-800 border border-gray-700 rounded-md shadow-lg w-48 z-10">
+        <div className="absolute bottom-12 right-0 p-2 bg-neutral-200 dark:bg-gray-800 border border-gray-700 rounded-md shadow-lg w-48 z-10">
          <NavLinks navItems={filteredFooterLinks}/>
         </div>
       )}

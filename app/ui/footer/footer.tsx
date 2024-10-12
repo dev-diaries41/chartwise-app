@@ -3,17 +3,20 @@
 import React from 'react';
 import FooterLinks from './footer-links';
 import InformationMenu from '@/app/ui/common/info-menu';
-import { usePathname } from 'next/navigation';
-import { shouldHide } from '@/app/lib/utils';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { shouldHide } from '@/app/lib/helpers';
 
 
 export default function Footer() {
   const pathname = usePathname();
-  const pathsToHide = ['/dashboard']
-  const hide = shouldHide(pathname, pathsToHide)
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+  const pathsToHide = ['/dashboard', '/login', '/register'];
   
+  const hide = (shouldHide(pathname, pathsToHide) || (callbackUrl && new URL(callbackUrl).pathname === '/dashboard'))
+
   return (
-    <footer className="flex flex-col  justify-end  mt-auto text-gray-300 text-sm">
+    <footer className="flex flex-col  justify-end  mt-auto text-sm">
      {!hide&& <div className="flex flex-col items-center text-center justify-center px-8 gap-4  py-8">
         <div className='lg:hidden'>
         <FooterLinks/>

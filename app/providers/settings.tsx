@@ -1,3 +1,4 @@
+'use client'
 import React, { createContext, useState, useContext, useEffect, useLayoutEffect } from 'react';
 import { ProviderProps, Settings } from '@/app/types';
 import { StorageKeys, Time } from '../constants/app';

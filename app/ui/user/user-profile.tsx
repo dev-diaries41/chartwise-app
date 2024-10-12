@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserProfileWidgetProps } from '@/app/types';
 import { useSubscription } from '@/app/providers/subscription';
 import Link from 'next/link';
+import { logout } from '@/app/lib/actions';
 
 
 export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
@@ -19,13 +20,16 @@ export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
           <span className=' text-xs font-medium opacity-50 overflow-hidden overflow-ellipsis'>{`${userPlan||''}`}</span>
         </div>
       </Link>
-      
-      <a
-        href={userId ? '/api/auth/logout' : '/api/auth/login'}
-        className='lg:hidden flex flex-row  items-center justify-end w-full gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer ml-auto' >
-        <FontAwesomeIcon icon={faSignOut} className='w-4 h-4'/>
-        {userId ? 'Sign out' : 'Sign in'}
-      </a>
+      <form action={async() => {
+        await logout()}
+        }>
+        <button
+          type='submit'
+          className='lg:hidden flex flex-row  items-center justify-end w-full gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer ml-auto' >
+          <FontAwesomeIcon icon={faSignOut} className='w-4 h-4'/>
+          {'Sign out'}
+        </button>
+      </form>
     </div>
   );
 };

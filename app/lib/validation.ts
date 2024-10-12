@@ -1,7 +1,7 @@
 import { StoredAnalysisSchema } from "../constants/schemas";
-import { StoredAnalysis } from "../types";
+import { IAnalyse } from "../types";
 
-export function validateAnalysis(analysis: Omit<StoredAnalysis, 'userId'>){
+export function validateAnalysis(analysis: Omit<IAnalyse, 'userId'>){
     const StoredAnalysisWithoutUserIdSchema = StoredAnalysisSchema.omit({ userId: true });
     return StoredAnalysisWithoutUserIdSchema.safeParse(analysis)
 }

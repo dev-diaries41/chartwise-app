@@ -14,7 +14,6 @@ export const LOGIN_URL = `${API_BASE_URL}/api/v1/auth/login`;
 export const LOGOUT_URL = `${API_BASE_URL}/api/v1/auth/logout`;
 export const REGISTER_URL = `${API_BASE_URL}/api/v1/auth/register`;
 export const USAGE_URL = `${API_BASE_URL}/api/v1/usage`;
-export const BASE_URL = process.env.BASE_URL!;
 
 
 export const AcceptedMimes = [
@@ -52,13 +51,12 @@ export const Time = {
 
 
 export const StorageKeys = {
+  cwauth: 'cwauth',
   jobId: 'jobId',
-  token: 'token',
   recentAnalyses: 'recent-analyses',
   recentCharts: 'recent-charts',
   subscription: 'stripe-subscription',
   settings: 'settings',
-  usage: 'usage',
   encrypt: 'encrypt'
 }
 
@@ -85,3 +83,8 @@ export const defaultSettings:Settings  = {
   }
 };
 
+export const PlanAmount = {
+  basic:699,
+  pro:2399,
+  elite: 2999,
+}

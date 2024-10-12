@@ -1,6 +1,5 @@
 import { useJournal } from '@/app/providers/journal';
 import { TradeJournalEntry } from '@/app/types';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import React, { ChangeEvent, useState } from 'react';
 
 interface AddEntryPopupProps {
@@ -48,8 +47,8 @@ interface AddEntryPopupProps {
 
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-90 z-50">
-      <div className="bg-gray-900 rounded-lg shadow-lg p-6 w-96">
+    <div className="fixed inset-0 flex items-center justify-center bg-neutral-200 dark:bg-gray-800 bg-opacity-90 z-50">
+      <div className="bg-neutral-300 dark:bg-gray-900 rounded-lg shadow-lg p-6 w-96">
         <h2 className="text-2xl font-bold mb-4">{selectedEntry ? 'Edit Journal Entry' : 'Add New Journal Entry'}
         </h2>
         <div className="space-y-4">
@@ -59,13 +58,13 @@ interface AddEntryPopupProps {
             placeholder="Symbol"
             value={entryData.symbol}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           />
           <select
             name="type"
             value={entryData.type}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           >
             <option value="buy">Buy</option>
             <option value="sell">Sell</option>
@@ -76,7 +75,7 @@ interface AddEntryPopupProps {
             placeholder="Quantity"
             value={entryData.quantity}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           />
           <input
             type="number"
@@ -84,7 +83,7 @@ interface AddEntryPopupProps {
             placeholder="Entry Price"
             value={entryData.entryPrice}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           />
           <input
             type="number"
@@ -92,7 +91,7 @@ interface AddEntryPopupProps {
             placeholder="Stop Loss (optional)"
             value={entryData.stopLoss}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           />
           <input
             type="number"
@@ -100,20 +99,20 @@ interface AddEntryPopupProps {
             placeholder="Take Profit (optional)"
             value={entryData.takeProfit}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           />
           <textarea
             name="comments"
             placeholder="Comments (optional)"
             value={entryData.comments}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           ></textarea>
           <select
             name="sentiment"
             value={entryData.sentiment}
             onChange={handleChange}
-            className="w-full p-2 border rounded-lg focus:outline-none bg-gray-800 focus:ring-2 focus:ring-blue-600"
+            className="w-full p-2 border rounded-lg focus:outline-none bg-neutral-200 dark:bg-gray-800 focus:ring-2 focus:ring-blue-600"
           >
             <option value="bullish">Bullish</option>
             <option value="bearish">Bearish</option>
@@ -123,7 +122,7 @@ interface AddEntryPopupProps {
         <div className="mt-6 flex justify-end space-x-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            className="px-4 py-2 rounded-lg  bg-neutral-400 hover:bg-neutral-200 dark:bg-gray-800 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             Cancel
           </button>

@@ -8,7 +8,7 @@ export default function FileUploader({
   acceptedFileExt,
   acceptedMimes,
   fileLimit = 1, 
-  className = " justify-center items-center block cursor-pointer text-white text-sm font-semibold shadow-md focus:outline-none"
+  className = " justify-center items-center block cursor-pointer  text-sm font-semibold focus:outline-none"
  }: FileUploaderProps) {
   const [inputKey, setInputKey] = useState(Date.now());
 

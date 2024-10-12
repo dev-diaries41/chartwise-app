@@ -18,7 +18,7 @@ export default function Logo({
             className="relative max-w-10 max-h-10"
             priority={true}
           />
-        <h1 className='hidden md:block w-full mr-4 text-lg text-gray-200 font-bold'>
+        <h1 className='hidden md:block w-full mr-4 text-lg font-bold'>
           ChartWise
         </h1>
     </div>

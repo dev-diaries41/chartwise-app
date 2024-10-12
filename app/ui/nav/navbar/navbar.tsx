@@ -23,10 +23,10 @@ export default function NavBar() {
       <div className="md:hidden">
         <div className='flex flex-row justify-center items-center gap-4'>
         <Link
-          href={'/dashboard'}
+          href={'/login'}
           className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 rounded-full shadow-md"
         >
-          {'Analyse chart'}
+          {'Sign In'}
         </Link>
         <button
           onClick={toggleMenu}
@@ -47,11 +47,11 @@ export default function NavBar() {
       <div className="md:flex items-center gap-5 hidden">
         <NavItems navItems={filteredHeaderLinks} />
         <Link
-          href={'/dashboard'}
+          href={'/login'}
           className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 px-4 rounded-full shadow-md"
         >
-          {'Analyse chart'}
-        </Link>
+          {'Sign In'}
+          </Link>
       </div>
     </nav>
   );

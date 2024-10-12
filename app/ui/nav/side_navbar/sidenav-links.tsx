@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import { NavItemsProps } from '@/app/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 export default function NavLinks({navItems}: NavItemsProps) {
   const pathname = usePathname();
 
@@ -17,11 +16,14 @@ export default function NavLinks({navItems}: NavItemsProps) {
             key={navItem.name}
             href={navItem.link}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-transparent text-sm font-medium hover:bg-gray-700 hover:text-emerald-600 justify-start p-2 px-3',
+              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-transparent text-sm font-medium hover:bg-neutral-200 dark:hover:bg-gray-700 justify-start p-2 px-3',
               {
-                'bg-emerald-100 text-emerald-600': pathname === navItem.link,
+                'text-emerald-500': pathname === navItem.link,
               },
             )}
+            {...(navItem.newPage
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
           >
             {navItem.icon && <FontAwesomeIcon icon={navItem.icon} className="w-4 h-4" />}
             <p className="w-full">{navItem.name}</p>

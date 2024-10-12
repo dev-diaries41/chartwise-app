@@ -1,7 +1,7 @@
 export enum AuthErrors  {
     MISSING_API_KEY = 'API key not provided',
     UNAUTHORIZED = 'Unauthorized access',
-    MISSING_JWT_TOKEN = 'missing JWT token',
+    MISSING_JWT_TOKEN = 'missing JWT token ',
     EXPIRED_TOKEN = 'jwt expired',
     INVALID_USER_ID = 'Invalid user',
     INVALID_LOGIN_CRED='Invalid login credentials'
@@ -41,5 +41,11 @@ export enum AuthErrors  {
     SHARED_ANALYSIS = 'Failed to get shared analysis',
     SAVE_ANALYSIS = 'Failed to save analysis'
   }
+
+  export enum ServerErrors{
+    INTERNAL_SERVER=  'Internal server error',
+    INVALID_DB_URL= 'Invalid database URL',
+    NO_DOCS_FOUND='No documents found matching the query'
+  };
 
   export const DEFAULT_ERROR_MESSAGE = 'Sorry, an error occurred. Please report the issue if it persists.'

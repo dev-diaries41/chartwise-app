@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Footer, Header } from './ui'
 import { Providers } from './providers'
-import { ToastContainer } from'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -31,8 +31,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers> 
-      <body className={`${inter.className} bg-gray-900`}>
-        <main className='relative flex flex-col min-h-screen bg-gray-900 '>
+      <body className={`${inter.className}`}>
+        <main className='bg-white dark:bg-gray-900 relative flex flex-col min-h-screen '>
           <Header/>
           {children}
           <ToastContainer />

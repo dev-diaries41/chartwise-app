@@ -8,7 +8,7 @@ interface ListProps {
 const List: React.FC<ListProps> = ({ items, listType = 'bullet' }) => {
   return (
     listType === 'bullet' ? (
-      <ul className="list-disc list-inside space-y-2 w-full text-start">
+      <ul className="list-disc list-inside space-y-2 w-full text-start text-lg">
         {items.map((item, index) => (
           <li key={index} className="text-md opacity-90">
             {item}
@@ -16,7 +16,7 @@ const List: React.FC<ListProps> = ({ items, listType = 'bullet' }) => {
         ))}
       </ul>
     ) : (
-      <ol className="list-decimal list-inside space-y-2 w-full text-start">
+      <ol className="list-decimal list-inside space-y-2 w-full text-start text-lg">
         {items.map((item, index) => (
           <li key={index} className="text-md opacity-90">
             {item}

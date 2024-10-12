@@ -41,13 +41,13 @@ export default function ContactForm(){
           <select
             id="feedback-type"
             name="feedback-type"
-            className="peer block w-full cursor-pointer bg-gray-800 border-2 border-gray-500 p-2 rounded-md"
+            className="peer block w-full cursor-pointer bg-transparent border-2 border-gray-500 p-2 rounded-md"
             aria-describedby="feedback-type-error"
           >
             {
               supportOptions.map((option, index) => {
                 return(
-                  <option key={index.toString()} className='text-gray-200' value={option.value}>{option.name}</option>
+                  <option key={index.toString()} className='' value={option.value}>{option.name}</option>
                 )
               })
             }
@@ -61,7 +61,7 @@ export default function ContactForm(){
             id="email"
             name="email"
             defaultValue=""
-            className="peer block w-full cursor-pointer bg-gray-800 border-2 border-gray-500 p-2 rounded-md"
+            className="peer block w-full cursor-pointer bg-transparent border-2 border-gray-500 p-2 rounded-md"
             placeholder='johndoe@example.com'
             aria-describedby="email-error"
           />
@@ -73,7 +73,7 @@ export default function ContactForm(){
           <textarea
             id="feedback"
             name="feedback"
-            className="peer block w-full cursor-pointer mb-4 bg-gray-800 border-2 border-gray-500 min-h-40 max-h-full flex-grow p-2 rounded-md"
+            className="peer block w-full cursor-pointer mb-4 bg-transparent border-2 border-gray-500 min-h-40 max-h-full flex-grow p-2 rounded-md"
             maxLength={500}
             defaultValue=""
             placeholder='Enter message...'
