@@ -1,0 +1,6 @@
+.env
+.env.local
+.next
+package-lock.json
+node_modules/
+promo_assets/
