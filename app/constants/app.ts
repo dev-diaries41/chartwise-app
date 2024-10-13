@@ -71,7 +71,7 @@ export const DefaultToastOptions: ToastOptions = {
 }
 
 
-export const defaultSettings:Settings  = {
+export const DefaultSettings:Settings  = {
   general: {
     name: 'General',
     theme: 'System',

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import * as AuthMessages from '@/app/constants/auth';
+import * as AuthMessages from '@/app/constants/registration';
 
 
 export default function RegistrationForom(){

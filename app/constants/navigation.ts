@@ -1,4 +1,4 @@
-import { faBookJournalWhills, faBoxOpen, faChartBar, faChartColumn, faCreditCard, faExternalLink, faHome, faInfoCircle, faQuestionCircle, faShare, faShareAltSquare, faShareSquare } from "@fortawesome/free-solid-svg-icons";
+import { faBookJournalWhills, faChartColumn, faCreditCard, faExternalLink, faHome, faQuestionCircle, } from "@fortawesome/free-solid-svg-icons";
 import { NavItem } from "../types";
 
 

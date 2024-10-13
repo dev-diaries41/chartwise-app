@@ -6,7 +6,6 @@ import { PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { getJobStatus, getNewToken } from "@/app/lib/requests/chartwise-client";
 import { usePathname, useRouter } from "next/navigation";
-import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/content";
 import { usePopUp, usePolling, useLoading } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { useChartwise } from "@/app/providers/chartwise";
@@ -16,6 +15,10 @@ import { useEffect, useLayoutEffect } from "react";
 
 const LOADER_DESCRIPTION = "Chart analysis in progress. This can take a few seconds. Please do not refresh the page.";
 const LOADER_TITLE = "Analysing chart...";
+const FREE_USAGE_LIMIT_TITLE = 'Free Usage Limit Reached';
+const FREE_USAGE_LIMIT_DESC = 'You have reached the limit for free usage. Subscribe now to continue using.'
+const PLAN_USAGE_LIMIT_TITLE = 'Subscription Usage Limit Reached';
+
 
 export function ChartAnalyser ({email}: {email: string | null | undefined}){
   const router = useRouter();

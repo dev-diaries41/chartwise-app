@@ -1,6 +1,6 @@
 import { IconDefinition, } from "@fortawesome/free-solid-svg-icons";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
-import { positions } from "../constants/style";
+import { positions } from "../constants/layout";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface WhatsIncludedItem {

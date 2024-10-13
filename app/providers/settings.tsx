@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect, useLayoutEffect 
 import { ProviderProps, Settings } from '@/app/types';
 import { StorageKeys, Time } from '../constants/app';
 import {LocalStorage} from "@/app/lib/storage";
-import { defaultSettings } from '../constants/app';
+import { DefaultSettings } from '../constants/app';
  
 interface SettingsContextProps {
     settings: Settings;
@@ -17,9 +17,9 @@ interface SettingsContextProps {
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
 
 const SettingsProvider = ({ children }: ProviderProps) => {
-    const [ settings, setSettings ] = useState<Settings>(defaultSettings);
+    const [ settings, setSettings ] = useState<Settings>(DefaultSettings);
     const [showSettings, setShowSettings] = useState(false);
-    const [selectedSettingCategory, setSelectedSettingCategory] = useState<string>(Object.values(defaultSettings)[0].name);
+    const [selectedSettingCategory, setSelectedSettingCategory] = useState<string>(Object.values(DefaultSettings)[0].name);
 
         // Retreive settings
         useLayoutEffect(() => {

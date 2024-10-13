@@ -1,6 +1,6 @@
 import React from 'react';
 import LoaderIndicator from '@/app/ui/common/loading-indicator';
-import { positions } from '@/app/constants/style';
+import { positions } from '@/app/constants/layout';
 import { LoaderDialogProps } from '@/app/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +27,6 @@ export default function LoaderDialog ({ title, description, position ='BOTTOM_RI
         <h2 className={`text-md font-bold max-w-[80%]`}>{title}</h2>
       </div>
       <p className={`text-sm mb-4`}>{description}</p>
-      
     </div>
   );
 };

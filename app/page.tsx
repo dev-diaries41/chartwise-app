@@ -5,9 +5,26 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ListCard from './ui/cards/list-card';
 import List from './ui/common/list';
-import { ChartWiseBenefits, HowItWorksGuide, TraderProblems } from './constants/content';
 import { faChartGantt } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
+
+export const ChartWiseBenefits = [
+  'Detailed overview of any chart',
+  'Tailored trade execution plans',
+  'Risk management',
+  'Extra confluence'
+  ]
+
+export const TraderProblems = [
+'Difficulty understanding chart',
+'No execution plan',
+'Poor risk management'
+]
+
+export const HowItWorksGuide = [
+'Enter chart mode and take a snapshot of the chart, or use an existing image.',
+'Switch to analysis mode, upload the chart, and optionally add strategy, criteria, and risk tolerance details.'
+]
 
 
 const Hero = () => {

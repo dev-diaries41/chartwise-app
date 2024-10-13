@@ -9,7 +9,7 @@ import { signIn, signUp, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation'
 import { RequestErrors } from '../constants/errors';
-import * as AuthMessages from '../constants/auth';
+import * as AuthMessages from '../constants/registration';
 
 const notify = new Notify(NOTIFICATIONS_CONFIG)
 

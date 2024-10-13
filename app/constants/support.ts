@@ -7,4 +7,4 @@ export const NOTIFICATIONS_CONFIG = {
       token: process.env.TELEGRAM_BOT_TOKEN || '',
       options: { polling: false },
     },
-  }
+}
