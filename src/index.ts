@@ -26,7 +26,7 @@ const { ...workers } = initialiseWorkers(redis);
 
 app.use(middleware.helmet());
 app.use(middleware.jsonLimit(config.middleware.jsonLimit));
-app.use(middleware.rateLimit(config.middleware.rateLimit));
+// app.use(middleware.rateLimit(config.middleware.rateLimit));
 app.use(middleware.cors());
 
 if (config.trustProxy !== undefined) {

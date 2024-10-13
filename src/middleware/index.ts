@@ -9,7 +9,6 @@ export * from './auth'
 export const middleware = {
     helmet: helmet,
     jsonLimit: (limit: string) => (express.json({ limit })),
-    rateLimit: (rateLimitOpts: RateLimitConfig) => rateLimit(rateLimitOpts),
     cors: () => cors({
       origin: (origin, callback) => {
         if (!origin || config.middleware.allowedOrigins.includes(origin)) {
@@ -19,5 +18,6 @@ export const middleware = {
         }
       },
     }),
+    // rateLimit: (rateLimitOpts: RateLimitConfig) => rateLimit(rateLimitOpts),
   };
 
