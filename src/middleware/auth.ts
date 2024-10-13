@@ -4,8 +4,9 @@ import { hash } from "@src/utils/cryptography";
 import { QueueManager } from "qme";
 import { AuthErrors, JobErrors, ServerErrors } from "@src/constants/errors";
 import { logger } from '@src/logger';
-import { auth } from '@src/services/auth';
 import { chartAnalysisQueue } from "@src/index";
+import { issueToken, verifyToken } from "@src/services/auth";
+import { JwtPayload } from "jsonwebtoken";
 
 
 
@@ -18,7 +19,7 @@ export async function checkToken(req: Request, res: Response, next: NextFunction
   }
 
   try {
-    const jwtPayload = await auth.verifyToken(token);
+    const jwtPayload = verifyToken<{ email: string }>(token);
     ['iat', 'exp'].forEach(keyToRemove => {
       delete jwtPayload[keyToRemove];
     })
@@ -33,16 +34,13 @@ export async function checkToken(req: Request, res: Response, next: NextFunction
   }
 }
 
-
-
-
 // Middleware to issue a new token
 export function issueNewToken(req: Request, res: Response, next: NextFunction) {
   if (!req.jwtPayload) {
     return res.status(401).json({ message: 'User information is missing' });
   }
 
-  const newToken = auth.issueToken(req.jwtPayload);
+  const newToken = issueToken(req.jwtPayload);
   res.setHeader('Authorization', `Bearer ${newToken}`);
   next();
 }
