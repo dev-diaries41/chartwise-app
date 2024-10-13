@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { convertToNumber } from '@/app/lib/helpers';
 import { GetDocResponse, GetDocsResponse } from '@/app/types';
-import { ServerErrors } from '@/app/constants/errors';
+import { RequestErrors, ServerErrors } from '@/app/constants/errors';
 
 export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string, any>): Promise<GetDocResponse<T>>{
   const session = await mongoose.startSession();
@@ -12,7 +12,7 @@ export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string
     if (!document) {
       await session.abortTransaction();
       session.endSession();
-      return { success: false, message: ServerErrors.NO_DOCS_FOUND };
+      return { success: false, message: RequestErrors.NO_DOCS_FOUND };
     }
 
     await session.commitTransaction();
@@ -38,7 +38,7 @@ export async function getDocs<T>(model: mongoose.Model<T>, filter: Record<string
     if (totalDocuments === 0) {
       await session.abortTransaction();
       session.endSession();
-      return { success: false, message: ServerErrors.NO_DOCS_FOUND };
+      return { success: false, message: RequestErrors.NO_DOCS_FOUND };
     }
 
     const skip = (pageNumber - 1) * perPageNumber;
@@ -67,7 +67,7 @@ export async function aggregate<T>(model: mongoose.Model<T>,pipeline: mongoose.P
     if (!data || data.length === 0) {
       await aggregationSession.abortTransaction();
       aggregationSession.endSession();
-      return { success: false, message: ServerErrors.NO_DOCS_FOUND };
+      return { success: false, message: RequestErrors.NO_DOCS_FOUND };
     }
 
     await aggregationSession.commitTransaction();

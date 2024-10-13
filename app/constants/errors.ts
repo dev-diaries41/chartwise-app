@@ -17,10 +17,10 @@ export enum AuthErrors  {
     REQUEST_ERROR = 'Failed to make request',
     POLLING_ERROR = 'Failed to poll',
     MISSING_IMAGE = 'Missing image',
-    NO_DOCS_FOUND = 'No documents found matching the query'
-
+    NO_DOCS_FOUND = 'No documents found matching the query',
+    DUPLICATE = 'E11000 duplicate key error collection'
   }
-
+  
   export enum ServiceUsageErrors {
     EXCEEDED_FREE_LIMIT = 'Exceeded free usage limit',  
     EXCEEDED_PLAN_LIMIT ='Exceeded plan limit',
@@ -30,22 +30,9 @@ export enum AuthErrors  {
     FAILED_TOTAL_USAGE_CHECK='Failed to retrieve total usage count'
   };
 
-  export enum MiscErrors  {
-    EXCEEDED_FREE_LIMIT= 'Exceeded free usage limit',
-    EXCEEDED_PLAN_LIMIT= 'Exceeded plan limit',
-    UNKNOWN_ERROR= 'An unknown error occurred'
-  }
-
-  export enum ToolErrors {
-    CHART_ANALYSIS ='Failed to analyse chart',
-    SHARED_ANALYSIS = 'Failed to get shared analysis',
-    SAVE_ANALYSIS = 'Failed to save analysis'
-  }
-
   export enum ServerErrors{
     INTERNAL_SERVER=  'Internal server error',
     INVALID_DB_URL= 'Invalid database URL',
-    NO_DOCS_FOUND='No documents found matching the query'
   };
 
   export const DEFAULT_ERROR_MESSAGE = 'Sorry, an error occurred. Please report the issue if it persists.'

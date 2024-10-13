@@ -4,9 +4,10 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { register } from '@/app/lib/actions';
 import InputError from '@/app/ui/common/form-error';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import * as AuthMessages from '@/app/constants/auth';
 
 
 export default function RegistrationForom(){
@@ -15,7 +16,7 @@ export default function RegistrationForom(){
   const router = useRouter();
 
   useEffect(() => {
-    if(state.message === 'Registration successful'){
+    if(state.message === AuthMessages.REGISTRATION_SUCCESS){
       setTimeout(() => router.push('/login'), 1500)
     }
   },[state])
@@ -26,12 +27,10 @@ export default function RegistrationForom(){
       <h1 className={`mb-3 text-2xl`}>
           Create your account
         </h1>
-      {state.message === 'Registration successful' && (
-          <div className='flex flex-row justify-start items-center gap-2'>
-            <FontAwesomeIcon icon={faCheckCircle} className="h-5 w-5 text-emerald-500" />
-            <p className="text-sm text-emerald-500">{state.message}</p>
-          </div>
-          )}
+         { state.message && <div className='flex flex-row justify-start items-center gap-2 rounded-md'>
+            <FontAwesomeIcon icon={state.message === AuthMessages.REGISTRATION_SUCCESS? faCheckCircle : faExclamationCircle} className={`h-5 w-5 ${state.message === AuthMessages.REGISTRATION_SUCCESS? 'text-emerald-500' : 'text-red-500'}`} />
+            <p className={`text-sm opacity-80`}>{state.message}</p>
+          </div>}
         <div className="relative">
           <InputError id='email-error' state={state} inputName={'email'} />
           <label htmlFor="email" className='mb-2 block text-sm font-medium'>Email</label>

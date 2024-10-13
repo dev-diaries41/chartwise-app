@@ -8,6 +8,8 @@ import { stripe } from '../stripe';
 import { signIn, signUp, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation'
+import { RequestErrors } from '../constants/errors';
+import * as AuthMessages from '../constants/auth';
 
 const notify = new Notify(NOTIFICATIONS_CONFIG)
 
@@ -55,18 +57,19 @@ export async function register(prevState: RegistrationState, formData: FormData)
 
   try {
     const { email, password, confirmPassword } = formResults.data;
-
-    if(password!== confirmPassword) return {
-      message: 'Passwords do not match',
-    }
+    if(password!== confirmPassword) return { message: 'Passwords do not match'}
 
     const newUser: NewUser = {email, password}
-    await signUp(newUser);
-    return {message: 'Registration successful'};
+    const result = await signUp(newUser);
+    if(!result.success)throw new Error(result.message);
 
+    return {message: AuthMessages.REGISTRATION_SUCCESS};
   } catch (error: any) {
     console.error("Error in registering user:", error.message);
-    return {message: 'Registration failed'};
+    if(error.message.includes(RequestErrors.DUPLICATE)) {
+      return {message: AuthMessages.ACCOUNT_EXISTS};
+    }
+    return {message: AuthMessages.REGISTRATION_FAILED};
   }
 }
 
