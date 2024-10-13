@@ -21,18 +21,11 @@ import { z } from 'zod';
     ),
   });
 
-  export const StoredAnalysisSchema = z.object({
-    analysis: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
-    chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
-    userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
-    formatVersion: z.number().optional(),
-    metadata: z.record(z.any()).optional().refine(val => typeof val === 'object', { message: "Metadata must be an object." }),
-  });
+
   
   
-  export const StoredAnalysisWithoutUserIdSchema = StoredAnalysisSchema.omit({ userId: true });
   
-  export const AnalyseChartSchema = z.object({
+  export const AnalysisParamsSchema = z.object({
     chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
     metadata: z.object({
       strategyAndCriteria: z.string().optional(),
@@ -40,6 +33,15 @@ import { z } from 'zod';
     }).refine((data) => typeof data.strategyAndCriteria === 'undefined' || typeof data.strategyAndCriteria === 'string', { message: "strategyAndCriteria must be a string" })
       .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'number', { message: "risk must be a number" })
   });
+
+  export const AnalysisSchema = AnalysisParamsSchema.extend({
+    output: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
+    userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
+    formatVersion: z.number().optional(),
+  });
+
+  export const AnalysisSchemaWithoutUserId = AnalysisSchema.omit({ userId: true });
+
 
   export const TradeJournalEntrySchema = z.object({
     entryId: z.number({

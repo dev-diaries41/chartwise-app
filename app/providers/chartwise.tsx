@@ -39,21 +39,24 @@ const ChartwiseProvider = ({ children }: ProviderProps) => {
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const router = useRouter();
 
-
-  useEffect(() => {
-    const addRecentAnalysis = (analysis: IAnalysisUrl) => {
-      LocalStorage.append(StorageKeys.recentAnalyses, analysis);
-      setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysis])
+  const saveAnalysis = async() => {
+    const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
+      LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
+      setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
     }
     if(analysis.chartUrls.length > 0 && analysis.output){
-      ChartwiseClient.saveAnalysis(analysis).then(url => {
-        if(url){
-          setShareUrl(url);
-          addRecentAnalysis({name:`Analysis-${Date.now()}`, analyseUrl: url});
-        }
-      });
+      const url = await ChartwiseClient.saveAnalysis(analysis);
+      if(url){
+        setShareUrl(url);
+        addRecentAnalysis({name:`Analysis-${Date.now()}`, analyseUrl: url});
+      }
     }
-  }, [analysis]);
+  }
+
+  useEffect(() => {
+    console.log("Current Analysis: ", analysis);
+   saveAnalysis()
+  }, [analysis, analysis.output]);
 
 
   useEffect(() => {

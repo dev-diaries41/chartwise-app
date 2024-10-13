@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { capitalizeFirstLetter } from '@/app/lib/helpers';
 import { AnalysisUsageProps, Usage, UsageType } from '@/app/types';
 import React from 'react';
@@ -16,10 +16,11 @@ function getCurrentMonth() {
 }
 
 const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, period }) => {
-  const {limit} = useSubscription();
-  if(!limit)return null
-  const percentage = (usage / limit) * 100;
+  const { limit } = useSubscription();
+  if (!limit) return null;
   
+  const percentage = (usage / limit) * 100;
+
   return (
     <div className="bg-neutral-300 dark:bg-gray-700 text-white p-8 rounded-xl shadow-lg w-full">
       <h3 className="text-xl font-semibold mb-1">Monthly Usage</h3>
@@ -30,7 +31,7 @@ const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, period }) => {
           text={`${Math.round(percentage)}%`} 
           styles={buildStyles({
             textColor: '#ffffff',
-            pathColor: '#00ff84',
+            pathColor: percentage > 80 ? '#ff0000' : '#00ff84',  // Red if usage is above 80%
             trailColor: '#2b2b2b'
           })} 
         />
@@ -40,8 +41,6 @@ const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, period }) => {
     </div>
   );
 };
-
-
 
 interface UsageCardProps {
   periodUsage: UsageType;
@@ -56,22 +55,45 @@ function UsageCard({ periodUsage }: UsageCardProps) {
   );
 }
 
-export default function UsageDashboard({usage}: {usage: Usage}) {  
+export default function UsageDashboard({ usage }: { usage: Usage }) {
+  const { userPlan } = useSubscription();
+
   return (
     <div className="relative flex-1 max-w-7xl mx-auto w-full">
       <div className="relative w-full flex flex-col max-w-5xl mx-auto lg:min-h-screen items-center text-center py-8 px-4">
-    <div className="flex flex-col w-full min-h-screen  items-center py-8 ">
-      <h1 className="text-3xl font-bold mb-8 text-left">Usage</h1>
-      <div className='w-full flex flex-wrap gap-4 justify-between items-center mb-8'>
-        {Object.entries(usage).map(([key, value], index) => (
-          <div key={index} className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-6 sm:mb-0">
-            <UsageCard periodUsage={{name: capitalizeFirstLetter(key), count: value}} />
+        <div className="flex flex-col w-full min-h-screen items-center py-8 ">
+          
+          {/* Page Title and Plan Information */}
+          <div className="flex justify-between w-full mb-8">
+            <h1 className="text-3xl font-bold">Usage</h1>
+            <div className="flex gap-4 font-medium items-center ">
+              <p className="text-md opacity-90 ">Current Plan: <span className="font-semibold">{capitalizeFirstLetter(userPlan)}</span></p>
+              {/* {userPlan !== 'Elite' && (
+                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                  Upgrade Plan
+                </button>
+              )}
+              {userPlan !== 'Free' && (
+                <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
+                  Cancel Plan
+                </button>
+              )} */}
+            </div>
           </div>
-        ))}
+
+          {/* Usage Breakdown Cards */}
+          <div className='w-full flex flex-wrap gap-4 justify-between items-center mb-8'>
+            {Object.entries(usage).map(([key, value], index) => (
+              <div key={index} className="w-full sm:w-1/2 lg:w-1/4 mb-6 sm:mb-0">
+                <UsageCard periodUsage={{ name: capitalizeFirstLetter(key), count: value }} />
+              </div>
+            ))}
+          </div>
+
+          {/* Monthly Analysis Usage */}
+          <AnalysisUsage usage={usage.month} period={getCurrentMonth()} />
+        </div>
       </div>
-      <AnalysisUsage usage={usage.month} period={getCurrentMonth()} />
-    </div>
-    </div>
     </div>
   );
 }

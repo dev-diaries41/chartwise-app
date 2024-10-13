@@ -1,6 +1,6 @@
 'use client'
  
-import DefaultError from '@/app/ui/common/not-found'
+import DefaultError from '@/app/ui/common/default-error'
 import { useEffect } from 'react'
  
 export default function Error({
@@ -16,7 +16,7 @@ export default function Error({
  
   return (
     <div>
-        <DefaultError title={`500 | Error getting usage`}  reset={reset}/>
+        <DefaultError title={`Error fetching account information.`}  reset={reset}/>
     </div>
   )
 }

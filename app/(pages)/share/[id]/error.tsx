@@ -1,6 +1,6 @@
 'use client'
  
-import DefaultError from '@/app/ui/common/not-found'
+import DefaultError from '@/app/ui/common/default-error'
 import { useEffect } from 'react'
  
 export default function Error({
@@ -16,7 +16,7 @@ export default function Error({
  
   return (
     <div>
-        <DefaultError title="404 | Analysis not found"  reset={reset}/>
+        <DefaultError title="Error fetching Analysis"  reset={reset}/>
     </div>
   )
 }

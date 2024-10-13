@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPlanFromPlanAmount } from '@/app/lib/user';
+import { getPlanFromPlanAmount } from '@/app/lib/helpers';
 
 interface ReceiptProps {
   amount: number;

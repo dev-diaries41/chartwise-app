@@ -4,7 +4,7 @@ import {CarouselImageViewer, FileUploader, MarkdownView, SliderInput} from "@/ap
 import {faCopy, faMagnifyingGlassChart, faPaperclip, faShareNodes, faTimes, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useChartwise } from "@/app/providers/chartwise";
-import { AnalyseChartSchema } from "@/app/constants/schemas";
+import { AnalysisParamsSchema } from "@/app/constants/schemas";
 import ActionRow from "../common/action-row";
 import { copyTextToClipboard } from "@/app/lib/helpers";
 
@@ -34,7 +34,7 @@ interface AnalysisFormProps {
             }
             setLoading(true);
             const {output, ...anaylsisParams} = analysis
-            const validatedAnalysis = AnalyseChartSchema.safeParse(anaylsisParams);
+            const validatedAnalysis = AnalysisParamsSchema.safeParse(anaylsisParams);
             if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
         
             try {

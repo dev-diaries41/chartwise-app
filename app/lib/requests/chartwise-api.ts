@@ -89,3 +89,14 @@ export class ChartWiseAPI {
 }
 
 export const chartwiseAPI = new ChartWiseAPI(FPF_LABS_API_KEY);
+
+export async function getAllUsage(userId: string, token: string | undefined): Promise<Usage> {
+  chartwiseAPI.token = token;
+
+  const [todayData, monthData, totalData] = await Promise.all([
+      chartwiseAPI.getUsage(userId, 'today'),
+      chartwiseAPI.getUsage(userId, 'month'),
+      chartwiseAPI.getUsage(userId, 'total'),
+  ]);
+  return { today: todayData.data, month: monthData.data, total: totalData.data };
+}

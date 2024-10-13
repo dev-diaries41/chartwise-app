@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useState, useContext } from 'react';
 import { ProviderProps, UserPlan } from '@/app/types';
-import { cacheUserPlan, getPlanFromPlanAmount } from '../lib/user';
+import { cacheUserPlan, getPlanFromPlanAmount } from '@/app/lib/helpers';
 import Stripe from 'stripe';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 

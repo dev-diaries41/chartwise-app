@@ -1,7 +1,7 @@
 'use client'
+import { AnalysisSchemaWithoutUserId } from "@/app/constants/schemas";
 import { AuthErrors, JobErrors } from "../../constants/errors";
-import {JobReceipt, JobResult, IAnalyse, TradeJournalEntry, Usage, UsagePeriod, AnalysisParams} from "@/app/types"
-import { validateAnalysis } from "../validation";
+import {JobReceipt, JobResult, IAnalyse, TradeJournalEntry, AnalysisParams} from "@/app/types"
 import { GetDocsResponse } from "@/app/types/response";
 
 
@@ -39,17 +39,10 @@ export async function submitAnalysisRequest(analysis: AnalysisParams): Promise<s
   return data.jobId;
 }
 
-export async function getUsage(userId: string | null | undefined, period: UsagePeriod): Promise<number> {
-  if (!userId) return 0
-  const endpointUrl = `/api/usage?period=${encodeURIComponent(period)}&userId=${encodeURIComponent(userId)}`;
-  const { data } = await fetchWithError<{data: number}>(endpointUrl, { method: 'GET', credentials: 'include' });
-  return data;
-}
-
 // User id sent via jwt
 export async function saveAnalysis(analysis: Omit<IAnalyse, 'userId'>): Promise<string | null> {
   try {
-    const validatedAnalysis = validateAnalysis(analysis);
+    const validatedAnalysis = AnalysisSchemaWithoutUserId.safeParse(analysis);
     if (!validatedAnalysis.success) throw new Error(JSON.stringify(validatedAnalysis.error));
 
     const body = JSON.stringify(validatedAnalysis.data);
@@ -57,16 +50,12 @@ export async function saveAnalysis(analysis: Omit<IAnalyse, 'userId'>): Promise<
     const id = response.data;
     const shareableUrl = `${window.location.origin}/share/${id}`;
     return shareableUrl;
-  } catch (error) {
+  } catch (error: any) {
+    // console.log('Error saving analysis: ', error.message)
     return null;
   }
 }
 
-export async function getSharedAnalysis(id: string): Promise<IAnalyse> {
-    const endpointUrl = `/api/analysis/share?id=${id}`;
-    const response = await fetchWithError<{ data: IAnalyse }>(endpointUrl, { method: 'GET', credentials: 'include' });
-    return response.data;
-}
 
 export async function addJournalEntry(entry: TradeJournalEntry): Promise<string> {
   const endpointUrl = '/api/journal';
@@ -82,7 +71,7 @@ export async function getJournalEntries (page: string | number, perPage: string 
 };
 
 export async function refreshOnError(error: Error, userId: string){
-if (error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN || 'Invalid token') {
+if (error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN ) {
   await getNewToken({ userId });
   return true;
   }
