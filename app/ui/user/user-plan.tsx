@@ -13,7 +13,7 @@ export default function UserPlanWidget({userId}: UserProfileWidgetProps) {
   if(hideUpgradeWidget)return null
 
   return (
-    <div className='flex flex-col items-center p-1 bg-transparent  rounded-lg'>
+    <div className='flex flex-col items-center p-2 bg-transparent  rounded-lg hover:bg-neutral-200 dark:hover:bg-gray-700 rounded-md'>
     <Link href={'/#pricing'} className="w-full flex flex-row items-center gap-1">
         <FontAwesomeIcon icon={faLevelUpAlt} className="w-4 h-4"/>
       <div className='flex flex-col gap-0'>

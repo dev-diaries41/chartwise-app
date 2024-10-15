@@ -13,7 +13,6 @@ const nextConfig = {
     // Ignore the missing 'supports-color' module
     config.resolve.alias['supports-color'] = false;
 
-    // Ignore the missing ReactToastify CSS source map warnings
     config.ignoreWarnings = [
       (warning) => 
         warning.message.includes("Failed to parse source map") || 

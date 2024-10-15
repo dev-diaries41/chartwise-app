@@ -34,7 +34,7 @@ export default React.memo(function  SideNav({email}: {email: string | null | und
         <div className='flex h-full flex-col justify-between'>
           <NavLinks navItems={dashboardLinks} />
           <div className="flex-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
-            <div className='mr-auto p-1'>
+            <div className='mr-auto p-1 '>
               <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis}/>
             </div>
           </div>
@@ -44,7 +44,7 @@ export default React.memo(function  SideNav({email}: {email: string | null | und
               }>
               <button
                 type='submit'
-                className='flex flex-row items-center justify-start gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer' >
+                className='w-full flex flex-row items-center justify-start gap-2 p-2 py-3 text-sm font-medium mt-auto focus:cursor-pointer hover:bg-neutral-200 dark:hover:bg-gray-700 rounded-md' >
                 <FontAwesomeIcon icon={faSignOut} className='w-4 h-4'/>
                 {'Sign out'}
               </button>

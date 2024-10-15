@@ -7,8 +7,8 @@ export default function FileUploader({
   onFileUpload,
   acceptedFileExt,
   acceptedMimes,
-  fileLimit = 1, 
-  className = " justify-center items-center block cursor-pointer  text-sm font-semibold focus:outline-none"
+  maxFiles = 1, 
+  className = " justify-center items-center block cursor-pointer  text-sm font-md focus:outline-none"
  }: FileUploaderProps) {
   const [inputKey, setInputKey] = useState(Date.now());
 
@@ -18,8 +18,8 @@ export default function FileUploader({
     }
     const selectedFiles = Array.from(event.target.files);
 
-    if (selectedFiles.length > fileLimit) {
-      alert(`You can only upload up to ${fileLimit} files.`);
+    if (selectedFiles.length > maxFiles) {
+      alert(`You can only upload up to ${maxFiles} files.`);
       setInputKey(Date.now());
       return;
     }
@@ -38,7 +38,7 @@ export default function FileUploader({
 
   return (
     <div className="flex w-full max-w-lg justify-center items-center">
-      <div className="w-full">
+      <div className="w-auto">
         <input
           type="file"
           id="file"

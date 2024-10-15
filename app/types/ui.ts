@@ -63,9 +63,10 @@ export interface WhatsIncludedItem {
       onFileUpload: (files: File[]) => void; // Updated to handle an array of files
       acceptedFileExt: string[];
       acceptedMimes: string[];
-      className?: string;
       children?: ReactNode;
-      fileLimit?: number
+      maxFiles?: number
+      maxSize?: number;
+      className?: string;
     }
     
     export interface Option {
@@ -201,24 +202,10 @@ export interface ActionItem {
   icon: IconDefinition;
   onClick: () => void;
   tooltip: string;
-  condition?: boolean;
+  isVisible?: boolean;
 }
 
 export interface ActionRowProps {
   actions: ActionItem[];
 }
 
-export interface TradeJournalEntry {
-  entryId: number;
-  tradeDate: Date;
-  symbol: string;
-  type: 'buy' | 'sell';
-  quantity: number;
-  entryPrice: number;
-  stopLoss?: number;
-  takeProfit?: number;
-  comments?: string;
-  sentiment?: 'bullish' | 'bearish' | 'neutral';
-  createdAt: Date;
-  updatedAt: Date;
-}

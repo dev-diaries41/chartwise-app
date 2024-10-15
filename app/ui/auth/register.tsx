@@ -31,6 +31,7 @@ export default function RegistrationForom(){
             <FontAwesomeIcon icon={state.message === AuthMessages.REGISTRATION_SUCCESS? faCheckCircle : faExclamationCircle} className={`h-5 w-5 ${state.message === AuthMessages.REGISTRATION_SUCCESS? 'text-emerald-500' : 'text-red-500'}`} />
             <p className={`text-sm opacity-80`}>{state.message}</p>
           </div>}
+          
         <div className="relative">
           <InputError id='email-error' state={state} inputName={'email'} />
           <label htmlFor="email" className='mb-2 block text-sm font-medium'>Email</label>

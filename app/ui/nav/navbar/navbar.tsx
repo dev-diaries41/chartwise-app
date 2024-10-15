@@ -24,7 +24,7 @@ export default function NavBar() {
         <div className='flex flex-row justify-center items-center gap-4'>
         <Link
           href={'/login'}
-          className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 rounded-full shadow-md"
+          className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 text-sm text-white font-medium p-2 rounded-full shadow-md"
         >
           {'Sign In'}
         </Link>
@@ -48,7 +48,7 @@ export default function NavBar() {
         <NavItems navItems={filteredHeaderLinks} />
         <Link
           href={'/login'}
-          className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-sm text-white font-semibold p-2 px-4 rounded-full shadow-md"
+          className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500  text-sm text-white font-medium p-2 px-4 rounded-full shadow-md"
         >
           {'Sign In'}
           </Link>

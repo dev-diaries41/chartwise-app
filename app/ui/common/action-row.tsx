@@ -1,16 +1,15 @@
-import { copyTextToClipboard } from '@/app/lib/ui';
-import { ActionRowProps, ActionItem } from '@/app/types';
+import { ActionItem } from '@/app/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 const ActionRow = ({ actions }: { actions: ActionItem[] }) => {
   return (
     <div className="flex flex-row justify-center items-center mr-auto gap-2">
-      {actions.map(({ icon, onClick, tooltip, condition = true }, index) => (
-        condition && (
+      {actions.map(({ icon, onClick, tooltip, isVisible = true }, index) => (
+        isVisible && (
           <div key={index} className="relative group">
             <button
-              className="text-gray-400 cursor-pointer hover:bg-gray-700 p-1 rounded-md"
+              className="cursor-pointer p-1 rounded-md opacity-80"
               onClick={onClick}
             >
               <FontAwesomeIcon icon={icon} className="w-4 h-4"/>

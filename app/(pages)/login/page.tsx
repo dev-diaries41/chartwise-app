@@ -1,5 +1,4 @@
 import LoginForm from '@/app/ui/auth/login';
-import react from 'react'
 
 export default function Page() {
     return (

@@ -4,6 +4,7 @@ import Header  from "./nav/navbar/header";
 import DropDownMenu from "./common/dropdown-menu";
 import Faq from "./common/faq";
 import CarouselImageViewer from "./common/image-carousel";
+import DragAndDropUpload from "./common/drag-upload";
 import MarkdownView from "./common/markdown-viewer";
 import InformationMenu from "./common/info-menu";
 import LoadingIndicator from "./common/loading-indicator";
@@ -21,16 +22,17 @@ import { PriceTable } from "./pricing/price-table";
 import { OrderCompleteSkeleton } from "./skeletons/order-complete";
 import { ReceiptSkeleton } from "./skeletons/receipt";
 import ContactForm from "./support/contact";
-import { ChartAnalyser } from "./trader/analyser";
+import { ChartAnalyser } from "./chartwise/analyser";
 import {Background} from "./common/bg";
 import Spacer from "./common/spacer";
-import RecentAnalyses from "./trader/recent-analyses";
+import RecentAnalyses from "./chartwise/recent-analyses";
 import UserPlanWidget from "./user/user-plan";
 import ActionRow from "./common/action-row";
 import Settings from "./common/settings";
 import SuspenseFallback from "./common/suspense";
 import SliderInput from "./common/slider";
-import AnalysisForm from "./trader/analysis-form";
+import AnalysisForm from "./chartwise/analysis-form";
+
 
 export {
     Card,
@@ -65,5 +67,6 @@ export {
     Settings,
     SuspenseFallback,
     SliderInput,
-    AnalysisForm
+    AnalysisForm,
+    DragAndDropUpload
 }

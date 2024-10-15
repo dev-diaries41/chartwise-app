@@ -10,7 +10,6 @@ export interface RecentAnalysesProps {
   onDelete: (IAnalysisUrl: IAnalysisUrl) => void;
 }
 
-
 export interface IAnalyse extends AnalysisParams {
   output: string ;
   userId: string;

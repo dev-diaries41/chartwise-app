@@ -12,7 +12,7 @@ export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
   const { userPlan } = useSubscription();
   
   return (
-    <div className="w-full flex flex-row items-center p-1 justify-center">
+    <div className="w-full flex flex-row items-center p-2 justify-center hover:bg-neutral-200 dark:hover:bg-gray-700 rounded-md">
       <Link href={'/dashboard/account'} className='w-full flex flex-row gap-2 items-center text-left mr-auto'>
         <FontAwesomeIcon icon={faUserCircle} className='w-4 h-4 rounded-full' />
         <div className='flex flex-col w-full gap-0 items-start overflow-hidden'>
@@ -27,8 +27,8 @@ export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
           type='submit'
           className='lg:hidden flex flex-row  items-center justify-end w-full gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer ml-auto' >
           <FontAwesomeIcon icon={faSignOut} className='w-4 h-4'/>
-          {'Sign out'}
-        </button>
+          <span className='hidden md:inline'>{'Sign out'}</span>
+          </button>
       </form>
     </div>
   );

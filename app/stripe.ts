@@ -1,13 +1,18 @@
 import Stripe from "stripe";
 import { PaymentDetails } from "@/app/types";
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_LIVE_KEY!, {
-    apiVersion: "2024-04-10",
-});
+const STRIPE_SECRET_KEY = process.env.NODE_ENV === 'development'? process.env.STRIPE_SECRET_TEST_KEY! : process.env.STRIPE_SECRET_LIVE_KEY!
+const WEBHOOK_SECRET = process.env.NODE_ENV === 'development'? process.env.STRIPE_WEBHOOK_SECRET_TEST! : process.env.STRIPE_WEBHOOK_SECRET_LIVE!
+const stripe = new Stripe(STRIPE_SECRET_KEY, {apiVersion: "2024-04-10"});
 
-export const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET_LIVE!;
 
-export async function handlePaymentComplete({email, name, receipt_url, chargeId}: PaymentDetails){
+async function handlePaymentComplete({email, name, receipt_url, chargeId}: PaymentDetails){
     console.log({email, name, receipt_url, chargeId})
-    console.log('payment details receviing succesffuly')
+    console.log('payment details receviing succesffuly');
+}
+
+export {
+    WEBHOOK_SECRET,
+    stripe,
+    handlePaymentComplete
 }

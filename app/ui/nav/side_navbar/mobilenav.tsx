@@ -42,7 +42,7 @@ onToggleMenu
           </Link>
           <div className='flex flex-row justify-end items-center ml-auto'>
             <button
-              className={`flex text-gray-200 hover:text-gray-200 z-50`}
+              className={`flex z-50`}
               onClick={onToggleMenu}
             >
               <FontAwesomeIcon icon={isOpen? faClose: faBars} size="lg" className="w-6 h-6" />
@@ -51,7 +51,7 @@ onToggleMenu
         </div>
 
         {isOpen && (
-        <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2 z-40 ">
+        <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-neutral-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2 z-40 ">
           <NavLinks navItems={[...dashboardLinks, ...navLinks.filter(link => !['License', 'Terms', 'Privacy Policy', 'Pricing', 'Home'].includes(link.name))]} />
           <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1">
             <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
@@ -66,7 +66,7 @@ onToggleMenu
           <div className='mt-auto'>
             <UserPlanWidget userId={email}/>
           </div>
-          <div className="bg-gray-700 p-2 rounded-md mt-3">
+          <div className="bg-neutral-100 dark:bg-gray-700 rounded-md mt-3">
             <UserProfileWidget userId={email} />
           </div>
       </div>

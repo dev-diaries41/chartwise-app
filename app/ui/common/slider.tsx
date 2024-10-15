@@ -9,10 +9,10 @@ interface SliderInputProps {
   max: number;
   value: number;
   onChange: (value: number) => void;
-  icon?: FontAwesomeIconProps['icon']
+  icon?: FontAwesomeIconProps['icon'];
 }
 
-const SliderInput: React.FC<SliderInputProps> = ({ min, max, value, icon, title, description, onChange }) => {
+export default function SliderInput({ min, max, value, icon, title, description, onChange }: SliderInputProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
     onChange(newValue);
@@ -44,5 +44,3 @@ const SliderInput: React.FC<SliderInputProps> = ({ min, max, value, icon, title,
     </div>
   );
 };
-
-export default SliderInput

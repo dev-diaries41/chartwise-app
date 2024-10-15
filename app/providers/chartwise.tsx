@@ -39,22 +39,21 @@ const ChartwiseProvider = ({ children }: ProviderProps) => {
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const router = useRouter();
 
-  const saveAnalysis = async() => {
-    const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
-      LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
-      setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
-    }
-    if(analysis.chartUrls.length > 0 && analysis.output){
-      const url = await ChartwiseClient.saveAnalysis(analysis);
-      if(url){
-        setShareUrl(url);
-        addRecentAnalysis({name:`Analysis-${Date.now()}`, analyseUrl: url});
-      }
-    }
-  }
 
   useEffect(() => {
-    console.log("Current Analysis: ", analysis);
+    const saveAnalysis = async() => {
+      const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
+        LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
+        setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
+      }
+      if(analysis.chartUrls.length > 0 && analysis.output){
+        const url = await ChartwiseClient.saveAnalysis(analysis);
+        if(url){
+          setShareUrl(url);
+          addRecentAnalysis({name:`Analysis-${Date.now()}`, analyseUrl: url});
+        }
+      }
+    }
    saveAnalysis()
   }, [analysis, analysis.output]);
 
@@ -195,6 +194,7 @@ const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     setAnalysis(prevAnalysis => ({...prevAnalysis, output}))
     LocalStorage.remove(StorageKeys.jobId);
   }
+
 
 
   return {

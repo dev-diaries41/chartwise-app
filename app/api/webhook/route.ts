@@ -1,5 +1,5 @@
 import { handlePaymentComplete } from '@/app/stripe';
-import { endpointSecret, stripe } from '@/app/stripe';
+import { WEBHOOK_SECRET, stripe } from '@/app/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   try {
     if(!sig)throw new Error('Invalid webhook signature')
-    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(payload, sig, WEBHOOK_SECRET);
   } catch (error: any) {
     console.error('Webhook error:', error);
     return NextResponse.json({ received: false }, { status: 400 });

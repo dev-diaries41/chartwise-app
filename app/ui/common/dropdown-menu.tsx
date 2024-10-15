@@ -17,9 +17,9 @@ export default function DropDownMenu({ title, children, icon }: DropDownMenuProp
     };
  
     return (
-        <div className="w-full max-w-xl mx-auto p-2">
-            <div className="w-full flex flex-row items-center cursor-pointer gap-2" onClick={toggleExpand}>
-                <div className='w-full flex flex-row items-center justify-start gap-2'>
+        <div className="w-full max-w-xl mx-auto">
+            <div className="w-full flex flex-row items-center cursor-pointer gap-2 hover:bg-neutral-200 dark:hover:bg-gray-700 rounded-md p-2 py-3" onClick={toggleExpand}>
+                <div className='w-full flex flex-row items-center justify-start gap-2 '>
                     { icon && <FontAwesomeIcon icon={icon} className='w-4 h-4'/>}
                     <h2 className="text-sm">{title}</h2>
                 </div>

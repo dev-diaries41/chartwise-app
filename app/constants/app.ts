@@ -1,7 +1,7 @@
 import { ToastOptions } from "react-toastify";
 import { Settings } from "@/app/types";
 
-export const FPF_LABS_API_KEY = process.env.FPF_LABS_API_TEST_KEY!
+export const FPF_LABS_API_KEY = process.env.NODE_ENV === 'development'? process.env.FPF_LABS_API_DEV_KEY! : process.env.FPF_LABS_API_KEY!
 export const API_BASE_URL = process.env.API_BASE_URL!;
 export const CHART_ANALYSIS_URL = `${API_BASE_URL}/api/v1/analysis`;
 export const CHART_ANALYSIS_RECURRING_URL = `${API_BASE_URL}/api/v1/analysis/recurring`;

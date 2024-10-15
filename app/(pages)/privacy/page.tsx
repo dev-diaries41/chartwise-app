@@ -1,3 +1,5 @@
+export const revalidate = false;
+
 export default function Page() {
   return (
     <div id="privacy-policy" className="py-8 pt-24 ">

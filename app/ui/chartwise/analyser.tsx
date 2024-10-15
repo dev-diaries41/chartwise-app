@@ -77,8 +77,9 @@ export function ChartAnalyser ({email}: {email: string | null | undefined}){
     if(error.message.includes('429')){
       return toast.error('We are currently overloaded at the moment', DefaultToastOptions);
     }
-    console.error("Unexepcted error here: ",error.message)
-    toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
+    console.error("Unexepcted error here: ",error.message);
+     toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
+     return;
   };
 
   const pollJobStatus = async () => {
@@ -118,7 +119,6 @@ export function ChartAnalyser ({email}: {email: string | null | undefined}){
     toast.error(PLAN_USAGE_LIMIT_TITLE, DefaultToastOptions);
   };
 
-
   const handleSubscripe = () => {
     router.push('/#pricing')
   }
@@ -128,7 +128,7 @@ export function ChartAnalyser ({email}: {email: string | null | undefined}){
       <div className='w-full flex flex-row gap-4 justify-between items-center'>
         <h1 className="text-left text-xl md:text-3xl my-4 font-bold">Upload & Analyse</h1>
         <button
-          className="flex w-auto items-center justify-center text-sm md:text-md lg:text-lg font-semibold gap-1"
+          className="flex w-auto items-center justify-center text-sm md:text-md lg:text-lg font-medium gap-1"
           onClick={newAnalysis}
           >
           <FontAwesomeIcon icon={faPlusCircle} className="w-4 md:w-4 h-4 md:h-4"  />

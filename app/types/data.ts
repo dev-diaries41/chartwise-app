@@ -53,3 +53,19 @@ export type Usage = {
     name?: string;
     username?: string;
   }
+
+
+export interface TradeJournalEntry {
+  entryId: number;
+  tradeDate: Date;
+  symbol: string;
+  type: 'buy' | 'sell';
+  quantity: number;
+  entryPrice: number;
+  stopLoss?: number;
+  takeProfit?: number;
+  comments?: string;
+  sentiment?: 'bullish' | 'bearish' | 'neutral';
+  createdAt: Date;
+  updatedAt: Date;
+}

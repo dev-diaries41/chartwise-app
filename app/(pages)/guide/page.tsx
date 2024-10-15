@@ -1,4 +1,3 @@
-import React from 'react';
 import CarouselImageViewer from '@/app/ui/common/image-carousel';
 
 const tradingAssistantGuide = {
@@ -30,6 +29,8 @@ const tradingAssistantGuide = {
     }
   ]
 };
+
+export const revalidate = false;
 
 
 export default function TradingAssistantGuide(){
