@@ -4,7 +4,6 @@ import {CarouselImageViewer, MarkdownView, SliderInput, DragAndDropUpload, Actio
 import {faChevronDown, faChevronUp, faCopy, faMagnifyingGlassChart, faShareNodes, faTimes, faUpload, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useChartwise } from "@/app/providers/chartwise";
-import { AnalysisParamsSchema } from "@/app/constants/schemas";
 import { copyTextToClipboard } from "@/app/lib/helpers";
 import { ActionItem } from "@/app/types";
 import { useState } from "react";
@@ -12,67 +11,27 @@ import { useState } from "react";
 
 interface AnalysisFormProps {
     loading: boolean;
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-    handleJobInProgress: (jobId: string) => void;
-    handleFailedJobStart: (error: Error) => void;
+    handleAnalyseChart: () => Promise<void>;
 }
 
 
-  export default function AnalysisForm ({
-    handleJobInProgress, 
-    handleFailedJobStart, 
-    loading, 
-    setLoading,
-    email
-  }: AnalysisFormProps & {email: string | null | undefined}){
-    const MAX_CHARS = 150;
-    const {analysis, shareUrl, uploadCharts, removeAnalysis, onRiskChange, onStrategyAndCriteriaChange, getRiskTolerance, analyseChart,  removeCharts} = useChartwise();
-    const [showStrategy, setShowStrategy] = useState(false);
+export default function AnalysisForm ({
+    loading,
+    handleAnalyseChart, 
+  }: AnalysisFormProps){
+  const MAX_CHARS = 150;
+  const {analysis, shareUrl, uploadCharts, onRiskChange, onStrategyAndCriteriaChange, getRiskTolerance,  removeCharts} = useChartwise();
+  const [showStrategy, setShowStrategy] = useState(false);
 
-    const AnalysisActionRow = () => {        
-        const handleAnalyseChart = async () => {
-            if(!email || analysis.chartUrls.length < 1)return;
-            if(analysis.output){
-              removeAnalysis();
-            }
-            setLoading(true);
-            const {output, ...anaylsisParams} = analysis
-            const validatedAnalysis = AnalysisParamsSchema.safeParse(anaylsisParams);
-            if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
-        
-            try {
-              const jobId = await analyseChart(validatedAnalysis.data, email);
-              handleJobInProgress(jobId);
-            } catch (error: any) {
-              handleFailedJobStart(error);
-            }
-        };
 
-        const actions: ActionItem[] = [
-          { icon: faCopy, onClick: () => copyTextToClipboard(analysis.output), tooltip: 'Copy' },
-          { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', isVisible: !!shareUrl }
-        ];
-  
-        return(
-          <div className="w-full flex flex-row justify-start items-center gap-3 rounded-md mt-4 h-8">
-            <div className="">
-            { analysis.output && <ActionRow actions={actions}/>}
-            </div>
-            <button
-              disabled={loading || !email || analysis.chartUrls.length < 1}
-              className={`flex  items-center justify-center bg-emerald-500 text-sm ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading || !email || analysis.chartUrls.length < 1? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
-              onClick={handleAnalyseChart}
-            >
-              <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
-              <span className="">Analyse Chart</span>
-            </button>
-          </div>
-        )
-      }
+  const actions: ActionItem[] = [
+    { icon: faCopy, onClick: () => copyTextToClipboard(analysis.output), tooltip: 'Copy' },
+    { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', isVisible: !!shareUrl }
+  ];
 
-      const toggleStrategy = () => {
-        setShowStrategy(prev => !prev);
-      }
+  const toggleStrategy = () => {
+    setShowStrategy(prev => !prev);
+  }
     
     return (
       <div className="relative w-full max-w-[100%] flex flex-col border-2 border-neutral-400 dark:border-gray-700 text-sm md:text-md shadow-md rounded-md mb-2" >
@@ -143,7 +102,19 @@ interface AnalysisFormProps {
         </div>
       
         <div className=" mt-auto w-full border-t-2 border-neutral-400 dark:border-gray-700 pb-4 px-4 rounded-b-md">
-          <AnalysisActionRow/>
+          <div className="w-full flex flex-row justify-start items-center gap-3 rounded-md mt-4 h-8">
+            <div className="">
+            { analysis.output && <ActionRow actions={actions}/>}
+            </div>
+            <button
+              disabled={loading || analysis.chartUrls.length < 1}
+              className={`flex  items-center justify-center bg-emerald-500 text-sm ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading  || analysis.chartUrls.length < 1? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
+              onClick={handleAnalyseChart}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
+              <span className="">Analyse Chart</span>
+            </button>
+          </div>
         </div>
     </div>
     )

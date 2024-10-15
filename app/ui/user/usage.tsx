@@ -22,7 +22,7 @@ const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, period }) => {
   const percentage = (usage / limit) * 100;
 
   return (
-    <div className="bg-neutral-300 dark:bg-gray-700 text-white p-8 rounded-xl shadow-lg w-full">
+    <div className="bg-neutral-100 dark:bg-gray-800 p-8 rounded-xl shadow-lg w-full">
       <h3 className="text-xl font-semibold mb-1">Monthly Usage</h3>
       <p className="text-md opacity-90 mb-4">{period}</p>
       <div className="w-48 mx-auto my-4">
@@ -30,9 +30,8 @@ const AnalysisUsage: React.FC<AnalysisUsageProps> = ({ usage, period }) => {
           value={percentage} 
           text={`${Math.round(percentage)}%`} 
           styles={buildStyles({
-            textColor: '#ffffff',
             pathColor: percentage > 80 ? '#ff0000' : '#00ff84',  // Red if usage is above 80%
-            trailColor: '#2b2b2b'
+            trailColor: '#3f3f3f'
           })} 
         />
       </div>
@@ -48,7 +47,7 @@ interface UsageCardProps {
 
 function UsageCard({ periodUsage }: UsageCardProps) {
   return (
-    <div className='flex flex-col items-center bg-neutral-300 dark:bg-gray-700 p-8 rounded-xl shadow-lg'>
+    <div className='flex flex-col items-center bg-neutral-100 dark:bg-gray-800 p-8 rounded-xl shadow-lg'>
       <h1 className='text-xl font-semibold opacity-90 mb-4'>{periodUsage.name}</h1>
       <span className='text-5xl font-bold my-auto'>{periodUsage.count}</span>
     </div>
@@ -60,7 +59,7 @@ export default function UsageDashboard({ usage }: { usage: Usage }) {
 
   return (
     <div className="relative flex-1 max-w-7xl mx-auto w-full">
-      <div className="relative w-full flex flex-col max-w-5xl mx-auto lg:min-h-screen items-center text-center py-8 px-4">
+      <div className="relative w-full flex flex-col max-w-5xl mx-auto  items-center text-center px-4">
         <div className="flex flex-col w-full min-h-screen items-center py-8 ">
           
           {/* Page Title and Plan Information */}
@@ -69,12 +68,12 @@ export default function UsageDashboard({ usage }: { usage: Usage }) {
             <div className="flex gap-4 font-medium items-center ">
               <p className="text-md opacity-90 ">Current Plan: <span className="font-semibold">{capitalizeFirstLetter(userPlan)}</span></p>
               {/* {userPlan !== 'Elite' && (
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <button className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">
                   Upgrade Plan
                 </button>
               )}
               {userPlan !== 'Free' && (
-                <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
+                <button className="bg-red-500 px-4 py-2 rounded hover:bg-red-700">
                   Cancel Plan
                 </button>
               )} */}

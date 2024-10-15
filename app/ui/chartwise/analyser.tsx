@@ -12,6 +12,7 @@ import { useChartwise } from "@/app/providers/chartwise";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useLayoutEffect } from "react";
+import { AnalysisParamsSchema } from "@/app/constants/schemas";
 
 const LOADER_DESCRIPTION = "Chart analysis in progress. This can take a few seconds. Please do not refresh the page.";
 const LOADER_TITLE = "Analysing chart...";
@@ -23,7 +24,7 @@ const PLAN_USAGE_LIMIT_TITLE = 'Subscription Usage Limit Reached';
 export function ChartAnalyser ({email}: {email: string | null | undefined}){
   const router = useRouter();
   const pathname = usePathname();
-  const {onAnalysisComplete, newAnalysis} = useChartwise();
+  const {analysis, analyseChart, removeAnalysis, onAnalysisComplete, newAnalysis} = useChartwise();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle} = usePopUp();
   const { loading, setLoading, minimizeLoader, showLoadingDialog } = useLoading();
 
@@ -58,6 +59,25 @@ export function ChartAnalyser ({email}: {email: string | null | undefined}){
   const onJobFail = () => {
     onJobFinished();
     toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
+  };
+
+
+  const handleAnalyseChart = async () => {
+    if(!email || analysis.chartUrls.length < 1)return;
+    if(analysis.output){
+      removeAnalysis();
+    }
+    setLoading(true);
+    const {output, ...anaylsisParams} = analysis
+    const validatedAnalysis = AnalysisParamsSchema.safeParse(anaylsisParams);
+    if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
+
+    try {
+      const jobId = await analyseChart(validatedAnalysis.data, email);
+      handleJobInProgress(jobId);
+    } catch (error: any) {
+      handleFailedJobStart(error);
+    }
   };
 
   const handleJobInProgress = (jobId: string) => {
@@ -123,6 +143,8 @@ export function ChartAnalyser ({email}: {email: string | null | undefined}){
     router.push('/#pricing')
   }
 
+
+
   return (
     <div className="w-full flex flex-col mx-auto items-center  mb-auto md:my-auto py-8">
       <div className='w-full flex flex-row gap-4 justify-between items-center'>
@@ -136,7 +158,7 @@ export function ChartAnalyser ({email}: {email: string | null | undefined}){
         </button>
       </div>
       <p className="w-full flex text-sm md:text-md lg:text-lg text-left opacity-80 mb-4">You can upload up to 3 charts for different timeframes.</p>
-      <AnalysisForm email={email} handleFailedJobStart={handleFailedJobStart} handleJobInProgress={handleJobInProgress} loading={loading} setLoading={setLoading}/>
+      <AnalysisForm handleAnalyseChart={handleAnalyseChart} loading={loading}/>
       {(popUpTitle && popUpDescription) && <PopUp title={popUpTitle} description={popUpDescription} onConfirm={handleSubscripe} onClose={closePopUp} cta="Subscribe"/>}
       {showLoadingDialog && (
         <LoaderDialog

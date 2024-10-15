@@ -1,5 +1,5 @@
 import React from 'react';
-import TradingViewWidget from '@/app/ui/trader/tradingview';
+import TradingViewWidget from '@/app/ui/chartwise/tradingview';
 
 export default function Page() {
   return (

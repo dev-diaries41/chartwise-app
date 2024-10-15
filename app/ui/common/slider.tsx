@@ -33,6 +33,8 @@ export default function SliderInput({ min, max, value, icon, title, description,
       </div>
       {description &&<p className="text-left mb-4">{description}</p>}
       <input
+        id="risk"
+        name="risk"
         type="range"
         min={min}
         max={max}
@@ -40,6 +42,7 @@ export default function SliderInput({ min, max, value, icon, title, description,
         onChange={handleChange}
         style={{ background: calculateBackgroundColor(value) }}
         className="w-full h-2 rounded-lg appearance-none cursor-pointer range-sm"
+        aria-describedby={"risk-error"}
       />
     </div>
   );
