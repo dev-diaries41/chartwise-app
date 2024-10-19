@@ -60,7 +60,7 @@ const TableFilters = ({ filters, updateFilter }: FiltersProps) => {
           name={filter.name}
           value={filters[filter.name as keyof Filters]}
           onChange={handleSelectChange}
-          className="flex items-center px-2 py-1 rounded-full shadow bg-neutral-200 dark:bg-gray-800"
+          className="flex items-center px-2 py-1 rounded-full shadow bg-gray-200 dark:bg-gray-800"
         >
           {filter.options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -110,7 +110,7 @@ export default function TradeJournalTable({ entries,  onAddEntry, onDeleteEntry,
       <Spacer/>
       <table className="min-w-full border border-neutral-400 dark:border-gray-700 text-sm">
         <thead>
-          <tr className='bg-neutral-200 dark:bg-gray-800'>
+          <tr className='bg-gray-200 dark:bg-gray-800'>
             <th className="p-2 border-b border-r border-neutral-400 dark:border-gray-700"></th>
             <th className="p-2 border-b border-r border-neutral-400 dark:border-gray-700">Trade Date</th>
             <th className="p-2 border-b border-r border-neutral-400 dark:border-gray-700">Symbol</th>
@@ -149,7 +149,7 @@ export default function TradeJournalTable({ entries,  onAddEntry, onDeleteEntry,
         {/* Previous Button */}
         {currentPage > 1 && (
           <button
-            className="p-2 bg-neutral-200 dark:bg-gray-800 bg-gray-800 rounded"
+            className="p-2 bg-gray-200 dark:bg-gray-800 bg-gray-800 rounded"
             onClick={() => changePage(currentPage - 1)}
           >
             <FontAwesomeIcon icon={faChevronLeft} className='w-4 h-4' />
@@ -159,7 +159,7 @@ export default function TradeJournalTable({ entries,  onAddEntry, onDeleteEntry,
         <span className="mx-2">Page {currentPage}</span>
         {currentEntries.length === itemsPerPage && (
           <button
-            className="p-2 bg-neutral-200 dark:bg-gray-800 rounded"
+            className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
             onClick={() => changePage(currentPage + 1)}
           >
             <FontAwesomeIcon icon={faChevronRight} className='w-4 h-4' />

@@ -1,4 +1,4 @@
-import { Time } from "@/app/constants/app";
+import { Time } from "@/app/constants/global";
 import * as AES from 'aes-js';
 
 export class LocalStorage {

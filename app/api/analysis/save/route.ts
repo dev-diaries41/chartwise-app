@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";
 import { APIResponse } from "@/app/types/response";
 import { handleError } from "@/app/lib/requests/next-api-errors";
-import { IAnalyse } from "@/app/types";
+import { IAnalysis } from "@/app/types";
 import { cookies } from "next/headers";
 
 
 export async function POST(req: NextRequest) {
   try {
-    const analysis = await req.json() as Omit<IAnalyse, 'userId'>;;
+    const analysis = await req.json() as Omit<IAnalysis, 'userId'>;;
     const cookieStore = cookies();
     const jwtCookie = cookieStore.get('jwt')
     const token = jwtCookie?.value;

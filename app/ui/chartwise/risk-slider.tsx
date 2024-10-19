@@ -25,13 +25,13 @@ export default function SliderInput({ min, max, value, icon, title, description,
   };
 
   return (
-    <div className="w-full flex flex-col items-left gap-1 mb-4">
+    <div className="w-full flex flex-col items-left gap-1">
       <div className='flex flex-row items-center justify-left gap-2 text-md opacity-80'>
-        { icon && <FontAwesomeIcon icon={icon} className='w-4 h-4'/> }
-        <h2 className="font-semibold  ">{title}</h2>
+        { icon && <FontAwesomeIcon icon={icon} className='w-4 h-4' color={calculateBackgroundColor(value)}/> }
+        <h2 className="font-semibold ">{title}</h2>
         <span className="font-semibold  ml-auto">{value}</span>
       </div>
-      {description &&<p className="text-left mb-4">{description}</p>}
+      {description &&<p className="text-left mb-2">{description}</p>}
       <input
         id="risk"
         name="risk"

@@ -5,11 +5,12 @@ import { ContactFormSchema, RegistrationFormSchema } from '@/app/constants/schem
 import Stripe from 'stripe';
 import { FeedbackState, NewUser, RegistrationState } from '@/app/types';
 import { stripe } from '../stripe';
-import { signIn, signUp, signOut } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation'
 import { RequestErrors } from '../constants/errors';
 import * as AuthMessages from '../constants/registration';
+import { signUp } from './user';
 
 const notify = new Notify(NOTIFICATIONS_CONFIG)
 
@@ -97,30 +98,5 @@ export async function sendNotification(prevState: FeedbackState, formData: FormD
   } catch (error: any) {
     console.error("Error in sendNotification:", error.message);
     return {message: 'MESSAGE FAILED'};
-  }
-}
-
-export async function getSubscription(email: string):Promise<{subscription: Stripe.Subscription;} | null> {
-  try {
-    const customer = await stripe.customers.list({
-      email,
-      limit: 1,
-    });
-  
-    if (customer.data.length === 0) return null;
-  
-    const subscription = await stripe.subscriptions.list({
-      limit: 1,
-      customer: customer.data[0].id,
-    });
-
-    if (subscription.data.length === 0) return null;
-
-    return {
-      subscription: subscription.data[0],
-    };
-  } catch (err:any) {
-    console.error(err.message)
-    return null;
   }
 }

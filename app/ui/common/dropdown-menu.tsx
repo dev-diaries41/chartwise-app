@@ -7,9 +7,10 @@ interface DropDownMenuProps {
     title: string;
     children: ReactNode;
     icon?: FontAwesomeIconProps['icon']
+    titleClassName?: string
 }
 
-export default function DropDownMenu({ title, children, icon }: DropDownMenuProps) {
+export default function DropDownMenu({ title, children, icon, titleClassName }: DropDownMenuProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpand = () => {
@@ -17,18 +18,18 @@ export default function DropDownMenu({ title, children, icon }: DropDownMenuProp
     };
  
     return (
-        <div className="w-full max-w-xl mx-auto">
-            <div className="w-full flex flex-row items-center cursor-pointer gap-2 hover:bg-neutral-200 dark:hover:bg-gray-700 rounded-md p-2 py-3" onClick={toggleExpand}>
+        <div className="w-full">
+            <div className="w-full flex flex-row items-start cursor-pointer gap-2  rounded-md p-2 py-3" onClick={toggleExpand}>
                 <div className='w-full flex flex-row items-center justify-start gap-2 '>
                     { icon && <FontAwesomeIcon icon={icon} className='w-4 h-4'/>}
-                    <h2 className="text-sm">{title}</h2>
+                    <h2 className={titleClassName || "text-sm font-medium text-left"}>{title}</h2>
                 </div>
                 <button className="text-sm">
                     { <FontAwesomeIcon icon={isExpanded? faChevronUp: faChevronDown} className='w-3 h-3'/>}
                 </button>
             </div>
             {isExpanded && (
-                <div className="w-full pt-4">
+                <div className="w-full">
                     {children}
                 </div>
             )}

@@ -1,4 +1,4 @@
-import { PlanAmount, StorageKeys, Time } from "../constants/app";
+import { PlanAmount, StorageKeys, Time } from "../constants/global";
 import { UserPlan, UserProfileInfo } from "../types";
 import {SessionStorage} from "./storage"
 
@@ -56,4 +56,11 @@ export function copyTextToClipboard(text: string | null) {
       } 
     }
   
-  
+    export function getCurrentMonth() {
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const currentMonthIndex = new Date(Date.now()).getUTCMonth();
+      return monthNames[currentMonthIndex];
+    }

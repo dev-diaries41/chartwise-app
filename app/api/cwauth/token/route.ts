@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";
 import { handleError } from "@/app/lib/requests/next-api-errors";
 import { cookies } from "next/headers";
-import { Time } from "@/app/constants/app";
+import { Time } from "@/app/constants/global";
 
 
 export async function POST(req: NextRequest) {

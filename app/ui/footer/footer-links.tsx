@@ -1,13 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { navLinks } from '@/app/constants/navigation';
+import { NavItem } from '@/app/types';
 
-const filteredFooterLinks = navLinks.filter(footerLink => !['Home', 'Support', 'Pricing', 'Guidelines'].includes(footerLink.name))
 
-const FooterLinks = () => {
+const FooterLinks = ({links}: {links: NavItem[]}) => {
   return (
-      <div className="flex flex-row items-center text-center  justify-between px-8 gap-4">
-        {filteredFooterLinks.map((footerItem, index) => {
+      <div className="flex flex-col md:flex-row items-start text-left  justify-center gap-4 order-1 md:order-2">
+        {links.map((footerItem, index) => {
             return (
               <Link
                 key={index.toString()}

@@ -1,44 +1,67 @@
 'use server'
-import { PlanAmount } from "@/app/constants/app";
-import { UserPlan } from "@/app/types";
-import { getSubscription } from "@/app/lib/actions";
+import { PlanAmount } from "@/app/constants/global";
+import { UserPlan, UserPlanOverView } from "@/app/types";
+import { stripe } from "../stripe";
+import Stripe from "stripe";
 
-async function getUserPlan(email: string|null|undefined): Promise<UserPlan>{
-    if(!email)return 'Free';
+
+export async function getSubscription(email: string):Promise<{subscription: Stripe.Subscription;} | null> {
+  try {
+    const customer = await stripe.customers.list({
+      email,
+      limit: 1,
+    });
+  
+    if (customer.data.length === 0) return null;
+  
+    const subscription = await stripe.subscriptions.list({
+      limit: 1,
+      customer: customer.data[0].id,
+    });
+
+    if (subscription.data.length === 0) return null;
+
+    return {
+      subscription: subscription.data[0],
+    };
+  } catch (err:any) {
+    console.error(err.message)
+    return null;
+  }
+}
+
+async function getUserPlan(email: string|null|undefined): Promise<UserPlanOverView>{
+    if(!email)return {plan:'Free'};
+    let cancel_at_end_billing: boolean = false;
 
     try {
-      // const cachedPlanInfo = SessionStorage.get<UserProfileInfo>(StorageKeys.subscription);
-      // if (cachedPlanInfo && typeof cachedPlanInfo === 'object') {
-      //   const { userPlan, expiresAt } = cachedPlanInfo;
-      //   if (expiresAt > Date.now() && userPlan) {
-      //     return userPlan;
-      //   }
-      // }
       const {subscription} = await getSubscription(email) || {};
-      if(!subscription)return 'Free';
+      if(!subscription)return {plan:'Free'};
+      const {cancel_at_period_end} = subscription;
+      cancel_at_end_billing = cancel_at_period_end;
   
       const subscriptionAmount = subscription?.items.data[0]?.plan?.amount;
   
       if (subscriptionAmount === PlanAmount.basic && subscription.status === 'active') {
-        return 'Basic';
+        return {plan:'Basic', cancel_at_period_end};
       } else if (subscriptionAmount === PlanAmount.pro && subscription.status === 'active') {
-        return 'Pro';
+        return {plan:'Pro', cancel_at_period_end};
       } else if (subscriptionAmount === PlanAmount.elite && subscription.status === 'active') {
-        return 'Elite';
+        return {plan:'Elite', cancel_at_period_end};
       } else {
-        return 'Free';
+        return {plan:'Free', cancel_at_period_end};
       }
     } catch (error) {
       console.error('Error getting user plan:', error);
-      return 'Free';
+      return {plan:'Free', cancel_at_period_end: cancel_at_end_billing};
     }
   }
 
-  export async function handleGetSubscriptionInfo (userId: string|null|undefined): Promise<{limit: number, plan: UserPlan}> {  
-    const plan = await getUserPlan(userId);
+  export async function handleGetSubscriptionInfo (userId: string|null|undefined): Promise<{limit: number; userPlanOverview: UserPlanOverView}> {  
+    const userPlanOverview = await getUserPlan(userId);
     const getMonthlyLimit = (plan: UserPlan): number  => {
         if(plan === 'Free'){
-        return 30;
+        return 10;
         }else if(plan === 'Basic'){
         return 100 ;
         }else if(plan === 'Pro'){
@@ -47,10 +70,21 @@ async function getUserPlan(email: string|null|undefined): Promise<UserPlan>{
         return 1000 ;
         }
         else{
-        return 30;
+        return 10;
         }
     }
-    const limit = getMonthlyLimit(plan)
-    return {limit, plan};
+    const limit = getMonthlyLimit(userPlanOverview.plan)
+    return {limit, userPlanOverview};
   };
 
+  export async function cancelSubscription(email: string){
+    try {
+      const {subscription} = await getSubscription(email) || {};
+      if(!subscription) throw new Error('Invalid subscription');
+  
+      const canclledSubscription = await stripe.subscriptions.update(subscription.id, {cancel_at_period_end: true});
+      console.log(canclledSubscription);
+    } catch (error: any) {
+      console.error('Error cancelled user subscription:', error.message);
+    }
+  }

@@ -35,7 +35,7 @@ export const revalidate = false;
 
 export default function TradingAssistantGuide(){
   return(
-    <div className="flex flex-col w-full max-w-5xl mx-auto py-8 px-4">
+    <div className="flex flex-col w-full max-w-5xl mx-auto py-8 pt-24 px-4">
       <h1 className="text-2xl font-bold mb-4">{tradingAssistantGuide.title}</h1>
   
       {tradingAssistantGuide.steps.map((step, index) => (

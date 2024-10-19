@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import UsageDashboard from '@/app/ui/user/usage';
+import AccountOverview from '@/app/ui/account/account';
 import { auth } from '@/auth';
 import { getAllUsage } from '@/app/lib/requests/chartwise-api';
 import Loading from './loading';
@@ -14,12 +14,13 @@ export default async function Page({ req }: { req: NextRequest }) {
     const cookiesStore = cookies()
     const token = cookiesStore.get('jwt')?.value; 
     const session = await auth();
-    const usage = await getAllUsage(session?.user?.email!, token);
+    const email = session?.user.email;
+    // const usage = await getAllUsage(email!, token);
 
     return (
         <ErrorBoundary errorComponent={Error}>
             <Suspense fallback={<Loading />}>
-                <UsageDashboard usage={usage}/>
+                <AccountOverview usage={undefined!} email={email!}/>
             </Suspense>
         </ErrorBoundary>
     );

@@ -153,9 +153,12 @@ export interface LoadingState {
 }
 
 export interface CTAPopUpProps extends BasePopUpProps{ 
-  cta?: string;
-  onClose: () => void;
-  onConfirm: () => void;
+  onConfirmCta?: string;
+  onCloseCta?: string;
+  onConfirmClassName?: string;
+  onCloseClassName?: string;
+  onClose?: () => void;
+  onConfirm?: () => void;
 }
 
 export interface ProviderProps {
@@ -207,5 +210,10 @@ export interface ActionItem {
 
 export interface ActionRowProps {
   actions: ActionItem[];
+}
+
+export type FAQ = {
+  question: string;
+  answer: string []
 }
 

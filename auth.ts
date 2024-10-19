@@ -1,40 +1,10 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
 import { z } from 'zod';
-import { AddDocResponse, NewUser, User } from '@/app/types';
+import { authConfig } from './auth.config';
+import { getUser } from './app/lib/user';
 import { hashPassword } from './app/lib/cryptography';
-import dbConnect from './app/lib/db';
-import { getDoc } from './app/lib/mongo/get';
-import UserModel from '@/app/models/user';
-import { addDoc } from './app/lib/mongo/add';
-import crypto from 'crypto'
-
-export async function findUser(email: string){
-  const result =  await getDoc(UserModel, {email})
-  if(!result.success || !result.data) return null;
-  return result.data;
-}
-
-async function getUser(email: string): Promise<User | undefined> {
-  try {
-    await dbConnect();
-    const user = await findUser(email);
-    return user;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
-  }
-}
-
-export async function signUp(newUser: NewUser): Promise<AddDocResponse> {
-  await dbConnect();
-  const {password, ...userInfo} = newUser;
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hashedPassword = hashPassword(password, salt)
-  const user: User = {...userInfo, hashedPassword, salt};
-  return addDoc(UserModel, user);
-}
+import { User } from './app/types';
 
  
 export const { auth, signIn, signOut , handlers} = NextAuth({
@@ -59,4 +29,25 @@ export const { auth, signIn, signOut , handlers} = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.name = user.name;
+        token.email = user.email;
+
+        if (user.metadata) {
+          token.metadata = user.metadata; // Add onboarding answers
+        }
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.name = token.name as User['name'];
+        session.user.email = token.email as User['email'];
+        session.user.metadata = token.metadata as User['metadata'];
+      }
+      return session;
+    },
+  },
 });

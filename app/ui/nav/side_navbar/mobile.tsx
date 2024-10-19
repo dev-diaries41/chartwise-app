@@ -2,12 +2,12 @@
 'use client'
 import React from 'react';
 import Link from 'next/link';
-import NavLinks from './sidenav-links';
+import NavLinks from './links';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { navLinks, dashboardLinks } from '@/app/constants/navigation';
 import {Logo, RecentAnalyses, UserPlanWidget} from '@/app/ui';
-import UserProfileWidget from '../../user/user-profile';
+import UserProfileWidget from '../../account/user-profile';
 import { useChartwise } from '@/app/providers/chartwise';
 import { faClose, faGear } from '@fortawesome/free-solid-svg-icons';
 import { useSettings } from '@/app/providers/settings';
@@ -27,10 +27,10 @@ onToggleMenu
   const {toggleSettings}=useSettings()
   
     return(
-      <div className="lg:hidden w-full p-4">
-        <div className=' flex flex-row justify-between bg-transparent items-center z-50'>
+      <div className="lg:hidden w-full p-4 fixed top-0 z-50 opacity-95">
+        <div className=' flex flex-row justify-between bg-transparent items-center'>
           <Link
-            className="flex items-center justify-start rounded-3xl z-50"
+            className="flex items-center justify-start rounded-ful z-50"
             href="/"
           >
           <Logo
@@ -51,9 +51,9 @@ onToggleMenu
         </div>
 
         {isOpen && (
-        <div className="absolute top-0 right-0 flex flex-col w-full min-h-screen bg-neutral-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2 z-40 ">
-          <NavLinks navItems={[...dashboardLinks, ...navLinks.filter(link => !['License', 'Terms', 'Privacy Policy', 'Pricing', 'Home'].includes(link.name))]} />
-          <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1">
+        <div className=" absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2">
+          <NavLinks navItems={[...dashboardLinks]} />
+          <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1 ">
             <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
           </div>
           {/* <button onClick={() => {
@@ -63,10 +63,11 @@ onToggleMenu
             <FontAwesomeIcon icon={faGear} className='w-4 h-4'/>
             Settings
           </button> */}
-          <div className='mt-auto'>
+          <div className='flex flex-col mt-auto'>
+            <NavLinks navItems={[ ...navLinks.filter(link => !['License', 'Terms', 'Privacy Policy', 'Pricing', 'Home'].includes(link.name))]} />
             <UserPlanWidget userId={email}/>
           </div>
-          <div className="bg-neutral-100 dark:bg-gray-700 rounded-md mt-3">
+          <div className="bg-gray-100 dark:bg-gray-700 rounded-md mt-3">
             <UserProfileWidget userId={email} />
           </div>
       </div>

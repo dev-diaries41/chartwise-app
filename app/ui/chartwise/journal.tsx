@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import AddEntryPopup from '@/app/ui/trader/journal-entry';
+import AddEntryPopup from '@/app/ui/chartwise/journal-entry';
 import { useJournal } from '@/app/providers/journal';
 import TradeJournalTable from './journal-table';
 import { TradeJournalEntry } from '@/app/types';

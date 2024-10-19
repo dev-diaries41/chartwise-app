@@ -1,57 +1,76 @@
 'use client'
 import React, {useState } from 'react';
-import { NavItems } from '../nav-items';
 import { navLinks } from '@/app/constants/navigation';
-import NavLinks from '../side_navbar/sidenav-links';
+import NavLinks from '../side_navbar/links';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { NavItemsProps } from '@/app/types';
 
-export default function NavBar() {
+const NavItems = ({ navItems }: NavItemsProps) => {
+  return (
+    <>
+      {navItems.map((navItem, index) => {
+        return (
+          <Link key={index.toString()} href={navItem.link} className='md:text-lg font-semibold'>
+            {navItem.name}
+          </Link>
+        );
+      })}
+    </>
+  );
+};
+
+export default function NavBar({email}: {email: string}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(prev => !prev)
   };
 
-  const filteredHeaderLinks = navLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guidelines', 'Home'].includes(footerLink.name))
-  const filteredMobHeaderLinks = navLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guidelines'].includes(footerLink.name))
+  const filteredHeaderLinks = navLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guide', 'Home'].includes(footerLink.name))
+  const filteredMobHeaderLinks = navLinks.filter(footerLink => !['License', 'Terms', 'Privacy Policy', 'Guide'].includes(footerLink.name))
 
 
   return (
-    <nav className='flex items-center justify-center gap-5'>
+    <nav className='flex items-center justify-center gap-5 '>
       <div className="md:hidden">
         <div className='flex flex-row justify-center items-center gap-4'>
-        <Link
-          href={'/login'}
-          className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500 text-sm text-white font-medium p-2 rounded-full shadow-md"
-        >
-          {'Sign In'}
-        </Link>
+      
         <button
           onClick={toggleMenu}
-          className="navbar-toggler relative z-50"
+          className={`navbar-toggler relative z-50 ${isOpen? "invert dark:invert-0" : ""}`}
           type="button"
         >
          <FontAwesomeIcon icon={isOpen? faTimes: faBars} className='w-6 h-6'/>
         </button>
         </div>
-       
-
+    
         {/* Dropdown menu */}
-       {isOpen&&  <div className="absolute top-0 right-0 w-full bg-gray-800 border border-r-1 border-gray-700 pt-16 p-4 z-40" id='navbar-menu'>
+       {isOpen&&  
+       (<div className="absolute top-0 right-0 flex flex-col min-h-screen w-full opacity-95 bg-white dark:bg-gray-800 border border-r-1 border-gray-700 text-lg text-black dark:text-white pt-16 p-4 z-40" id='navbar-menu'>
           <NavLinks navItems={filteredMobHeaderLinks} />
-        </div>}
+          <Link
+          href={email? '/dashboard':'/login'}
+          className="flex items-center justify-center  mt-auto mb-8 bg-emerald-700 hover:bg-emerald-600 border-2 border-emerald-400  text-white font-semibold p-2 rounded-full shadow-sm shadow-black text-sm md:text-md"
+        >
+        {email? 'Analyse charts':'Log in'}
+
+        </Link>
+        </div>
+        )
+        }
 
       </div>
       <div className="md:flex items-center gap-5 hidden">
         <NavItems navItems={filteredHeaderLinks} />
         <Link
-          href={'/login'}
-          className="flex items-center justify-center bg-emerald-700 hover:bg-emerald-500  text-sm text-white font-medium p-2 px-4 rounded-full shadow-md"
+          href={email? '/dashboard':'/login'}
+          className="flex items-center justify-center  bg-emerald-700 hover:bg-emerald-600 border-2 border-emerald-400  text-white font-semibold p-2 rounded-full shadow-sm shadow-black text-sm md:text-md"
         >
-          {'Sign In'}
-          </Link>
+        {email? 'Analyse charts':'Log in'}
+
+        </Link>
       </div>
     </nav>
   );

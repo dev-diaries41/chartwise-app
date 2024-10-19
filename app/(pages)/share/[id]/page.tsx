@@ -1,4 +1,4 @@
-import SharedAnalysis from "@/app/ui/trader/shared-analysis";
+import SharedAnalysis from "@/app/ui/chartwise/shared-analysis";
 import React, { Suspense } from "react";
 import Loading from "./loading";
 import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";

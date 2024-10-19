@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import { Footer, Header } from './ui'
 import { Providers } from './providers'
 import { ToastContainer } from 'react-toastify';
 import'react-toastify/dist/ReactToastify.css';
+import { auth } from '@/auth'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chartwise.vercel.app/'),
@@ -23,17 +24,19 @@ export const metadata: Metadata = {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await auth();
+  const email = session?.user.email;
   return (
     <html lang="en">
       <Providers> 
-      <body className={`${inter.className}`}>
-        <main className='bg-white dark:bg-gray-900 relative flex flex-col min-h-screen '>
-          <Header/>
+      <body className={`${poppins.className}`}>
+        <main className='bg-gray-100 dark:bg-gray-900 relative flex flex-col min-h-screen '>
+          <Header email ={email!}/>
           {children}
           <ToastContainer />
           <Footer/>

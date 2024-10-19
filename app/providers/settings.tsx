@@ -1,9 +1,9 @@
 'use client'
 import React, { createContext, useState, useContext, useEffect, useLayoutEffect } from 'react';
 import { ProviderProps, Settings } from '@/app/types';
-import { StorageKeys, Time } from '../constants/app';
+import { StorageKeys, Time } from '../constants/global';
 import {LocalStorage} from "@/app/lib/storage";
-import { DefaultSettings } from '../constants/app';
+import { DefaultSettings } from '../constants/global';
  
 interface SettingsContextProps {
     settings: Settings;

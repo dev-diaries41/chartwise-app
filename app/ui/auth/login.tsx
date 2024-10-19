@@ -5,6 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import CircleLoadingIndicator from '../common/circle-loading-indicator';
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -25,7 +26,7 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full bg-transparent rounded-md border border-gray-200 py-[9px] p-2 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full bg-transparent rounded-md border border border-gray-300 dark:border border-gray-700 py-[9px] p-2 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
                 name="email"
@@ -43,7 +44,7 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full bg-transparent rounded-md border border-gray-200 py-[9px] p-2 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full bg-transparent rounded-md border border-gray-300 dark:border border-gray-700 py-[9px] p-2 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 type="password"
                 name="password"

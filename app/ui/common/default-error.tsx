@@ -4,7 +4,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 export default function DefaultError({ title, reset }: { title: string, reset?: () => void }) {
     return (
-        <div className='flex flex-col gap-6 absolute inset-0 justify-center items-center text-center w-full py-16 p-4'>
+        <div className='flex flex-col gap-6 absolute inset-0 justify-center items-center text-center w-full p-4'>
             <FontAwesomeIcon icon={faExclamationTriangle} className='text-6xl text-red-500 opacity-80' />
             <h1 className='text-2xl font-bold opacity-90'>{title}</h1>
             {reset && (

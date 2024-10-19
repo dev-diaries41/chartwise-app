@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useState, useContext, useEffect, ChangeEvent, } from 'react';
-import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalyse } from '@/app/types';
-import { StorageKeys } from '../constants/app';
+import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalysis } from '@/app/types';
+import { StorageKeys } from '../constants/global';
 import {LocalStorage} from "@/app/lib/storage"
 import * as ChartwiseClient from '../lib/requests/chartwise-client';
 import { RetryHandler } from 'devtilities';
@@ -13,8 +13,8 @@ interface TradeContextProps {
   setRecentAnalyses: React.Dispatch<React.SetStateAction<IAnalysisUrl[]>>; 
   analysisToView: IAnalysisUrl | null;
   setAnalysisToView: React.Dispatch<React.SetStateAction<IAnalysisUrl|null>>; 
-  analysis: Omit<IAnalyse, 'userId'>; 
-  setAnalysis: React.Dispatch<React.SetStateAction<Omit<IAnalyse, 'userId'>>>; 
+  analysis: Omit<IAnalysis, 'userId'>; 
+  setAnalysis: React.Dispatch<React.SetStateAction<Omit<IAnalysis, 'userId'>>>; 
   shareUrl: string | null, 
   setShareUrl:  React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -23,7 +23,7 @@ const ChartwiseContext = createContext<TradeContextProps | undefined>(undefined)
 const retryHandler = new RetryHandler(1); // Allow only 1 retry to handle expired token
 
 
-const DefaultAnalysis: Omit<IAnalyse, 'userId'> = {
+const DefaultAnalysis: Omit<IAnalysis, 'userId'> = {
   output: '',
   chartUrls: [],
   metadata:{
@@ -35,7 +35,7 @@ const DefaultAnalysis: Omit<IAnalyse, 'userId'> = {
 const ChartwiseProvider = ({ children }: ProviderProps) => {
   const [recentAnalyses, setRecentAnalyses] = useState<IAnalysisUrl[]>([]);
   const [analysisToView, setAnalysisToView] = useState<IAnalysisUrl | null>(null);
-  const [analysis, setAnalysis] = useState<Omit<IAnalyse, 'userId'>>(DefaultAnalysis);
+  const [analysis, setAnalysis] = useState<Omit<IAnalysis, 'userId'>>(DefaultAnalysis);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const router = useRouter();
 
@@ -123,8 +123,8 @@ const removeAnalysis = () => {
     setAnalysisToView(null);
   }
   
-const onStrategyAndCriteriaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-  setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, strategyAndCriteria: event.target.value}}))
+const onStrategyChange = (strategy: string) => {
+  setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, strategyAndCriteria: prevAnalysis.metadata.strategyAndCriteria === strategy? '':strategy}}))
 };
 
 const onRiskChange = (value: any) => {
@@ -208,7 +208,7 @@ const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     removeAnalysis,
     analyseChart,
     removeCharts,
-    onStrategyAndCriteriaChange,
+    onStrategyChange,
     onAnalysisComplete,
     onRiskChange,
     getRiskTolerance,

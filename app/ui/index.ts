@@ -9,7 +9,7 @@ import MarkdownView from "./common/markdown-viewer";
 import InformationMenu from "./common/info-menu";
 import LoadingIndicator from "./common/loading-indicator";
 import LoaderDialog from "./common/loading-dialog";
-import PopUp from "./common/usage-popup";
+import PopUp from "./common/popup";
 import FileUploader from "./common/upload";
 import InputError from "./common/form-error";
 import Logo from "./logo";
@@ -26,12 +26,13 @@ import { ChartAnalyser } from "./chartwise/analyser";
 import {Background} from "./common/bg";
 import Spacer from "./common/spacer";
 import RecentAnalyses from "./chartwise/recent-analyses";
-import UserPlanWidget from "./user/user-plan";
+import UserPlanWidget from "./account/user-plan";
 import ActionRow from "./common/action-row";
 import Settings from "./common/settings";
 import SuspenseFallback from "./common/suspense";
-import SliderInput from "./common/slider";
+import RiskSlider from "./chartwise/risk-slider";
 import AnalysisForm from "./chartwise/analysis-form";
+import OnboardingCarousel from "./common/onboarding";
 
 
 export {
@@ -66,7 +67,8 @@ export {
     ActionRow,
     Settings,
     SuspenseFallback,
-    SliderInput,
+    RiskSlider,
     AnalysisForm,
-    DragAndDropUpload
+    DragAndDropUpload,
+    OnboardingCarousel
 }

@@ -44,13 +44,13 @@ export default function CarouselImageViewer({ images, switchInterval }: Carousel
   return (
     <div className="relative w-full bg-transparent rounded-md shadow-md shadow-black group">
       <div className="relative overflow-hidden rounded-lg">
-        <div className="carousel-container relative overflow-hidden w-full h-full">
+        <div className="relative overflow-hidden w-full h-full">
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {images.map((image, index) => (
-              <div key={index} className="flex min-w-full relative aspect-ratio-wrapper">
+              <div key={index} className="flex min-w-full relative  pb-[56.25%]">             {/* {pb-[56.25%] maintain aspect ratio of 16:9} */}
                 <div className="absolute inset-0 flex justify-center items-center">
                   <Image
                     quality={100}

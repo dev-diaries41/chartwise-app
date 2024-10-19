@@ -50,7 +50,7 @@ export default function DragAndDropUpload({
       )}
       <div
         {...getRootProps()}
-        className={`${className || 'flex flex-col justify-center items-center w-full h-[30vh] mx-auto border-2 border-dashed bg-neutral-100 dark:bg-gray-800 border-emerald-500 p-6 rounded-md text-center'}`}
+        className={`${className || 'flex flex-col justify-center items-center w-full h-[30vh] mx-auto border-2 border-dashed border-gray-300 dark:border-gray-700 p-6 rounded-md text-center'}`}
       >
         <input {...getInputProps()} />
         {children}

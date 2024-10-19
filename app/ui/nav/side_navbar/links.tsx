@@ -16,7 +16,7 @@ export default function NavLinks({navItems}: NavItemsProps) {
             key={navItem.name}
             href={navItem.link}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-transparent text-sm font-medium hover:bg-neutral-200 dark:hover:bg-gray-700 justify-start p-2 px-3',
+              'flex h-10 grow items-center justify-center gap-2 rounded-md bg-transparent font-medium hover:bg-gray-200 dark:hover:bg-gray-700 justify-start p-2 px-3',
               {
                 'text-emerald-500': pathname === navItem.link,
               },
@@ -26,7 +26,7 @@ export default function NavLinks({navItems}: NavItemsProps) {
               : {})}
           >
             {navItem.icon && <FontAwesomeIcon icon={navItem.icon} className="w-4 h-4" />}
-            <p className="w-full">{navItem.name}</p>
+            <span className="w-full">{navItem.name}</span>
           </Link>
         );
       })}

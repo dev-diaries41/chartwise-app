@@ -1,6 +1,6 @@
-import { CHART_ANALYSIS_RESULTS_URL, CHART_ANALYSIS_URL, SAVE_ANALYSIS_URL, SHARED_ANALYSIS_URL, JOURNAL_URL, USAGE_URL, FPF_LABS_API_KEY, REFRESH_TOKEN_URL } from "@/app/constants/app";
+import { CHART_ANALYSIS_RESULTS_URL, CHART_ANALYSIS_URL, SAVE_ANALYSIS_URL, SHARED_ANALYSIS_URL, JOURNAL_URL, USAGE_URL, FPF_LABS_API_KEY, REFRESH_TOKEN_URL } from "@/app/constants/api";
 import { RequestErrors } from "@/app/constants/errors";
-import { AnalysisParams, JobReceipt, JobResult, IAnalyse, TradeJournalEntry, Usage, UsagePeriod } from "@/app/types";
+import { AnalysisParams, JobReceipt, JobResult, IAnalysis, TradeJournalEntry, Usage, UsagePeriod } from "@/app/types";
 import { APIResponse, GetDocsResponse } from "@/app/types/response";
 import axios from "axios";
 
@@ -30,7 +30,7 @@ export class ChartWiseAPI {
     return response.data;
   }
 
-  public async saveAnalysis(analysis: Omit<IAnalyse, 'userId'>): Promise<APIResponse<string>> {
+  public async saveAnalysis(analysis: Omit<IAnalysis, 'userId'>): Promise<APIResponse<string>> {
     const headers = this.getHeaders();
     const reqBody = {analysis};
     const response = await axios.post(SAVE_ANALYSIS_URL, reqBody, { headers });
@@ -43,7 +43,7 @@ export class ChartWiseAPI {
     return response.data;
   }
 
-  public async getSharedAnalysis(id: string):Promise<APIResponse<IAnalyse>>{
+  public async getSharedAnalysis(id: string):Promise<APIResponse<IAnalysis>>{
     const headers = this.getHeaders();
     const response = await axios.get(`${SHARED_ANALYSIS_URL}/${id}`, {headers});
     return response.data;

@@ -1,13 +1,13 @@
 'use client'
 import React, { createContext, useState, useContext } from 'react';
-import { ProviderProps, UserPlan } from '@/app/types';
+import { ProviderProps, UserPlan, UserPlanOverView } from '@/app/types';
 import { cacheUserPlan, getPlanFromPlanAmount } from '@/app/lib/helpers';
 import Stripe from 'stripe';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface SubscriptionContextProps {
-  userPlan: UserPlan;
-  setUserPlan: React.Dispatch<React.SetStateAction<UserPlan>>;
+  userPlanOverview: UserPlanOverView;
+  setUserPlanOverview: React.Dispatch<React.SetStateAction<UserPlanOverView>>;
   limit: number;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
   checkOutDetails: Partial<Stripe.Response<Stripe.Checkout.Session>> | null;
@@ -18,16 +18,16 @@ const SubscriptionContext = createContext<SubscriptionContextProps | undefined>(
 
 const SubscriptionProvider = ({ children, planInfo }: ProviderProps &  {planInfo: {
   limit: number;
-  plan: UserPlan;
+  userPlanOverview: UserPlanOverView;
 }}) => {
-  const [userPlan, setUserPlan] = useState<UserPlan>(planInfo.plan);
+  const [userPlanOverview, setUserPlanOverview] = useState<UserPlanOverView>(planInfo.userPlanOverview);
   const [limit, setLimit] = useState<number>(planInfo.limit);
   const [checkOutDetails, setCheckoutDetails] = useState<Partial<Stripe.Response<Stripe.Checkout.Session>>|null>(null);
 
   return (
     <SubscriptionContext.Provider value={{
-      userPlan,
-      setUserPlan,
+      userPlanOverview,
+      setUserPlanOverview,
       limit,
       setLimit,
       checkOutDetails, 
@@ -44,7 +44,7 @@ const useSubscription = () => {
     throw new Error('useSubscription must be used within a SubscriptionProvider');
   }
 
-  const {setUserPlan, setCheckoutDetails} = context
+  const {setUserPlanOverview, setCheckoutDetails} = context
   
   const getCheckoutSessionDetails = async (sessionId: string, router: AppRouterInstance) => {
     try {
@@ -59,7 +59,7 @@ const useSubscription = () => {
       if(amount_total){
         const newUserPlan = getPlanFromPlanAmount(amount_total)
         if(newUserPlan){
-          setUserPlan(newUserPlan)
+          setUserPlanOverview(prev => ({...prev, plan: newUserPlan }))
           cacheUserPlan(newUserPlan)
         }
       }
@@ -72,6 +72,7 @@ const useSubscription = () => {
       router.push('/'); // Redirect to root page
     }
   };
+
 
 
   return {

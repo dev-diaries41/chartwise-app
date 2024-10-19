@@ -4,7 +4,7 @@ import { useFormState } from 'react-dom';
 import { sendNotification } from '@/app/lib/actions';
 import InputError from '@/app/ui/common/form-error';
 import { toast } from 'react-toastify';
-import { DefaultToastOptions } from '@/app/constants/app';
+import { DefaultToastOptions } from '@/app/constants/global';
 import { SubmitButton } from '@/app/ui/common/button';
 
 const supportOptions: {value:string, name: string}[] = [
@@ -47,7 +47,7 @@ export default function ContactForm(){
             {
               supportOptions.map((option, index) => {
                 return(
-                  <option key={index.toString()} className='' value={option.value}>{option.name}</option>
+                  <option key={index.toString()} className='dark:bg-gray-800' value={option.value}>{option.name}</option>
                 )
               })
             }

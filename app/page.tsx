@@ -3,28 +3,55 @@ import { CarouselImageViewer, Faq, PriceTable } from '@/app/ui';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import ListCard from './ui/cards/list-card';
 import List from './ui/common/list';
-import { faChartGantt } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faClock, faLayerGroup, faMagnifyingGlassChart, faShieldAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Faqs } from '@/app/constants/faq';
 
-export const ChartWiseBenefits = [
-  'Detailed overview of any chart',
-  'Tailored trade execution plans',
-  'Risk management',
-  'Extra confluence'
-  ]
-
-export const TraderProblems = [
-'Difficulty understanding chart',
-'No execution plan',
-'Poor risk management'
-]
 
 export const HowItWorksGuide = [
-'Enter chart mode and take a snapshot of the chart, or use an existing image.',
-'Switch to analysis mode, upload the chart, and optionally add strategy, criteria, and risk tolerance details.'
+'Go to the  charts page and take a snapshot of the chart, or use an existing image.',
+'Go back to the analysis page, upload the chart, and optionally add strategy, and adjust risk tolerance.'
 ]
+
+export const ChartWiseBenefits: {
+  title: string;
+  description: string;
+  icon: IconDefinition
+}[] = [
+  {
+    title: "AI-Powered Chart Analysis",
+    description: "Our AI analyzes charts, identifying trends, patterns, and anomalies to give you clear, actionable insights.",
+    icon: faMagnifyingGlassChart
+  },
+  {
+    title: "Strategy Optimization",
+    description: "Receive AI-generated trade strategies that align with your risk tolerance and trading goals, making precise decisions easier.",
+    icon: faChartLine
+  },
+  {
+    title: "Multi-Timeframe Insights",
+    description: "Upload multiple charts across different timeframes and get a comprehensive analysis that correlates data for better understanding.",
+    icon: faLayerGroup
+  },
+  {
+    title: "Risk Management",
+    description: "Get tailored risk management advice, including stop loss and take profit levels, based on your trade setup and market volatility.",
+    icon: faShieldAlt
+  },
+  {
+    title: "Trade Journal Feedback",
+    description: "Log your trades and let the AI provide feedback on your performance, helping you refine and improve your strategies over time.",
+    icon: faBook
+  },
+  {
+    title: "Save Time",
+    description: "Quickly understand complex charts without spending hours manually analyzing trends and data.",
+    icon: faClock
+  },
+];
+
 
 
 const Hero = () => {
@@ -50,7 +77,7 @@ const Hero = () => {
             ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
             <Link
                 href={'/dashboard'}
-                className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-500 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
+                className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-600 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
                 {'Get started for free'}
             </Link>
           </div>
@@ -61,39 +88,25 @@ const Hero = () => {
   )
 }
 
-const Pricing = () => {
-  return (
-    <section id='pricing' className="relative  flex flex-col bg-neutral-100 dark:bg-gray-800 w-full mx-auto items-center justify-center text-center py-16 mb-16">
-    <h1 className="text-center text-3xl my-4 px-3 font-bold">Pricing</h1>
-    <p className="max-w-5xl mb-5 px-3">
-    Invest in your trading success, start your subscription now!    
-    </p>
-    <div className='container justify-center py-16'>
-      <PriceTable/>
-    </div>
-  </section>
-  )
-}
+
 
 const Benefits = () => {
   return (
-    <section id='benefits' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-white to-gray-200 dark:from-gray-900 dark:to-gray-800">
-      <h1 className="text-center text-3xl my-4 px-3 font-bold">Looking to improve your trading success?</h1>
+    <section id='benefits' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-radial at-tl from-gray-800 to-gray-900">
+      <h1 className="text-center text-3xl md:text-5xl my-4 px-3 font-bold">How ChartWise can improve your trading success</h1>
       <div className="flex flex-col  md:flex-row w-full max-w-7xl justify-center items-center gap-8 my-8 p-4">
-        <ListCard
-          title={'Trading Challenges'}
-          items={TraderProblems}
-          titleClassName='text-red-500'
-          icon={faChartGantt}
-          iconColor='red'
-        />
-          <ListCard
-          title={'ChartWise Solutions'}
-          items={ChartWiseBenefits}
-          titleClassName='text-emerald-400'
-          icon={faChartLine}
-          iconColor='#34D399'
-        />
+            <div className='grid grid-cols-1 md:grid-cols-2  justify-center items-center gap-8 mb-16'>
+          {
+            ChartWiseBenefits.map((benefit, index) => {
+              return(
+                <div key={index} className='flex flex-col justify-center items-start text-left gap-4 mb-10 p-4'>
+                  <FontAwesomeIcon icon={benefit.icon} className="text-emerald-500 w-8 h-8 md:w-10 md:h-10 mb-4" />
+                  <h1 className='font-semibold text-xl md:text-2xl'>{benefit.title}</h1>
+                  <p className='font-medium md:text-lg opacity-80'>{benefit.description}</p>
+                </div>
+              )})
+          }
+        </div>
     </div>
     </section>
   )
@@ -101,11 +114,11 @@ const Benefits = () => {
 
 const HowItWorks = () => {
   return (
-    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gradient-to-r from-white to-gray-200 dark:from-gray-900 dark:to-gray-800" >
-      <h1 className="text-center text-3xl my-4 px-3 font-bold">How to analyse charts with ChartWise?</h1>
+    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gray-900" >
+      <h1 className="text-center text-3xl md:text-5xl my-4 px-3 font-bold">How to analyse charts with ChartWise</h1>
       <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
-          <CarouselImageViewer images={['/chartwise-chart-mode.png', '/chartwise-analysis-mode.png']}  switchInterval={5000}/>
-        <div className='w-full justify-start font-medium'>
+          <CarouselImageViewer images={['/analyse-page-v2.png', '/charts-page.png']}  switchInterval={5000}/>
+        <div className='justify-start font-medium'>
           <List items={HowItWorksGuide} listType='numbered' />
         </div>
     </div>
@@ -113,15 +126,31 @@ const HowItWorks = () => {
   )
 }
 
+const Pricing = () => {
+  return (
+    <section id='pricing' className="flex flex-col bg-gray-900 w-full mx-auto items-center justify-center text-center py-16">
+      <h1 className="text-center text-3xl md:text-5xl my-4 px-3 font-bold">Pricing</h1>
+      <h2 className="text-center text-lg md:text-2xl my-4 px-3 font-semibold opacity-80">
+      Trade smarter with ChartWise!
+      </h2>
+      <p className="max-w-5xl md:text-lg mb-5 px-3 opacity-80">
+        Subscribe to a ChartWise plan to improve your trading outcomes.
+      </p>
+      <div className='w-full container justify-center py-16'>
+        <PriceTable/>
+      </div>
+    </section>
+  )
+}
 
 const Page = () => {
   return (
-    <div className='w-full my-auto'>
+    <div className='w-full my-auto text-white overflow-hidden'>
       <Hero/>
       <Benefits/>
       <HowItWorks/>
       <Pricing/>
-      <Faq />
+      <Faq faq={Faqs} />
     </div>
   );
 }

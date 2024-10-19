@@ -1,8 +1,9 @@
 'use client'
 import { AnalysisSchemaWithoutUserId } from "@/app/constants/schemas";
 import { AuthErrors, JobErrors } from "../../constants/errors";
-import {JobReceipt, JobResult, IAnalyse, TradeJournalEntry, AnalysisParams} from "@/app/types"
-import { GetDocsResponse } from "@/app/types/response";
+import {JobReceipt, JobResult, IAnalysis, TradeJournalEntry, AnalysisParams, OnboardingAnswers, User} from "@/app/types"
+import { FindOneAndUpdateResponse, GetDocsResponse } from "@/app/types/response";
+import { Caveat } from "next/font/google";
 
 
 async function fetchWithError<T>(endpointUrl: string, options: RequestInit = {}): Promise<T> {
@@ -40,7 +41,7 @@ export async function submitAnalysisRequest(analysis: AnalysisParams): Promise<s
 }
 
 // User id sent via jwt
-export async function saveAnalysis(analysis: Omit<IAnalyse, 'userId'>): Promise<string | null> {
+export async function saveAnalysis(analysis: Omit<IAnalysis, 'userId'>): Promise<string | null> {
   try {
     const validatedAnalysis = AnalysisSchemaWithoutUserId.safeParse(analysis);
     if (!validatedAnalysis.success) throw new Error(JSON.stringify(validatedAnalysis.error));
@@ -71,9 +72,19 @@ export async function getJournalEntries (page: string | number, perPage: string 
 };
 
 export async function refreshOnError(error: Error, userId: string){
-if (error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN ) {
-  await getNewToken({ userId });
-  return true;
+  if (error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN ) {
+    await getNewToken({ userId });
+    return true;
+    }
+  return false;
+}
+
+export async function completedOnboarding(email: string | null | undefined, answers: OnboardingAnswers): Promise<void> {
+  try{
+    const body = JSON.stringify({email, answers});
+    const endpointUrl = '/api/onboarding';
+    await fetchWithError<{data: FindOneAndUpdateResponse<User>}>(endpointUrl, { method: 'POST', body});
+  }catch(error){
+    console.error('Failed to update users onboarding answers');
   }
-return false;
 }

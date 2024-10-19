@@ -1,3 +1,4 @@
+import { OnboardingAnswers } from "./chartwise";
 
 export interface JobResult<T> { 
     status: JobReceipt["status"]; 
@@ -20,6 +21,7 @@ export interface JobReceipt {
 }
 
 export type UserPlan = 'Free' | 'Basic' | 'Pro' | 'Elite';
+export type UserPlanOverView = {plan: UserPlan; cancel_at_period_end?: boolean; cancelled? :boolean;}
 
 export type UserProfileInfo = {
     userPlan: UserPlan, 
@@ -48,24 +50,23 @@ export type Usage = {
 
   export interface User {
     email: string;
-    salt: string, 
+    salt: string; 
     hashedPassword: string;
     name?: string;
     username?: string;
+    metadata?: UserMetadata;
+  }
+  
+  export interface UserMetadata {
+    answers?: OnboardingAnswers;
+    creationDate?: Date;
+    hasCompletedOnboarding?: boolean
   }
 
-
-export interface TradeJournalEntry {
-  entryId: number;
-  tradeDate: Date;
-  symbol: string;
-  type: 'buy' | 'sell';
-  quantity: number;
-  entryPrice: number;
-  stopLoss?: number;
-  takeProfit?: number;
-  comments?: string;
-  sentiment?: 'bullish' | 'bearish' | 'neutral';
-  createdAt: Date;
-  updatedAt: Date;
-}
+  
+  export type OnboardingQuestions = {
+    questionCategory: keyof OnboardingAnswers;
+    question: string;
+    options: string[];
+    allowMultipleAnswers?: boolean
+  }

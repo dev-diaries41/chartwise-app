@@ -11,11 +11,11 @@ export default function RecentAnalyses({
     onDelete
 }: RecentAnalysesProps) {
     return ( 
-        <DropDownMenu title="Recent Analyses" icon={faMagnifyingGlassChart}>
+        <DropDownMenu title="Recent Analyses">
             {analyses.map((analysis, index) => (
                 <div 
                     key={index} 
-                    className="p-2 flex justify-between items-center cursor-pointer text-gray-400 text-xs hover:bg-neutral-200 dark:hover:bg-gray-700 rounded-md transition duration-300 overflow-hidden whitespace-nowrap relative group"
+                    className="p-2 flex justify-between items-center cursor-pointer text-gray-400 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition duration-300 overflow-hidden whitespace-nowrap relative group"
                 >
                     <span 
                         className="flex-grow overflow-hidden overflow-ellipsis whitespace-nowrap pr-1"

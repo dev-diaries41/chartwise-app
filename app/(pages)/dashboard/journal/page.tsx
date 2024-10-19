@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import TradeJournal from '@/app/ui/trader/journal';
+import TradeJournal from '@/app/ui/chartwise/journal';
 import { cookies } from 'next/headers';
 import { auth } from '@/auth';
 import { NextRequest } from 'next/server';
