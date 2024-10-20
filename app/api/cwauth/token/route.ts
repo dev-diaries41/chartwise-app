@@ -8,10 +8,10 @@ import { Time } from "@/app/constants/global";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await req.json();
-    if (!userId)throw new Error(AuthErrors.INVALID_USER_ID);
+    const { email } = await req.json();
+    if (!email)throw new Error(AuthErrors.INVALID_USER_ID);
     
-    const token = await chartwiseAPI.getAuthToken(userId);
+    const token = await chartwiseAPI.getAuthToken(email);
     chartwiseAPI.token = token;
 
     const cookieStore = cookies();

@@ -33,6 +33,7 @@ import SuspenseFallback from "./common/suspense";
 import RiskSlider from "./chartwise/risk-slider";
 import AnalysisForm from "./chartwise/analysis-form";
 import OnboardingCarousel from "./common/onboarding";
+import TableFilters from "./common/table-filters";
 
 
 export {
@@ -70,5 +71,6 @@ export {
     RiskSlider,
     AnalysisForm,
     DragAndDropUpload,
-    OnboardingCarousel
+    OnboardingCarousel,
+    TableFilters
 }

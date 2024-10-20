@@ -15,10 +15,10 @@ async function fetchWithError<T>(endpointUrl: string, options: RequestInit = {})
   return await response.json();
 }
 
-export async function getNewToken({ userId }: { userId: string}){
-    if (!userId) throw new Error(AuthErrors.INVALID_USER_ID);
+export async function getNewToken({ email }: { email: string}){
+    if (!email) throw new Error(AuthErrors.INVALID_USER_ID);
 
-    const body = JSON.stringify({userId})
+    const body = JSON.stringify({email})
     const response = await fetch('/api/cwauth/token', { method: 'POST', body });
     if (!response.ok) {
       const errorResponse = await response.json();
@@ -56,27 +56,16 @@ export async function saveAnalysis(analysis: Omit<IAnalysis, 'userId'>): Promise
     return null;
   }
 }
+export async function refreshOnError(error: Error, email: string){
+  console.log("refrsh error here: ", error.message);
 
-
-export async function addJournalEntry(entry: TradeJournalEntry): Promise<string> {
-  const endpointUrl = '/api/journal';
-  const body = JSON.stringify(entry); 
-  const { message } = await fetchWithError<{ message: string }>(endpointUrl, { method: 'POST', body , credentials: 'include'});
-  return message;
-}
-
-export async function getJournalEntries (page: string | number, perPage: string | number): Promise<GetDocsResponse<TradeJournalEntry>> {
-  const endpointUrl = `/api/journal?page=${page}&perPage=${perPage}`;
-  const  {data} = await fetchWithError<{data: GetDocsResponse<TradeJournalEntry>}>(endpointUrl, { method: 'GET' , credentials: 'include'});
-  return data;
-};
-
-export async function refreshOnError(error: Error, userId: string){
-  if (error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN ) {
-    await getNewToken({ userId });
-    return true;
-    }
-  return false;
+  const shouldRetry = error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN;
+  console.log({shouldRetry})
+  if (shouldRetry) {
+    await getNewToken({ email });
+    return shouldRetry;
+  }
+  return shouldRetry;
 }
 
 export async function completedOnboarding(email: string | null | undefined, answers: OnboardingAnswers): Promise<void> {

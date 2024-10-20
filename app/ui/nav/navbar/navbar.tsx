@@ -12,7 +12,7 @@ const NavItems = ({ navItems }: NavItemsProps) => {
     <>
       {navItems.map((navItem, index) => {
         return (
-          <Link key={index.toString()} href={navItem.link} className='md:text-lg font-semibold'>
+          <Link key={index.toString()} href={navItem.link} className='md:text-lg font-medium'>
             {navItem.name}
           </Link>
         );

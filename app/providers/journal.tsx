@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect, useLayoutEffect } from 'react';
 import { ProviderProps, TradeJournalEntry } from '@/app/types';
 import { placeholderEntries } from '../constants/placeholder';
 import { RetryHandler } from 'devtilities';
@@ -37,7 +37,7 @@ const JournalProvider = ({ children }: ProviderProps) => {
   );
 };
 
-const useJournal = () => {
+const useJournal = (initialEntries?: TradeJournalEntry[]) => {
   const context = useContext(JournalContext);
   if (!context) {
     throw new Error('useJournal must be used within a JournalProvider');
@@ -45,6 +45,13 @@ const useJournal = () => {
 
   const { entries, setEntries, showAddEntryPopup, setShowAddEntryPopup, selectedEntry, setSelectedEntry} = context;
 
+  if(initialEntries){
+    useLayoutEffect(()=>{
+      if(initialEntries.length > 0){
+        setEntries(initialEntries)
+      }
+    },[])
+  }
   
 
   const addEntry = (newEntry: TradeJournalEntry) => {
@@ -59,27 +66,12 @@ const useJournal = () => {
     });
   };
 
-  const submitEntry = async(entry: TradeJournalEntry, userId: string | undefined | null) => {
-    const validateEntry = TradeJournalEntrySchemaNoUser.safeParse(entry);
-    if(!validateEntry.success){
-      alert('error');
-      return;
-    }
+  const submitEntry = async(entry: TradeJournalEntry) => {
+    console.log(entry)
     if (selectedEntry) {
       updateEntry(entry);
     } else {
       addEntry(entry);
-    }
-    try {
-      const retryHandler = new RetryHandler(1)
-      if(userId){
-        await retryHandler.retry(
-          async () => await ChartwiseClient.addJournalEntry(validateEntry.data),
-          async(error)=> await ChartwiseClient.refreshOnError(error as Error, userId)
-        );
-      }
-    } catch (error: any) {
-      console.error('error adding:', error.message)
     }
   };
   

@@ -13,7 +13,7 @@ const FooterLinks = ({links}: {links: NavItem[]}) => {
                 href={footerItem.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gray-500 transition-colors"
+                className="opacity-80 hover:text-gray-500 transition-colors"
               >
                 {footerItem.name}
               </Link>

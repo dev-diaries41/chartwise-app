@@ -51,7 +51,7 @@ export default function Footer() {
               />
             </Link>
           </div>
-          <p className="text-gray-400">
+          <p className="opacity-80">
             Copyright © {new Date().getFullYear()} FPF Labs. All rights reserved.
           </p>
         </div>

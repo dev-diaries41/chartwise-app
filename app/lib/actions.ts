@@ -2,9 +2,7 @@
 import { NOTIFICATIONS_CONFIG } from '@/app/constants/support';
 import { Notify } from 'notify-utils';
 import { ContactFormSchema, RegistrationFormSchema } from '@/app/constants/schemas';
-import Stripe from 'stripe';
 import { FeedbackState, NewUser, RegistrationState } from '@/app/types';
-import { stripe } from '../stripe';
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation'

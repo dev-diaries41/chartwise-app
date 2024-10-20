@@ -7,7 +7,7 @@ export async function addDoc<T>(model: mongoose.Model<T>, doc: Record<string, an
   try {
     const options = { session };
     const createdDoc = await model.create([doc], options);
-    const id = createdDoc[0]._id as string; // Assuming you're inserting one document and expecting _id back
+    const id = createdDoc[0]._id?.toString();
 
 
     await session.commitTransaction();

@@ -22,7 +22,7 @@ export default function AccountOverview({ usage = {
 }, email }: { usage: Usage, email:string }) {
   const { userPlanOverview } = useSubscription();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle, popUpCta} = usePopUp();
-  const onConfirm = async() => {
+  const cancelSub = async() => {
     await cancelSubscription(email);
     closePopUp();
   }
@@ -56,7 +56,7 @@ export default function AccountOverview({ usage = {
         title={popUpTitle} 
         description={popUpDescription} 
         onClose={closePopUp} 
-        onConfirm={onConfirm} 
+        onConfirm={cancelSub} 
         onConfirmCta={popUpCta}
         onConfirmClassName={`px-4 py-2 bg-red-500 hover:bg-red-400 text-white font-medium rounded-full shadow-sm `}
         />

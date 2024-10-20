@@ -37,6 +37,7 @@ export interface TradeJournalEntry {
   sentiment?: 'bullish' | 'bearish' | 'neutral';
   createdAt: Date;
   updatedAt: Date;
+  userId: string
 }
 
 export type OnboardingAnswers = {

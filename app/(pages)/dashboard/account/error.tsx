@@ -16,7 +16,7 @@ export default function Error({
  
   return (
     <div>
-        <DefaultError title={`Error fetching account information.`}  reset={reset}/>
+        <DefaultError title={`Error Fetching Account Information.`}  reset={reset}/>
     </div>
   )
 }

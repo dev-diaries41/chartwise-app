@@ -1,7 +1,7 @@
 export enum AuthErrors  {
     MISSING_API_KEY = 'API key not provided',
     UNAUTHORIZED = 'Unauthorized access',
-    MISSING_JWT_TOKEN = 'missing JWT token ',
+    MISSING_JWT_TOKEN = 'missing JWT token',
     EXPIRED_TOKEN = 'jwt expired',
     INVALID_USER_ID = 'Invalid user',
     INVALID_LOGIN_CRED='Invalid login credentials'

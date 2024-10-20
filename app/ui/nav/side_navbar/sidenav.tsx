@@ -18,7 +18,7 @@ export default React.memo(function  SideNav({email}: {email: string | null | und
  
   return (
     <>
-      <div className="fixed flex flex-col w-[280px] min-h-screen bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700  p-2 lg:block hidden z-[100]">
+      <div className="fixed flex flex-col w-[280px] min-h-screen bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700  p-2 lg:block hidden z-[100]">
         <Link
           className="flex w-100 h-20 items-center justify-start rounded-3xl"
           href="/"
@@ -32,7 +32,7 @@ export default React.memo(function  SideNav({email}: {email: string | null | und
         </Link>
         <div className='flex h-full flex-col justify-between'>
           <NavLinks navItems={dashboardLinks} />
-          <div className="flex-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
+          <div className="flex-1 max-h-[60vh] overflow-y-auto custom-scrollbar">
             <div className='mr-auto px-1'>
               <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis}/>
             </div>

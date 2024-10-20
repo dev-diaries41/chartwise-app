@@ -10,7 +10,7 @@ import { completedOnboarding, getJobStatus, getNewToken } from "@/app/lib/reques
 import { usePopUp, usePolling, useLoading, useOnboarding } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { useChartwise } from "@/app/providers/chartwise";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faExclamation, faExclamationCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnalysisParamsSchema } from "@/app/constants/schemas";
 import { CHARTWISE_WELCOME_MESSAGE, CHARTWISE_WELCOME_TITLE, onboardingQuestions } from "@/app/constants/onboarding";
@@ -42,7 +42,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     const cwauth = SessionStorage.get<string>(StorageKeys.cwauth);
     if(cwauth === 'initialised') return;
     if(email){
-      getNewToken({userId: email}).then(() => console.log('cwauth initialised'))
+      getNewToken({email}).then(() => console.log('cwauth initialised'))
     }
 
     SessionStorage.set(StorageKeys.cwauth, 'initialised');
@@ -99,7 +99,6 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     if(error.message.includes('429')){
       return toast.error('We are currently overloaded at the moment', DefaultToastOptions);
     }
-    console.error("Unexepcted error here: ",error.message);
      toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
      return;
   };
@@ -160,7 +159,8 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
       onboardingQuestions={onboardingQuestions} 
       welcomeMessage={CHARTWISE_WELCOME_MESSAGE} 
       welcomeTitle={CHARTWISE_WELCOME_TITLE}/>
-      )}      
+      )}
+      
       <div className='w-full flex flex-row gap-4 justify-between items-center'>
         <h1 className="text-left text-xl md:text-3xl my-4 font-bold">Upload & Analyse</h1>
         <button

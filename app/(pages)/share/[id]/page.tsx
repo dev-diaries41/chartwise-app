@@ -1,14 +1,14 @@
 import SharedAnalysis from "@/app/ui/chartwise/shared-analysis";
 import React, { Suspense } from "react";
 import Loading from "./loading";
-import { chartwiseAPI } from "@/app/lib/requests/chartwise-api";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import Error from "./error";
+import { getAnalysis } from "@/app/lib/data/analysis";
 
 export const revalidate = 3600;
 
 export default async function Page ({params}:  { params: { id: string } }){
-  const {data: analysis} = await chartwiseAPI.getSharedAnalysis(params.id);
+  const analysis = await getAnalysis(params.id)
 
   return (
     <ErrorBoundary errorComponent={Error}>

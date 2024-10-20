@@ -55,8 +55,8 @@ export class ChartWiseAPI {
       const response = await axios.get(`${JOURNAL_URL}`, {headers, params: {page, perPage}});
       return response.data;
     }catch(error: any){
-      console.error(error.message);
-      if(error.message === RequestErrors.NO_DOCS_FOUND){
+      console.error("Error in getJournalEntries: ", error.message);
+      if(error.response?.data?.message === RequestErrors.NO_DOCS_FOUND){
         return null
       }
       throw error;
@@ -89,14 +89,3 @@ export class ChartWiseAPI {
 }
 
 export const chartwiseAPI = new ChartWiseAPI(FPF_LABS_API_KEY);
-
-export async function getAllUsage(userId: string, token: string | undefined): Promise<Usage> {
-  chartwiseAPI.token = token;
-
-  const [todayData, monthData, totalData] = await Promise.all([
-      chartwiseAPI.getUsage(userId, 'today'),
-      chartwiseAPI.getUsage(userId, 'month'),
-      chartwiseAPI.getUsage(userId, 'total'),
-  ]);
-  return { today: todayData.data, month: monthData.data, total: totalData.data };
-}

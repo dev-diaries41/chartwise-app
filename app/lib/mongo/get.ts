@@ -17,7 +17,7 @@ export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string
 
     await session.commitTransaction();
     session.endSession();
-    return { success: true, data: document };
+    return { success: true, data: document.toObject() };
   } catch (error: any) {
     await session.abortTransaction();
     session.endSession();
@@ -42,11 +42,16 @@ export async function getDocs<T>(model: mongoose.Model<T>, filter: Record<string
     }
 
     const skip = (pageNumber - 1) * perPageNumber;
-    const documents = await model.find(filter, null, options).skip(skip).limit(perPageNumber).session(session);
-
+    const documents = await model
+    .find(filter, '-_id -__v', options) 
+    .lean() 
+    .skip(skip)
+    .limit(perPageNumber)
+    .session(session);
+    
     await session.commitTransaction();
     session.endSession();
-    return { success: true, totalDocuments, page: pageNumber, perPage: perPageNumber, data: documents };
+    return { success: true, totalDocuments, page: pageNumber, perPage: perPageNumber, data: documents as T[] };
   } catch (error: any) {
     await session.abortTransaction();
     session.endSession();

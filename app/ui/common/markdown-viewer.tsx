@@ -9,7 +9,7 @@ interface MarkdownViewProps {
 
 export default function MarkdownView({ content }: MarkdownViewProps) {
   return (
-    <div className="relative w-full flex flex-col max-w-[90%] mx-auto animate-fadeIn mt-4 rounded-md text-gray-200 text-left ">
+    <div className="relative w-full flex flex-col max-w-[90%] mx-auto animate-fadeIn mt-4 rounded-md text-left ">
       <div className="markdown-container p-4 ">
         <ReactMarkdown
           children={content}

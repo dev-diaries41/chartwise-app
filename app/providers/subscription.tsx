@@ -10,6 +10,8 @@ interface SubscriptionContextProps {
   setUserPlanOverview: React.Dispatch<React.SetStateAction<UserPlanOverView>>;
   limit: number;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
+  hasReachedLimit: boolean;
+  setHasReachedLimit: React.Dispatch<React.SetStateAction<boolean>>;
   checkOutDetails: Partial<Stripe.Response<Stripe.Checkout.Session>> | null;
   setCheckoutDetails: React.Dispatch<React.SetStateAction<Partial<Stripe.Response<Stripe.Checkout.Session>> | null>>;
 }
@@ -22,6 +24,7 @@ const SubscriptionProvider = ({ children, planInfo }: ProviderProps &  {planInfo
 }}) => {
   const [userPlanOverview, setUserPlanOverview] = useState<UserPlanOverView>(planInfo.userPlanOverview);
   const [limit, setLimit] = useState<number>(planInfo.limit);
+  const [hasReachedLimit, setHasReachedLimit] = useState<boolean>(false);
   const [checkOutDetails, setCheckoutDetails] = useState<Partial<Stripe.Response<Stripe.Checkout.Session>>|null>(null);
 
   return (
@@ -30,8 +33,11 @@ const SubscriptionProvider = ({ children, planInfo }: ProviderProps &  {planInfo
       setUserPlanOverview,
       limit,
       setLimit,
+      hasReachedLimit, 
+      setHasReachedLimit,
       checkOutDetails, 
-      setCheckoutDetails
+      setCheckoutDetails,
+    
     }}>
       {children}
     </SubscriptionContext.Provider>
@@ -44,7 +50,7 @@ const useSubscription = () => {
     throw new Error('useSubscription must be used within a SubscriptionProvider');
   }
 
-  const {setUserPlanOverview, setCheckoutDetails} = context
+  const {setUserPlanOverview, setCheckoutDetails, setHasReachedLimit, hasReachedLimit, limit, userPlanOverview} = context
   
   const getCheckoutSessionDetails = async (sessionId: string, router: AppRouterInstance) => {
     try {
@@ -73,10 +79,10 @@ const useSubscription = () => {
     }
   };
 
-
-
   return {
-    ...context,
+    hasReachedLimit, 
+    limit, 
+    userPlanOverview,    
     getCheckoutSessionDetails
   };
 };

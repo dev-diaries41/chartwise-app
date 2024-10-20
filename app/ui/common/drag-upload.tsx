@@ -26,7 +26,7 @@ export default function DragAndDropUpload({
     },
     onDropRejected: (rejectedFiles) => {
       if (rejectedFiles.length > 0 && rejectedFiles[0].errors.some(err => err.code === 'too-many-files')) {
-        setErrorMessage(`You can only upload up to ${maxFiles} file(s).`);
+        setErrorMessage(`You can only upload up to ${maxFiles} file(s). ${maxFiles === 1? 'Upgrade for multi-timeframe analysis.':''}`);
       };
 
       if (rejectedFiles.length > 0 && rejectedFiles[0].errors.some(err => err.code === 'file-invalid-type')) {

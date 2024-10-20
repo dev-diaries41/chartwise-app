@@ -2,6 +2,8 @@ import { IconDefinition, } from "@fortawesome/free-solid-svg-icons";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 import { positions } from "../constants/layout";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { TradeJournalEntry } from "./chartwise";
+import { GetDocsResponse } from "./response";
 
 export interface WhatsIncludedItem {
     icon: IconDefinition;
@@ -217,3 +219,31 @@ export type FAQ = {
   answer: string []
 }
 
+export interface TradeJournalTableProps {
+  // entries: TradeJournalEntry[];
+  onAddEntry: () => void, 
+  onDeleteEntry: (entryId: number) => void;
+  onOpenEntry: (entry: TradeJournalEntry) => void;
+  metadata: Pick<GetDocsResponse, 'totalDocuments' | 'perPage' | 'page'>
+}
+
+export interface Filters {
+  type: string;
+  sentiment: string;
+  symbol: string;
+}
+
+export type FilterOptions =  {
+  name: string;
+  value: string;
+  options: {
+      value: string;
+      label: string;
+  }[]
+}
+
+export interface FiltersProps {
+  filters: Filters;
+  filterOptions: FilterOptions[]
+  updateFilter: (filterName: string, value: string) => void;
+}

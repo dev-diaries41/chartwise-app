@@ -1,12 +1,13 @@
 'use client'
 import { AcceptedImgMimes } from "@/app/constants/global";
 import {CarouselImageViewer, MarkdownView, RiskSlider, DragAndDropUpload, ActionRow} from "@/app/ui/";
-import {faCopy, faMagnifyingGlassChart, faShareNodes, faTimes, faUpload, faWarning } from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faMagnifyingGlassChart, faRefresh, faShareNodes, faTimes, faUpload, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useChartwise } from "@/app/providers/chartwise";
 import { copyTextToClipboard } from "@/app/lib/helpers";
 import { ActionItem } from "@/app/types";
 import StrategyDropdown from "./strategies";
+import { useSubscription } from "@/app/providers/subscription";
 
 
 interface AnalysisFormProps {
@@ -19,10 +20,12 @@ export default function AnalysisForm ({
     handleAnalyseChart, 
   }: AnalysisFormProps){
   const {analysis, shareUrl, uploadCharts, onRiskChange, onStrategyChange, getRiskTolerance,  removeCharts} = useChartwise();
+  const {userPlanOverview} = useSubscription()
 
   const actions: ActionItem[] = [
     { icon: faCopy, onClick: () => copyTextToClipboard(analysis.output), tooltip: 'Copy' },
-    { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', isVisible: !!shareUrl }
+    { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', isVisible: !!shareUrl },
+    { icon: faRefresh, onClick: ()=>handleAnalyseChart(), tooltip: 'Re-analyis', isVisible: analysis.chartUrls.length > 0 }
   ];
     
     return (
@@ -41,7 +44,7 @@ export default function AnalysisForm ({
             </div>
             ):(
             <div className="mb-auto w-full h-full">
-              <DragAndDropUpload onFileUpload={uploadCharts} acceptedMimes={AcceptedImgMimes} maxFiles={3}>
+              <DragAndDropUpload onFileUpload={uploadCharts} acceptedMimes={AcceptedImgMimes} maxFiles={(userPlanOverview.plan === 'Free' || userPlanOverview.plan === 'Basic')? 1 : 3}>
                 <div className='flex flex-col gap-4 justify-center items-center'>
                   <FontAwesomeIcon icon={faUpload} className="w-8 h-8 text-emerald-500" />
                   <span className="text-lg font-semibold">Click to upload charts</span>
@@ -69,7 +72,7 @@ export default function AnalysisForm ({
           </div>
           
           {analysis.output && (
-            <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto mx-auto pb-8 mb-8 text-sm md:text-md">
+            <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto pb-8 mb-8 text-sm md:text-md">
               <MarkdownView content={analysis.output}/>
             </div>
           )}
@@ -81,8 +84,8 @@ export default function AnalysisForm ({
             { analysis.output && <ActionRow actions={actions}/>}
             </div>
             <button
-              disabled={loading || analysis.chartUrls.length < 1}
-              className={`flex  items-center justify-center bg-emerald-500 text-sm ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading  || analysis.chartUrls.length < 1? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
+              disabled={loading || analysis.chartUrls.length < 1 || !!analysis.output}
+              className={`flex  items-center justify-center bg-emerald-500 text-sm ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading  || analysis.chartUrls.length < 1 || !!analysis.output? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
               onClick={handleAnalyseChart}
             >
               <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>

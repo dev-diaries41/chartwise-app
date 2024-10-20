@@ -5,8 +5,8 @@ export async function findOneAndUpdateDoc<T>(model: mongoose.Model<T>, filter: R
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-    const options = { session, new: true };
-    const updatedDoc = await model.findOneAndUpdate(filter, update, options);
+    const options = { session, new: true, lean: true }; // Using lean to get a plain JS object
+    const updatedDoc = await model.findOneAndUpdate(filter, update, options).select('-_id -__v'); // Exclude _id and __v
 
     await session.commitTransaction();
     session.endSession();

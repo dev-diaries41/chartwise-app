@@ -60,7 +60,7 @@ export default function CarouselImageViewer({ images, switchInterval }: Carousel
                     placeholder="blur"
                     blurDataURL={image}
                     fill={true}
-                    style={{ objectFit: 'contain' }}
+                    style={{ objectFit: 'fill' }}
                   />
                 </div>
               </div>
@@ -96,7 +96,7 @@ export default function CarouselImageViewer({ images, switchInterval }: Carousel
               key={index}
               onClick={() => handleDotClick(index)}
               className={`h-2.5 w-2.5 rounded-full ${
-                currentIndex === index ? 'bg-blue-500' : 'bg-white'
+                currentIndex === index ? 'bg-blue-500' : 'bg-gray-400'
               }`}
             />
           );

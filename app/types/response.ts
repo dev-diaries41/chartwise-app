@@ -13,7 +13,7 @@ export interface DataResponse<T> extends BaseResponse {
   data?: T;
 }
 
-export interface GetDocsResponse<T> extends BaseResponse {
+export interface GetDocsResponse<T = Record<string, any>> extends BaseResponse {
   totalDocuments?: number;
   page?: number;
   perPage?: number;
