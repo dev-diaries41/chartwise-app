@@ -33,7 +33,7 @@ export default function Footer() {
               <Logo src={'/chartwise-icon.png'}/>
             </Link>
             <div className="mx-2 h-7 w-px bg-gray-700"></div>             */}
-            <Link href="https://www.instagram.com/signsafemusic" target="_blank" rel="noopener noreferrer">
+            {/* <Link href="https://www.instagram.com/signsafemusic" target="_blank" rel="noopener noreferrer">
               <Image
                 src="/x-logo.svg"
                 alt="X (Twitter)"
@@ -41,7 +41,7 @@ export default function Footer() {
                 height={24}
                 className='dark:invert'
               />
-            </Link>
+            </Link> */}
             <Link href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
               <Image
                 src="/discord-mark-black.svg"
