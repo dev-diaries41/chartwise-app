@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const jobId = req.nextUrl.searchParams.get('jobId');
     if (!jobId) return NextResponse.json({ message: JobErrors.INVALID_JOB_ID, status: 400},{status:400} );
 
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const jwtCookie = cookieStore.get('jwt')
     const token = jwtCookie?.value;
     if (!token) return NextResponse.json({ message: AuthErrors.MISSING_JWT_TOKEN, status: 401},{status:401} );

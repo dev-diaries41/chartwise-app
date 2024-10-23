@@ -1,7 +1,9 @@
 import { RateLimiterRedis } from 'rate-limiter-flexible';
-import redis from './redis';
+import connectRedis from './redis';
 
 const limiter = (userId: string) => {
+  const redis = connectRedis(); // Lazily get the Redis instance
+
   return new RateLimiterRedis({
     storeClient: redis,
     keyPrefix: `rate_limit:${userId}`,  // Key prefix to store user limits

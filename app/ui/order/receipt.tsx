@@ -48,7 +48,7 @@ export default function Receipt ({amount, email}: ReceiptProps){
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="w-1/2 py-2 pl-4 pr-6 border-b border-gray-200 text-base font-medium text-gray-800">{`Subscription ${getPlanFromPlanAmount(amount)?? ''} x 1`}</td>
+                      <td className="w-1/2 py-2 pl-4 pr-6 border-b border-gray-200 text-base font-medium text-gray-800">{`${getPlanFromPlanAmount(amount)?? ''} plan`}</td>
                       <td className="w-1/6 py-2 pl-4 pr-6 border-b border-gray-200 text-base text-gray-600"></td>
                       <td className="w-1/3 py-2 pl-4 pr-6 border-b border-gray-200 text-base font-medium text-right text-gray-800">{'£' + amount/100}</td>
                     </tr>
@@ -64,7 +64,7 @@ export default function Receipt ({amount, email}: ReceiptProps){
                   <tbody>
                   <tr>
                     <td className="pl-4 pr-6 pt-4 pb-2 border-b border-gray-200">
-                      If you have any questions, send an <a href="mailto:support@fpflabs.app" className="underline">email</a>.
+                      You should receive an email with your receipt shortly.
                     </td>
                   </tr>
                   </tbody>

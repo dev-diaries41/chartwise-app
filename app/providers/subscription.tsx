@@ -54,7 +54,7 @@ const useSubscription = () => {
     throw new Error('useSubscription must be used within a SubscriptionProvider');
   }
 
-  const {setUserPlanOverview, setCheckoutDetails, setHasReachedLimit, hasReachedLimit, limit, userPlanOverview, isUpgrading, setIsUpgrading} = context
+  const {setUserPlanOverview, setCheckoutDetails, setHasReachedLimit, checkOutDetails, hasReachedLimit, limit, userPlanOverview, isUpgrading, setIsUpgrading} = context
   
   const getCheckoutSessionDetails = async (sessionId: string, router: AppRouterInstance) => {
     try {
@@ -92,6 +92,7 @@ const useSubscription = () => {
   }
 
   return {
+    checkOutDetails,
     isUpgrading,
     hasReachedLimit, 
     limit, 

@@ -10,7 +10,7 @@ import { cookies } from "next/headers";
 export async function POST(req: NextRequest) {
   try {
     const analysis = await req.json() as Omit<IAnalysis, 'userId'>;;
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const jwtCookie = cookieStore.get('jwt')
     const token = jwtCookie?.value;
 

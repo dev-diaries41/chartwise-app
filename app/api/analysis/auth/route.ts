@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     const token = await chartwiseAPI.getAuthToken(email);
     chartwiseAPI.token = token;
 
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     cookieStore.set('jwt', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

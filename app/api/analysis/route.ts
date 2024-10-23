@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     const analysis = await req.json() as AnalysisParams;
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const jwtCookie = cookieStore.get('jwt');
     const token = jwtCookie?.value;
 

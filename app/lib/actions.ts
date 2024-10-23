@@ -10,9 +10,8 @@ import { RequestErrors } from '../constants/errors';
 import {ACCOUNT_EXISTS, CHECK_EMAIL_MESSAGE, EMAIL_MESSAGE, PASSWORDS_DO_NOT_MATCH, REGISTRATION_FAILED, REGISTRATION_SUCCESS, RESET_FAILED, RESET_SUCCESS} from '@/app/constants/messages';
 import { isValidUser, signUp, updatePassword } from './user';
 import { generateAccessUrl } from './auth';
-import { emailService } from './email';
+import { sendEmail } from './email';
 
-const notify = new Notify(NOTIFICATIONS_CONFIG)
 
 export async function authenticate(
   prevState: string | undefined,
@@ -59,7 +58,7 @@ export async function sendPasswordResetEmail(prevState: ResetState, formData: Fo
     const resetPasswordEmailMessage = `${EMAIL_MESSAGE}:\n\n${url}`
     const isValid = await isValidUser(formResults.data.email);
     if(isValid){
-      await emailService.sendEmail(formResults.data.email, 'Password reset', resetPasswordEmailMessage)
+      await sendEmail(formResults.data.email, 'Password reset', resetPasswordEmailMessage)
     }
     return {message: CHECK_EMAIL_MESSAGE}
   } catch (error) {
@@ -131,6 +130,7 @@ export async function resetPassword(prevState: CompleteResetState, formData: For
 
 
 export async function sendNotification(prevState: FeedbackState, formData: FormData) {
+  const notify = new Notify(NOTIFICATIONS_CONFIG)
   const formResults = ContactFormSchema.safeParse({
     email: formData.get('email'),
     feedbackType: formData.get('feedback-type'),
