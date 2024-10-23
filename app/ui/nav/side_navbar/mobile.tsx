@@ -11,6 +11,8 @@ import UserProfileWidget from '../../account/user-profile';
 import { useChartwise } from '@/app/providers/chartwise';
 import { faClose, faGear } from '@fortawesome/free-solid-svg-icons';
 import { useSettings } from '@/app/providers/settings';
+import { usePathname } from 'next/navigation';
+import { shouldHide } from '@/app/lib/helpers';
 
 interface MobileNavProps {
     email: string | null | undefined;
@@ -24,11 +26,15 @@ onToggleMenu
 
 }: MobileNavProps){
   const {recentAnalyses, deleteAnalysis} = useChartwise();
-  const {toggleSettings}=useSettings()
+  const {toggleSettings}=useSettings();
+  const pathname = usePathname();
+  const pathsToHide = ['/dashboard/charts'];
+  const hide = (shouldHide(pathname, pathsToHide))
+
   
     return(
       <div className="lg:hidden w-full p-4 fixed top-0 z-50 opacity-95">
-        <div className=' flex flex-row justify-between bg-transparent items-center'>
+{       !hide && <div className=' flex flex-row justify-between bg-transparent items-center'>
           <Link
             className="flex items-center justify-start rounded-ful z-50"
             href="/"
@@ -48,7 +54,7 @@ onToggleMenu
               <FontAwesomeIcon icon={isOpen? faClose: faBars} size="lg" className="w-6 h-6" />
             </button>
           </div>
-        </div>
+        </div>}
 
         {isOpen && (
         <div className=" absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2">

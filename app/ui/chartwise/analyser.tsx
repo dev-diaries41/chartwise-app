@@ -41,13 +41,21 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
   }, [])
 
   useEffect(() => {
-    if (email) {
-      getNewToken({ email }).then(() => {
-        console.log('cwauth initialised');
-        // SessionStorage.set(StorageKeys.cwauth, 'initialised');
-      });
-    }
+    const fetchToken = async () => {
+      if (email) {
+        try {
+          await getNewToken({ email });
+          console.log('cwauth initialised');
+          // SessionStorage.set(StorageKeys.cwauth, 'initialised');
+        } catch (error) {
+          console.error('Error fetching token:', error);
+        }
+      }
+    };
+  
+    fetchToken();
   }, [email]);
+  
   
 
   const onJobFinished = (status: JobReceipt['status']) => {
