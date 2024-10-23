@@ -15,8 +15,7 @@ const Hero = () => {
       <Image
         src={'/background.jpg'}
         alt='bg'
-        width={2048}
-        height={2048}
+       fill={true}
         priority={true}
         className='absolute top-0 bottom-0 left-0 w-full h-screen opacity-20 object-cover'
       />

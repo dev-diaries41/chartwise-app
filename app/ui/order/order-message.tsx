@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function OrderComplete(){
     return (
-        <div className="flex flex-col items-center text-white text-center">
+        <div className="flex flex-col items-center text-center">
             <div className='flex flex-row gap-4 items-center mb-8'>
               <h1 className="text-3xl font-bold">Order complete</h1>
               <FontAwesomeIcon icon={faCheckCircle}  color={'green'} className="w-10 h-10" />

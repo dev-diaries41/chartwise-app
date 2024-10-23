@@ -26,7 +26,7 @@ export default function OrderSuccess() {
     if(!sessionId || !checkOutDetails)return null;
 
     return (
-        <div className='flex flex-col gap-8 justify-center items-center min-h-screen py-16 px-4 sm:px-6'>
+        <div className='flex flex-col gap-8 justify-center items-center min-h-screen py-16 px-4 sm:px-6 max-w-5xl mx-auto'>
           <Link href='/' className='flex flex-row items-left mr-auto gap-4'>
             <FontAwesomeIcon icon={faArrowLeft} className='w-6 h-6'/>
             Back
