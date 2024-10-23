@@ -14,10 +14,8 @@ export default async function Layout({
 }) {
   const session = await auth();
   const email = session?.user?.email; 
-  const planInfo = await handleGetSubscriptionInfo(email);
 
   return (
-    <SubscriptionProvider planInfo={planInfo}>
     <SettingsProvider>
     <ChartwiseProvider email={email}>
     <JournalProvider>
@@ -29,6 +27,5 @@ export default async function Layout({
       </JournalProvider>  
     </ChartwiseProvider>
     </SettingsProvider> 
-    </SubscriptionProvider>
   )
 }

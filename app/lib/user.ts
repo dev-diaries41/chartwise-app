@@ -9,7 +9,7 @@ import { addDoc } from '@/app/lib/mongo/add';
 import UserModel from '@/app/models/user';
 
 
-export async function getUser(email: string): Promise<User | undefined> {
+export async function getUser(email: string): Promise<User | null> {
   try {
     await dbConnect();
     const result =  await getDoc<User>(UserModel, {email})
@@ -18,10 +18,11 @@ export async function getUser(email: string): Promise<User | undefined> {
     return user;
   } catch (error) {
     console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+   return null
   }
 }
 
+// try carch not needed as used in parent function 
 export async function signUp(newUser: NewUser): Promise<AddDocResponse> {
   await dbConnect();
   const {password, ...userInfo} = newUser;
@@ -31,6 +32,7 @@ export async function signUp(newUser: NewUser): Promise<AddDocResponse> {
   return addDoc(UserModel, user);
 }
 
+// try carch not needed as used in parent function 
 export async function completedOnboarding(email: string, answers:OnboardingAnswers): Promise<FindOneAndUpdateResponse<User>> {
   await dbConnect()
     const filter = { email };
@@ -42,6 +44,7 @@ export async function completedOnboarding(email: string, answers:OnboardingAnswe
     return await findOneAndUpdateDoc<User>(UserModel, filter, update);
   }
 
+  // try carch not needed as used in parent function 
   export async function updatePassword(email: string, newPassword: string): Promise<FindOneAndUpdateResponse<User>> {
     await dbConnect();
     const salt = crypto.randomBytes(16).toString('hex');
