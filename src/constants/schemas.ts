@@ -7,16 +7,7 @@ export const ServiceJobSchema = z.object({
   data: z.record(z.any()).optional().describe('Job data must be an object').default({})
 });
 
-
-export const StoredAnalysisSchema = z.object({
-  output: z.string().min(1, { message: "Analysis must be at least 1 characters long." }),
-  chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
-  userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
-  formatVersion: z.number().optional(),
-  metadata: z.record(z.any()).optional().refine(val => typeof val === 'object', { message: "Metadata must be an object." }),
-});
-
-export const AnalyseChartSchema = z.object({
+export const AnalysisParams = z.object({
   chartUrls: z.array(z.string().min(10, { message: "Each chart URL must be at least 10 characters long." })),
   metadata: z.object({
     strategyAndCriteria: z.string().optional(),
@@ -24,6 +15,15 @@ export const AnalyseChartSchema = z.object({
   }).refine((data) => typeof data.strategyAndCriteria === 'undefined' || typeof data.strategyAndCriteria === 'string', { message: "strategyAndCriteria must be a string" })
     .refine((data) => typeof data.risk === 'undefined' || typeof data.risk === 'number', { message: "risk must be a number" })
 });
+
+export const StoredAnalysisSchema = AnalysisParams.extend({
+  name: z.string().min(1, { message: "Analysis name must be at least 1 characters long." }),
+  output: z.string().min(1, { message: "Analysis must be at least 1, characters long." }),
+  userId: z.string().min(1, { message: "User ID is required." }), 
+  formatVersion: z.number().optional(),
+});
+
+
 
 
 export const ServiceJobDetailsSchema = z.object({
@@ -35,7 +35,7 @@ export const ServiceJobDetailsSchema = z.object({
   webhookUrl: z.string().optional()
 });
 
-export const AnalysisJobScehma = AnalyseChartSchema.merge(ServiceJobDetailsSchema);
+export const AnalysisJobScehma = AnalysisParams.merge(ServiceJobDetailsSchema);
 
 
 export const TradeJournalEntrySchema = z.object({

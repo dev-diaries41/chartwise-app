@@ -52,7 +52,7 @@ export async function generateTextFromMutliImages(prompt:string, imageUrls: stri
     temperature,
     max_tokens,
     messages: [
-        {role: "system", content: "You are an expert profitable trading assistant specialising in cryptocurrency, stocks and forex."},
+        {role: "system", content: "You are an expert profitable trading assistant specialising in cryptocurrencies, stocks, forex, bonds, commodities and ETFs."},
         {
         role: "user",
         content:[...content]

@@ -4,6 +4,7 @@ import { ServiceUsage } from "@src/mongo/models/usage";
 import { addDoc } from "@src/mongo/utils/add";
 import { countDocs } from "@src/mongo/utils/count";
 import { FREE_MONTHLY_LIMIT } from "@src/constants/services";
+import { PlanAmount } from "@src/constants/globals";
 
 
 export async function addUsage(userId: string, service: string){
@@ -48,11 +49,11 @@ export async function getTodaysUsageCount(userId: string, service: string): Prom
 
 export function getMaxMonthlyUsage(planCost: number | null | undefined, status: Stripe.Subscription['status'] | undefined){
   switch(planCost){
-      case 699:
+      case PlanAmount.basic:
           return status === 'active'? 100 : FREE_MONTHLY_LIMIT;
-      case 2399:
+      case PlanAmount.pro:
           return status === 'active'? 500 : FREE_MONTHLY_LIMIT;
-      case 2999:
+      case PlanAmount.elite:
           return status === 'active'? 1000 : FREE_MONTHLY_LIMIT;
       default:
           return FREE_MONTHLY_LIMIT;

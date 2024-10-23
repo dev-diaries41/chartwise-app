@@ -13,6 +13,7 @@ export interface IAnalyseCharts extends IBaseAnalysis {
 }
 
 export interface Analysis extends IBaseAnalysis {
+  name: string;
   output: string;
   userId: string;
   formatVersion?: number;

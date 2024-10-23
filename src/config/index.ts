@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { ServerConfig } from '@src/types/server';
 import { apiKeyAuth } from '@src/middleware';
-import { chartAnalysisRoute, usageRoute, authRoute, sharedAnalysisRoute, journalRoute, webhooksRoute } from '@src/routes';
+import { chartAnalysisRoute, authRoute } from '@src/routes';
 import { Time } from '@src/constants/server';
 import { checkToken } from '@src/middleware';
 
@@ -10,7 +10,7 @@ dotenv.config();
 
 export const config: ServerConfig = {
   port: parseInt(process.env.PORT ?? '10000'),
-  databaseUrl: process.env.TEST_MONGODB_URL!,
+  databaseUrl: process.env.MONGODB_URL!,
   logger: {
     logFilePaths: ['logs/error.log', 'logs/combined.log', 'logs/job.log', 'logs/metrics.log'],
     rentionTime: 7,
@@ -23,19 +23,15 @@ export const config: ServerConfig = {
       windowMs: 15 * Time.min,
       max: 50,
     },
-    allowedOrigins: [
-      'http://localhost:3001',
-      'http://127.0.0.1:3001',
-      'http://127.0.0.0:3001'
-    ]
+    allowedOrigins: []
   },
   routes: [
     {path: '/api/v1/analysis', routeHandlers: [apiKeyAuth, checkToken, chartAnalysisRoute]},
-    {path: '/api/v1/journal', routeHandlers: [apiKeyAuth, checkToken, journalRoute]},
-    {path: '/api/v1/usage', routeHandlers: [apiKeyAuth, checkToken, usageRoute]},
-    {path: '/api/v1/share', routeHandlers: [apiKeyAuth, sharedAnalysisRoute]},
     {path: '/api/v1/auth', routeHandlers: [apiKeyAuth, authRoute]},
-    {path: '/webhooks', routeHandlers: [webhooksRoute]},
+    // {path: '/webhooks', routeHandlers: [webhooksRoute]},
+    // {path: '/api/v1/journal', routeHandlers: [apiKeyAuth, checkToken, journalRoute]},
+    // {path: '/api/v1/usage', routeHandlers: [apiKeyAuth, checkToken, usageRoute]},
+    // {path: '/api/v1/share', routeHandlers: [apiKeyAuth, sharedAnalysisRoute]},
   ],
   queues:{
     backgroundJobs: 'background-jobs',

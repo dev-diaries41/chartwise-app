@@ -45,7 +45,7 @@ export function initialiseWorkers(redis: Redis): {
     redis,
     {
       concurrency: 4,
-      limiter: { max: 18, duration: Time.min }  // respecting token limits for tier one openai gpt4o usage (analysis using ~ 1648 tokens). Max 18jobs per min
+      limiter: { max: 18, duration: Time.min }  // respecting token limits for `Tier One` openai gpt4o usage (analysis using ~ 1648 tokens). Max 18jobs per min
   });
 
   return { backgroundWorker, chartAnalysisWorker };

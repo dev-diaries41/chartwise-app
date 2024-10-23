@@ -4,6 +4,7 @@ import { Analysis } from '@src/types';
 
 
 const analysisSchema = new mongoose.Schema({
+  name: { type: String, required: true },
   output: { type: String, required: true },
   chartUrls: { type: Array, required: true },
   timestamp: { type: Number, required: true, default: Date.now() },
