@@ -3,53 +3,11 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import List from './ui/common/list';
-import { faBook, faClock, faLayerGroup, faMagnifyingGlassChart, faShieldAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Faqs } from '@/app/constants/faq';
+import { ChartWiseBenefits, HERO_DESCRIPTION, HowItWorksGuide } from './constants/hero';
 
 export const revalidate = 3600
-
-export const HowItWorksGuide = [
-'Go to the  charts page and take a snapshot of the chart, or use an existing image.',
-'Go back to the analysis page, upload the chart, and optionally add strategy, and adjust risk tolerance.'
-]
-
-export const ChartWiseBenefits: {
-  title: string;
-  description: string;
-  icon: IconDefinition
-}[] = [
-  {
-    title: "AI-Powered Chart Analysis",
-    description: "Our AI analyzes charts, identifying trends, patterns, and anomalies to give you clear, actionable insights.",
-    icon: faMagnifyingGlassChart
-  },
-  {
-    title: "Strategy Optimization",
-    description: "Receive AI-generated trade strategies that align with your risk tolerance and trading goals, making precise decisions easier.",
-    icon: faChartLine
-  },
-  {
-    title: "Multi-Timeframe Insights",
-    description: "Upload multiple charts across different timeframes and get a comprehensive analysis that correlates data for better understanding.",
-    icon: faLayerGroup
-  },
-  {
-    title: "Risk Management",
-    description: "Get tailored risk management advice, including stop loss and take profit levels, based on your trade setup and market volatility.",
-    icon: faShieldAlt
-  },
-  {
-    title: "Save Time",
-    description: "Quickly understand complex charts without spending hours manually analyzing trends and data.",
-    icon: faClock
-  },
-];
-
-const HeroDescription = 'ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.';
-
-
 
 const Hero = () => {
   return (
@@ -71,7 +29,7 @@ const Hero = () => {
          
           <div className='absolute bottom-48 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
             <p className="text-md md:text-lg lg:text-xl font-medium mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
-            {HeroDescription}</p>
+            {HERO_DESCRIPTION}</p>
             <Link
                 href={'/dashboard'}
                 className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-600 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>

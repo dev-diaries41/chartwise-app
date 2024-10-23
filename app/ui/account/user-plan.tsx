@@ -8,8 +8,8 @@ import { useSubscription } from '@/app/providers/subscription';
 
 
 export default function UserPlanWidget({userId}: UserProfileWidgetProps) {
-  const {userPlan} = useSubscription()
-  const hideUpgradeWidget = !userId  || userPlan !== 'Free';
+  const {userPlanOverview} = useSubscription()
+  const hideUpgradeWidget = !userId  || userPlanOverview.plan !== 'Free';
   if(hideUpgradeWidget)return null
 
   return (

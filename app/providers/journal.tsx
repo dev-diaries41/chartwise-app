@@ -1,7 +1,6 @@
 'use client'
 import React, { createContext, useState, useContext, useEffect, useLayoutEffect } from 'react';
 import { ProviderProps, TradeJournalEntry } from '@/app/types';
-import { placeholderEntries } from '../constants/placeholder';
 import { RetryHandler } from 'devtilities';
 import * as ChartwiseClient from "@/app/lib/requests/chartwise-client";
 import { TradeJournalEntrySchemaNoUser } from '../constants/schemas';
@@ -75,7 +74,7 @@ const useJournal = (initialEntries?: TradeJournalEntry[]) => {
     }
   };
   
-  const deleteEntry = (entryId: number) => {
+  const deleteEntry = (entryId: string) => {
     setEntries(entries.filter(entry => entry.entryId !== entryId));
   };
 

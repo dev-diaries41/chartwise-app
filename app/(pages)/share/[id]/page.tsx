@@ -7,7 +7,8 @@ import { getAnalysis } from "@/app/lib/data/analysis";
 
 export const revalidate = 3600;
 
-export default async function Page ({params}:  { params: { id: string } }){
+export default async function Page(props:  { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const analysis = await getAnalysis(params.id)
 
   return (

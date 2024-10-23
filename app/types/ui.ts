@@ -243,7 +243,7 @@ export type FAQ = {
 export interface TradeJournalTableProps {
   entries: TradeJournalEntry[];
   onAddEntry: () => void, 
-  onDeleteEntry: (entryId: number) => void;
+  onDeleteEntry: (entryId: string) => void;
   onOpenEntry: (entry: TradeJournalEntry) => void;
   metadata: Pick<GetDocsResponse, 'totalDocuments' | 'perPage' | 'page'>
 }

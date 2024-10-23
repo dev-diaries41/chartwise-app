@@ -23,7 +23,7 @@ isOpen,
 onToggleMenu
 
 }: MobileNavProps){
-  const {recentAnalyses, deleteAnalysis, viewAnalysis} = useChartwise();
+  const {recentAnalyses, deleteAnalysis} = useChartwise();
   const {toggleSettings}=useSettings()
   
     return(
@@ -54,7 +54,7 @@ onToggleMenu
         <div className=" absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2">
           <NavLinks navItems={[...dashboardLinks]} />
           <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1 ">
-            <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis} />
+            <RecentAnalyses analyses={recentAnalyses} onDelete={deleteAnalysis} />
           </div>
           {/* <button onClick={() => {
             toggleSettings();

@@ -10,11 +10,12 @@ const EXPIRED_LINK_ERROR = 'Password reset link has expired'
 
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     token?: string; // Optional token
-  };
+  }>;
 }
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page(props: PageProps) {
+    const searchParams = await props.searchParams;
     const { token } = searchParams; // Get the token from searchParams
 
     if (!token) {
