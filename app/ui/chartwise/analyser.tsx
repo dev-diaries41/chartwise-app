@@ -40,16 +40,15 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
 
   }, [])
 
-  // Handle cwauth on first render
   useEffect(() => {
-    const cwauth = SessionStorage.get<string>(StorageKeys.cwauth);
-    if(cwauth === 'initialised') return;
-    if(email){
-      getNewToken({email}).then(() => console.log('cwauth initialised'))
+    if (email) {
+      getNewToken({ email }).then(() => {
+        console.log('cwauth initialised');
+        // SessionStorage.set(StorageKeys.cwauth, 'initialised');
+      });
     }
-
-    SessionStorage.set(StorageKeys.cwauth, 'initialised');
-  }, [])
+  }, [email]);
+  
 
   const onJobFinished = (status: JobReceipt['status']) => {
     stopPolling();
