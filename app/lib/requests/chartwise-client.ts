@@ -1,10 +1,8 @@
 'use client'
 import { AnalysisSchemaWithoutUserId } from "@/app/constants/schemas";
-import { AuthErrors, JobErrors } from "../../constants/errors";
-import {JobReceipt, JobResult, IAnalysis, TradeJournalEntry, AnalysisParams, OnboardingAnswers, User} from "@/app/types"
-import { FindOneAndUpdateResponse, GetDocsResponse } from "@/app/types/response";
-import { Caveat } from "next/font/google";
-
+import { AuthErrors, JobErrors } from "@/app/constants/errors";
+import {JobReceipt, JobResult, IAnalysis, AnalysisParams, OnboardingAnswers, User} from "@/app/types"
+import { FindOneAndUpdateResponse } from "@/app/types/response";
 
 async function fetchWithError<T>(endpointUrl: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(endpointUrl, options);
@@ -19,7 +17,7 @@ export async function getNewToken({ email }: { email: string}){
     if (!email) throw new Error(AuthErrors.INVALID_USER_ID);
 
     const body = JSON.stringify({email})
-    const response = await fetch('/api/cwauth/token', { method: 'POST', body });
+    const response = await fetch('/api/analysis/auth', { method: 'POST', body });
     if (!response.ok) {
       const errorResponse = await response.json();
       throw new Error(errorResponse.message)
@@ -32,12 +30,11 @@ export async function getJobStatus(jobId: string): Promise<JobResult<{ output: s
   return data;
 }
 
-export async function submitAnalysisRequest(analysis: AnalysisParams): Promise<string> {
+export async function submitAnalysisRequest(analysis: AnalysisParams): Promise<JobReceipt> {
   const body = JSON.stringify(analysis);
   const endpointUrl = '/api/analysis';
   const {data} = await fetchWithError<{data: JobReceipt}>(endpointUrl, { method: 'POST', body, credentials: 'include' });
-  if (!data?.jobId) throw new Error(JobErrors.INVALID_JOB_ID);
-  return data.jobId;
+  return data;
 }
 
 // User id sent via jwt
@@ -57,10 +54,7 @@ export async function saveAnalysis(analysis: Omit<IAnalysis, 'userId'>): Promise
   }
 }
 export async function refreshOnError(error: Error, email: string){
-  console.log("refrsh error here: ", error.message);
-
   const shouldRetry = error.message.trim() === AuthErrors.MISSING_JWT_TOKEN || error.message.trim() === AuthErrors.EXPIRED_TOKEN;
-  console.log({shouldRetry})
   if (shouldRetry) {
     await getNewToken({ email });
     return shouldRetry;

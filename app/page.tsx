@@ -1,4 +1,3 @@
-'use client'
 import { CarouselImageViewer, Faq, PriceTable } from '@/app/ui';
 import React from 'react';
 import Image from 'next/image';
@@ -9,6 +8,7 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons/faChartLine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Faqs } from '@/app/constants/faq';
 
+export const revalidate = 3600
 
 export const HowItWorksGuide = [
 'Go to the  charts page and take a snapshot of the chart, or use an existing image.',
@@ -41,16 +41,13 @@ export const ChartWiseBenefits: {
     icon: faShieldAlt
   },
   {
-    title: "Trade Journal Feedback",
-    description: "Log your trades and let the AI provide feedback on your performance, helping you refine and improve your strategies over time.",
-    icon: faBook
-  },
-  {
     title: "Save Time",
     description: "Quickly understand complex charts without spending hours manually analyzing trends and data.",
     icon: faClock
   },
 ];
+
+const HeroDescription = 'ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.';
 
 
 
@@ -74,14 +71,13 @@ const Hero = () => {
          
           <div className='absolute bottom-48 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
             <p className="text-md md:text-lg lg:text-xl font-medium mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
-            ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.</p>
+            {HeroDescription}</p>
             <Link
                 href={'/dashboard'}
                 className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-600 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
                 {'Get started for free'}
             </Link>
           </div>
-        
         </div>
       </div>
     </section>
@@ -117,7 +113,7 @@ const HowItWorks = () => {
     <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gray-900" >
       <h1 className="text-center text-3xl md:text-5xl my-4 px-3 font-bold">How to analyse charts with ChartWise</h1>
       <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
-          <CarouselImageViewer images={['/analyse-page-v2.png', '/charts-page.png']}  switchInterval={5000}/>
+          <CarouselImageViewer images={['/analysis-page-v3.png', '/chart-page-v2.png']}  switchInterval={5000}/>
         <div className='justify-start font-medium'>
           <List items={HowItWorksGuide} listType='numbered' />
         </div>
@@ -136,7 +132,7 @@ const Pricing = () => {
       <p className="max-w-5xl md:text-lg mb-5 px-3 opacity-80">
         Subscribe to a ChartWise plan to improve your trading outcomes.
       </p>
-      <div className='w-full container justify-center py-16'>
+      <div className='w-full justify-center py-16'>
         <PriceTable/>
       </div>
     </section>
@@ -150,7 +146,7 @@ const Page = () => {
       <Benefits/>
       <HowItWorks/>
       <Pricing/>
-      <Faq faq={Faqs} />
+      <Faq faq={Faqs}/>
     </div>
   );
 }

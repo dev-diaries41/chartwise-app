@@ -18,8 +18,8 @@ export default function MarkdownView({ content }: MarkdownViewProps) {
           components={{
             p: ({ node, ...props }) => <p className="leading-relaxed mb-6 text-md md:text-lg" {...props} />,
             ul: ({ node, ...props }) => <ul className="list-disc list-inside text-md md:text-lg mb-6" {...props} />,
-            li: ({ node, ...props }) => <li className="mb-3" {...props} />,
-            ol: ({ node, ...props }) => <ol className="list-decimal list-inside text-md md:text-lg mb-6" {...props} />,
+            li: ({ node, ...props }) => <li className={`mb-3`} {...props} />,
+            ol: ({ node, ...props }) => <ol className=" list-inside text-md md:text-lg mb-2" {...props} />,
             h1: ({ node, ...props }) => <h1 className="text-2xl md:text-3xl font-bold mb-6 mt-8" {...props} />,
             h2: ({ node, ...props }) => <h2 className="text-lg md:text-2xl font-bold mb-4 mt-6" {...props} />,
             h3: ({ node, ...props }) => <h3 className="text-md md:text-lg font-semibold mb-3 mt-4" {...props} />,

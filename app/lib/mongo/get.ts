@@ -3,12 +3,12 @@ import { convertToNumber } from '@/app/lib/helpers';
 import { GetDocResponse, GetDocsResponse } from '@/app/types';
 import { RequestErrors, ServerErrors } from '@/app/constants/errors';
 
-export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string, any>): Promise<GetDocResponse<T>>{
+export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string, any>, projection: Record<string, string> | null = null): Promise<GetDocResponse<T>>{
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
     const options = { session };
-    const document = await model.findOne(filter, null, options).session(session);
+    const document = await model.findOne(filter, projection, options).session(session);
     if (!document) {
       await session.abortTransaction();
       session.endSession();
@@ -26,7 +26,7 @@ export async function getDoc<T>(model: mongoose.Model<T>,  filter: Record<string
   }
 }
 
-export async function getDocs<T>(model: mongoose.Model<T>, filter: Record<string, any>, page: string | number = 1, perPage: string | number = 10): Promise<GetDocsResponse<T>> {
+export async function getDocs<T>(model: mongoose.Model<T>, filter: Record<string, any>, page: string | number = 1, perPage: string | number = 10, projection: string | null = null): Promise<GetDocsResponse<T>> {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
@@ -43,15 +43,17 @@ export async function getDocs<T>(model: mongoose.Model<T>, filter: Record<string
 
     const skip = (pageNumber - 1) * perPageNumber;
     const documents = await model
-    .find(filter, '-_id -__v', options) 
-    .lean() 
+    .find(filter, projection, options) 
     .skip(skip)
     .limit(perPageNumber)
+    .sort({ _id: -1 })  // Sort by _id, which reflects the order they were stored (newest first)
     .session(session);
+
+    const documentsWithStringId = documents.map(doc => doc.toObject());
     
     await session.commitTransaction();
     session.endSession();
-    return { success: true, totalDocuments, page: pageNumber, perPage: perPageNumber, data: documents as T[] };
+    return { success: true, totalDocuments, page: pageNumber, perPage: perPageNumber, data: documentsWithStringId as T[] };
   } catch (error: any) {
     await session.abortTransaction();
     session.endSession();

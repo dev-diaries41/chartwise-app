@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FAQ } from '@/app/types';
+import { DISCORD_INVITE_URL, SUPPORT_EMAIL } from '@/app/constants/support';
 
 
 export default function Faq({faq} :{faq: FAQ[]}){
@@ -17,13 +18,33 @@ export default function Faq({faq} :{faq: FAQ[]}){
   };
   
   return (
-    <section id='faq' className='mx-auto w-full  py-16 bg-gray-900'>
+    <section id='support' className='mx-auto w-full  py-16 bg-gray-900'>
     <div className="max-w-7xl mx-auto flex flex-col gap-12">
       <div className="flex flex-col text-center basis-1/2">
         <h1 className="ttext-center text-3xl md:text-5xl mb-4 px-3 font-bold">
           Frequently Asked Questions
         </h1>
-       
+        <div className="flex flex-col text-center basis-1/2">
+          <div className="text-base-content/80">
+            Have questions or need help? You can send us an email at {' '}
+            <a
+              href={`mailto:${SUPPORT_EMAIL}`}
+              target="_blank"
+              className="link text-base-content text-blue-500 underline"
+            >
+              {SUPPORT_EMAIL}
+            </a>
+            {' '} for support, or join the ChartWise{' '}
+            <a
+              className="link text-base-content text-blue-500 underline"
+              target="_blank"
+              href={DISCORD_INVITE_URL}
+            >
+              Discord community
+            </a>
+            {' '} to ask for help and stay updated on the latest updates.
+          </div>
+        </div>
       </div>
       <ul className="basis-1/2 rounded-md p-4">
         {faq.map((item, index) => (

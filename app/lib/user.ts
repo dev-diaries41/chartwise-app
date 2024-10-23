@@ -9,16 +9,12 @@ import { addDoc } from '@/app/lib/mongo/add';
 import UserModel from '@/app/models/user';
 
 
-export async function findUser(email: string){
-  const result =  await getDoc(UserModel, {email})
-  if(!result.success || !result.data) return null;
-  return result.data;
-}
-
 export async function getUser(email: string): Promise<User | undefined> {
   try {
     await dbConnect();
-    const user = await findUser(email);
+    const result =  await getDoc<User>(UserModel, {email})
+    if(!result.success || !result.data) throw new Error(result.message);
+    const user = result.data;
     return user;
   } catch (error) {
     console.error('Failed to fetch user:', error);
@@ -45,3 +41,23 @@ export async function completedOnboarding(email: string, answers:OnboardingAnswe
   
     return await findOneAndUpdateDoc<User>(UserModel, filter, update);
   }
+
+  export async function updatePassword(email: string, newPassword: string): Promise<FindOneAndUpdateResponse<User>> {
+    await dbConnect();
+    const salt = crypto.randomBytes(16).toString('hex');
+    const hashedPassword = hashPassword(newPassword, salt)
+    return findOneAndUpdateDoc(UserModel, {email}, {hashedPassword, salt});
+  }
+
+  export async function isValidUser(email: string): Promise<boolean> {
+    try {
+      await dbConnect();
+      const user = await UserModel.findOne({email})
+      return !!user;
+    } catch (error: any) {
+      console.error('Error checking user: ', error?.message)
+      return false
+    }
+  }
+
+  

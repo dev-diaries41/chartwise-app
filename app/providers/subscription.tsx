@@ -12,19 +12,22 @@ interface SubscriptionContextProps {
   setLimit: React.Dispatch<React.SetStateAction<number>>;
   hasReachedLimit: boolean;
   setHasReachedLimit: React.Dispatch<React.SetStateAction<boolean>>;
+  isUpgrading: boolean;
+  setIsUpgrading: React.Dispatch<React.SetStateAction<boolean>>;
   checkOutDetails: Partial<Stripe.Response<Stripe.Checkout.Session>> | null;
   setCheckoutDetails: React.Dispatch<React.SetStateAction<Partial<Stripe.Response<Stripe.Checkout.Session>> | null>>;
 }
 
 const SubscriptionContext = createContext<SubscriptionContextProps | undefined>(undefined);
 
-const SubscriptionProvider = ({ children, planInfo }: ProviderProps &  {planInfo: {
+const SubscriptionProvider = React.memo(({ children, planInfo }: ProviderProps &  {planInfo: {
   limit: number;
   userPlanOverview: UserPlanOverView;
 }}) => {
   const [userPlanOverview, setUserPlanOverview] = useState<UserPlanOverView>(planInfo.userPlanOverview);
   const [limit, setLimit] = useState<number>(planInfo.limit);
   const [hasReachedLimit, setHasReachedLimit] = useState<boolean>(false);
+  const [isUpgrading, setIsUpgrading] = useState<boolean>(false);
   const [checkOutDetails, setCheckoutDetails] = useState<Partial<Stripe.Response<Stripe.Checkout.Session>>|null>(null);
 
   return (
@@ -36,13 +39,14 @@ const SubscriptionProvider = ({ children, planInfo }: ProviderProps &  {planInfo
       hasReachedLimit, 
       setHasReachedLimit,
       checkOutDetails, 
-      setCheckoutDetails,
+      setCheckoutDetails,isUpgrading, 
+      setIsUpgrading
     
     }}>
       {children}
     </SubscriptionContext.Provider>
   );
-};
+});
 
 const useSubscription = () => {
   const context = useContext(SubscriptionContext);
@@ -50,7 +54,7 @@ const useSubscription = () => {
     throw new Error('useSubscription must be used within a SubscriptionProvider');
   }
 
-  const {setUserPlanOverview, setCheckoutDetails, setHasReachedLimit, hasReachedLimit, limit, userPlanOverview} = context
+  const {setUserPlanOverview, setCheckoutDetails, setHasReachedLimit, hasReachedLimit, limit, userPlanOverview, isUpgrading, setIsUpgrading} = context
   
   const getCheckoutSessionDetails = async (sessionId: string, router: AppRouterInstance) => {
     try {
@@ -78,12 +82,23 @@ const useSubscription = () => {
       router.push('/'); // Redirect to root page
     }
   };
+  
+  const toggleUpgradePop = ()=> {
+    setIsUpgrading(prev => !prev)
+  }
+
+  const updatePlanOverviewToCancelled = ()=> {
+    setUserPlanOverview(prev => ({...prev, cancel_at_period_end: true}))
+  }
 
   return {
+    isUpgrading,
     hasReachedLimit, 
     limit, 
     userPlanOverview,    
-    getCheckoutSessionDetails
+    getCheckoutSessionDetails,
+    toggleUpgradePop,
+    updatePlanOverviewToCancelled
   };
 };
 

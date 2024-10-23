@@ -1,3 +1,5 @@
+import { SUPPORT_EMAIL } from "@/app/constants/support";
+
 export const revalidate = false;
 
 export default function Page() {
@@ -13,11 +15,11 @@ export default function Page() {
             </div>
             <div className="mb-4">
               <h2 className="my-2 text-xl font-semibold">2. Information We Collect</h2>
-              <p>We only collect the email address of users who sign in using Google social login. No other personal data is collected, stored, or processed by us.</p>
+              <p>We only collect the email address of users. No other personal data is collected, stored, or processed by us.</p>
             </div>
             <div className="mb-4">
               <h2 className="my-2 text-xl font-semibold">3. How We Use Your Information</h2>
-              <p>We use the email address provided through Google social login to:</p>
+              <p>We use the email address provided during registration to:</p>
               <ul className="list-disc list-inside">
                 <li>Provide access to the App and its features.</li>
                 <li>Communicate with you regarding your account or use of the App.</li>
@@ -46,7 +48,7 @@ export default function Page() {
             </div>
             <div className="mb-4">
               <h2 className="my-2 text-xl font-semibold">8. Contact Us</h2>
-              <p>If you have any questions or concerns about this Privacy Policy, please contact us at fpflabs@gmail.com.</p>
+              <p>{`If you have any questions or concerns about this Privacy Policy, please contact us at ${SUPPORT_EMAIL}.`}</p>
             </div>
             <p>Last updated: July 11, 2024.</p>
           </div>

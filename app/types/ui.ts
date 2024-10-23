@@ -4,6 +4,7 @@ import { positions } from "../constants/layout";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { TradeJournalEntry } from "./chartwise";
 import { GetDocsResponse } from "./response";
+import { JobReceipt } from "./data";
 
 export interface WhatsIncludedItem {
     icon: IconDefinition;
@@ -109,6 +110,25 @@ export interface WhatsIncludedItem {
     };
     message: string | null;
   };
+
+  export type CompleteResetState = {
+    errors?: {
+      passowrd?: string[];
+      confirmPassword?: string[];
+    };
+    message: string | null;
+  };
+
+  export type ResetState = {
+    errors?: {
+      email?: string[];
+    };
+    message: string | null;
+  };
+
+  export type UpgradeState = {
+    message: string | null;
+  };
   
 
 
@@ -141,8 +161,9 @@ export interface BasePopUpProps {
 }
 
 export interface LoaderDialogProps extends BasePopUpProps{
-  onMinimize :() => void;
-
+  onMinimize? :() => void;
+  status?: JobReceipt['status'] | null;
+  queue?: JobReceipt['queue'];
 }
 
 export interface LoadingState {
@@ -220,7 +241,7 @@ export type FAQ = {
 }
 
 export interface TradeJournalTableProps {
-  // entries: TradeJournalEntry[];
+  entries: TradeJournalEntry[];
   onAddEntry: () => void, 
   onDeleteEntry: (entryId: number) => void;
   onOpenEntry: (entry: TradeJournalEntry) => void;

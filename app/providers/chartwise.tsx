@@ -1,18 +1,17 @@
 'use client'
-import React, { createContext, useState, useContext, useEffect, ChangeEvent, } from 'react';
+import React, { createContext, useState, useContext, useEffect, } from 'react';
 import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalysis } from '@/app/types';
 import { StorageKeys } from '../constants/global';
 import {LocalStorage} from "@/app/lib/storage"
 import * as ChartwiseClient from '../lib/requests/chartwise-client';
 import { RetryHandler } from 'devtilities';
-import { useRouter } from 'next/navigation';
+import { formatAnalyses, getAnalysisName } from '../lib/helpers';
+import { getAnalyses } from '../lib/data/analysis';
 
 
 interface TradeContextProps {
   recentAnalyses: IAnalysisUrl[];
   setRecentAnalyses: React.Dispatch<React.SetStateAction<IAnalysisUrl[]>>; 
-  analysisToView: IAnalysisUrl | null;
-  setAnalysisToView: React.Dispatch<React.SetStateAction<IAnalysisUrl|null>>; 
   analysis: Omit<IAnalysis, 'userId'>; 
   setAnalysis: React.Dispatch<React.SetStateAction<Omit<IAnalysis, 'userId'>>>; 
   shareUrl: string | null, 
@@ -24,6 +23,7 @@ const retryHandler = new RetryHandler(1); // Allow only 1 retry to handle expire
 
 
 const DefaultAnalysis: Omit<IAnalysis, 'userId'> = {
+  name: '',
   output: '',
   chartUrls: [],
   metadata:{
@@ -32,13 +32,27 @@ const DefaultAnalysis: Omit<IAnalysis, 'userId'> = {
   }
 }
 
-const ChartwiseProvider = ({ children }: ProviderProps) => {
+const ChartwiseProvider = React.memo(({ children, email }: ProviderProps & {email: string | null | undefined}) => {
   const [recentAnalyses, setRecentAnalyses] = useState<IAnalysisUrl[]>([]);
-  const [analysisToView, setAnalysisToView] = useState<IAnalysisUrl | null>(null);
   const [analysis, setAnalysis] = useState<Omit<IAnalysis, 'userId'>>(DefaultAnalysis);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
-  const router = useRouter();
 
+  useEffect(() => {
+    const fetchRecentAnalysis = async(email: string) => {
+      const analyses = await getAnalyses(email)
+      const fetchedFormattedAnalysis = formatAnalyses(analyses);
+      LocalStorage.set(StorageKeys.recentAnalyses, JSON.stringify(fetchedFormattedAnalysis));
+      setRecentAnalyses(fetchedFormattedAnalysis);
+    }
+
+    const cachedAnalyses = LocalStorage.get(StorageKeys.recentAnalyses);
+    if (Array.isArray(cachedAnalyses)) {
+    setRecentAnalyses(cachedAnalyses);
+    }else{
+      if(!email) return;
+      fetchRecentAnalysis(email)
+    }
+  },[])
 
   useEffect(() => {
     const saveAnalysis = async() => {
@@ -50,7 +64,7 @@ const ChartwiseProvider = ({ children }: ProviderProps) => {
         const url = await ChartwiseClient.saveAnalysis(analysis);
         if(url){
           setShareUrl(url);
-          addRecentAnalysis({name:`Analysis-${Date.now()}`, analyseUrl: url});
+          addRecentAnalysis({name: analysis.name, analyseUrl: url});
         }
       }
     }
@@ -58,30 +72,10 @@ const ChartwiseProvider = ({ children }: ProviderProps) => {
   }, [analysis, analysis.output]);
 
 
-  useEffect(() => {
-    const storedAnalyses = LocalStorage.get(StorageKeys.recentAnalyses);
-    if (Array.isArray(storedAnalyses)) {
-    setRecentAnalyses(storedAnalyses);
-    }
-},[])
-
-useEffect(() => {
-  const viewRecentAnalysis = (analysis: IAnalysisUrl) => {
-      router.push(analysis.analyseUrl)
-  }
-  
-  if(analysisToView){
-  viewRecentAnalysis(analysisToView)
-  }
-},[analysisToView]);
-
-
   return (
     <ChartwiseContext.Provider value={{ 
-      analysisToView,
       recentAnalyses, 
       setRecentAnalyses,
-      setAnalysisToView,
       analysis,
       setAnalysis,
       shareUrl, 
@@ -90,7 +84,7 @@ useEffect(() => {
       {children}
     </ChartwiseContext.Provider>
   );
-};
+});
 
 const useChartwise = () => {
   const context = useContext(ChartwiseContext);
@@ -98,8 +92,6 @@ const useChartwise = () => {
     throw new Error('useChartwise must be used within a ChartwiseProvider');
   }
   const {
-    analysisToView,
-    setAnalysisToView,
     recentAnalyses,
     setRecentAnalyses,
     analysis,
@@ -107,29 +99,27 @@ const useChartwise = () => {
     shareUrl,
   } = context;
 
-  
-  const viewAnalysis = (analysis: IAnalysisUrl) => {
-    setAnalysisToView(analysis)
-  }
 
-  const deleteAnalysis = (analysis: IAnalysisUrl) => {
-    LocalStorage.removeItemFromArray(StorageKeys.recentAnalyses, (storedAnaysis: IAnalysisUrl) => storedAnaysis.name!== analysis.name);
-    setRecentAnalyses(prevAnalyses => prevAnalyses.filter((storedAnaysis: IAnalysisUrl) => storedAnaysis.name!== analysis.name))
-  }
+const deleteAnalysis = (analysis: IAnalysisUrl) => {
+  LocalStorage.removeItemFromArray(StorageKeys.recentAnalyses, (storedAnaysis: IAnalysisUrl) => storedAnaysis.name!== analysis.name);
+  setRecentAnalyses(prevAnalyses => prevAnalyses.filter((storedAnaysis: IAnalysisUrl) => storedAnaysis.name!== analysis.name))
+}
 
 
 const removeAnalysis = () => {
     setAnalysis(prevAnalysis => ({...prevAnalysis, output: ''}))
-    setAnalysisToView(null);
   }
   
 const onStrategyChange = (strategy: string) => {
   setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, strategyAndCriteria: prevAnalysis.metadata.strategyAndCriteria === strategy? '':strategy}}))
 };
 
-const onRiskChange = (value: any) => {
-  setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, risk: value}}))
+const onRiskChange = (newRisk: number) => {
+  setAnalysis(prevAnalysis => ({...prevAnalysis, metadata: {...prevAnalysis.metadata, risk: newRisk}}))
+};
 
+const onNameChnage = (newName: string) => {
+  setAnalysis(prevAnalysis => ({...prevAnalysis, name: newName}))
 };
 
 const removeCharts = () => {
@@ -138,6 +128,8 @@ const removeCharts = () => {
 };
 
 const uploadCharts = async (files: File[]) => {
+  const analysisName = getAnalysisName(files[0]?.name);
+  onNameChnage(analysisName);
   const fileReaders = files.map(file => {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -176,11 +168,11 @@ const getRiskTolerance = () => {
 
 const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     try {
-      const jobId = await retryHandler.retry(
+      const jobReceipt = await retryHandler.retry(
         async () => await ChartwiseClient.submitAnalysisRequest(analysis),
         async(error)=> await ChartwiseClient.refreshOnError(error as Error, userId)
       );
-      return jobId;
+      return jobReceipt;
     } catch (error) {
       throw error;
     }
@@ -199,11 +191,9 @@ const analyseChart = async (analysis: AnalysisParams, userId: string) => {
 
   return {
     analysis,
-    analysisToView,
     recentAnalyses,
     shareUrl,
     newAnalysis,
-    viewAnalysis,
     deleteAnalysis,
     removeAnalysis,
     analyseChart,
@@ -212,7 +202,8 @@ const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     onAnalysisComplete,
     onRiskChange,
     getRiskTolerance,
-    uploadCharts
+    uploadCharts,
+    onNameChnage
   };
 };
 

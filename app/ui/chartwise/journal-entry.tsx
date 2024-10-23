@@ -1,3 +1,4 @@
+'use client'
 import { TradeJournalEntrySchema } from '@/app/constants/schemas';
 import { addJournalEntry, updateJournalEntry } from '@/app/lib/data/journal';
 import { useJournal } from '@/app/providers/journal';
@@ -11,21 +12,21 @@ interface AddEntryPopupProps {
     numberOfEntries: number;
   }
   
-  const AddEntryPopup: React.FC<AddEntryPopupProps> = ({ onClose, onSubmit, numberOfEntries, email }) => {
+  export default React.memo(function AddEntryPopup ({ onClose, onSubmit, email, numberOfEntries }:AddEntryPopupProps) {
     const {selectedEntry} = useJournal()
     const [entryData, setEntryData] = useState<Partial<TradeJournalEntry>>({
       tradeDate: selectedEntry?.tradeDate ?? new Date(),
-      symbol: selectedEntry?.symbol ?? '',
+      symbol: selectedEntry?.symbol ?? 'MSFT',
       type: selectedEntry?.type ?? 'buy',
-      quantity: selectedEntry?.quantity,
-      entryPrice: selectedEntry?.entryPrice,
+      quantity: selectedEntry?.quantity || 100,
+      entryPrice: selectedEntry?.entryPrice || 1000,
       stopLoss: selectedEntry?.stopLoss,
       takeProfit: selectedEntry?.takeProfit,
       comments: selectedEntry?.comments,
       sentiment: selectedEntry?.sentiment ?? 'neutral',
       createdAt: selectedEntry?.createdAt ?? new Date(),
       updatedAt: new Date(),
-      entryId: selectedEntry?.entryId ?? numberOfEntries + 1,
+      entryId: selectedEntry?.entryId ?? crypto.randomUUID()
     });
     
 
@@ -33,7 +34,7 @@ interface AddEntryPopupProps {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setEntryData((prevData) => ({ ...prevData, [name]: value }));
+    setEntryData((prevData) => ({ ...prevData, [name]: name === 'symbol'? value.toUpperCase() : value }));
   };
 
   const handleSubmit = async() => {
@@ -204,6 +205,4 @@ interface AddEntryPopupProps {
       </div>
     </div>
   );
-};
-
-export default AddEntryPopup;
+});

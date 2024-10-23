@@ -10,7 +10,7 @@ export default function Header({email}: {email: string}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
-  const pathsToHide = ['/dashboard', '/login', '/register'];
+  const pathsToHide = ['/dashboard', '/login', '/register', 'reset-password', 'forgot-password'];
   const onLandingPage = pathname === '/';
   
   if (shouldHide(pathname, pathsToHide) || (callbackUrl && new URL(callbackUrl).pathname === '/dashboard')) {

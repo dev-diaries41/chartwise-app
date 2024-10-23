@@ -5,7 +5,7 @@ import { CTAPopUpProps } from '@/app/types';
 export default function PopUp ({ onClose, onConfirm, title, description, onConfirmCta, onCloseCta, onCloseClassName, onConfirmClassName }: CTAPopUpProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-2 lg:p-0 transition-opacity duration-300 ease-in-out">
-      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 w-full max-w-md animate-fadeIn">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 w-full max-w-lg min-h-[200px] animate-fadeIn">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-lg font-semibold">{title}</h2>
         </div>

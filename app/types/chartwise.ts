@@ -6,14 +6,15 @@ export type IAnalysisUrl = {
 
 export interface RecentAnalysesProps {
   analyses: IAnalysisUrl[];
-  onClick: (IAnalysisUrl: IAnalysisUrl) => void;
   onDelete: (IAnalysisUrl: IAnalysisUrl) => void;
 }
 
 export interface IAnalysis extends AnalysisParams {
   output: string ;
+  timestamp?: number;
   userId: string;
   formatVersion?: number;
+  name: string;
 }
 
 export interface AnalysisParams {
@@ -25,7 +26,7 @@ export interface AnalysisParams {
 }
 
 export interface TradeJournalEntry {
-  entryId: number;
+  entryId: string;
   tradeDate: Date;
   symbol: string;
   type: 'buy' | 'sell';

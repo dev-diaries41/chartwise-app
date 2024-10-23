@@ -1,22 +1,23 @@
 'use client'
-import React, { useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import React, { useActionState, useEffect } from 'react';
+import {useFormStatus } from 'react-dom';
 import { register } from '@/app/lib/actions';
 import InputError from '@/app/ui/common/form-error';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import * as AuthMessages from '@/app/constants/registration';
+import {REGISTRATION_SUCCESS} from '@/app/constants/messages';
+import CircleLoadingIndicator from '../common/circle-loading-indicator';
 
 
 export default function RegistrationForom(){
   const initialState = { message: '', errors: {}};
-  const [state, dispatch] = useFormState(register, initialState);
+  const [state, dispatch] = useActionState(register, initialState);
   const router = useRouter();
 
   useEffect(() => {
-    if(state.message === AuthMessages.REGISTRATION_SUCCESS){
+    if(state.message === REGISTRATION_SUCCESS){
       setTimeout(() => router.push('/login'), 1500)
     }
   },[state])
@@ -28,7 +29,7 @@ export default function RegistrationForom(){
           Create your account
         </h1>
          { state.message && <div className='flex flex-row justify-start items-center gap-2 rounded-md'>
-            <FontAwesomeIcon icon={state.message === AuthMessages.REGISTRATION_SUCCESS? faCheckCircle : faExclamationCircle} className={`h-5 w-5 ${state.message === AuthMessages.REGISTRATION_SUCCESS? 'text-emerald-500' : 'text-red-500'}`} />
+            <FontAwesomeIcon icon={state.message === REGISTRATION_SUCCESS? faCheckCircle : faExclamationCircle} className={`h-5 w-5 ${state.message === REGISTRATION_SUCCESS? 'text-emerald-500' : 'text-red-500'}`} />
             <p className={`text-sm opacity-80`}>{state.message}</p>
           </div>}
           
@@ -99,7 +100,8 @@ function RegisterButton() {
     className="mt-4 w-full flex  gap-2 items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
     aria-disabled={pending}
     disabled={pending}
-    > {pending? 'Sign up...' : 'Sign up'} 
+    > {'Sign up'} 
+      {pending && <CircleLoadingIndicator size={20}/>}
     </button>
   );
 }

@@ -8,7 +8,7 @@ In my trading journey, I've experienced both gains and losses to say the least. 
 
 ## What Is ChartWise?
 
-ChartWise is designed to help traders analyze charts and create effective trade plans. You start by uploading a screenshot of your chart and inputting details about your trading strategy and risk tolerance. ChartWise then generates a detailed analysis and execution plan tailored to your inputs, leveraging advanced technical analysis and artificial intelligence.
+ChartWise is designed to help traders analyse charts and create effective trade plans. You start by uploading a screenshot of your chart and inputting details about your trading strategy and risk tolerance. ChartWise then generates a detailed analysis and execution plan tailored to your inputs, leveraging advanced technical analysis and artificial intelligence.
 
 ## Why ChartWise Can Help
 

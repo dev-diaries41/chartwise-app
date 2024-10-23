@@ -1,3 +1,4 @@
+'use client'
 import { Time } from "@/app/constants/global";
 import * as AES from 'aes-js';
 

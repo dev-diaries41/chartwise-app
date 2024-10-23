@@ -34,6 +34,7 @@ import RiskSlider from "./chartwise/risk-slider";
 import AnalysisForm from "./chartwise/analysis-form";
 import OnboardingCarousel from "./common/onboarding";
 import TableFilters from "./common/table-filters";
+import CircleLoadingIndicator from './common/circle-loading-indicator';
 
 
 export {
@@ -72,5 +73,6 @@ export {
     AnalysisForm,
     DragAndDropUpload,
     OnboardingCarousel,
-    TableFilters
+    TableFilters,
+    CircleLoadingIndicator
 }

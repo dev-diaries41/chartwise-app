@@ -25,7 +25,7 @@ export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
             type="submit"
             className='w-full flex flex-row items-center group-hover:pointer-events-auto justify-start gap-2 p-2 py-3 text-sm font-medium mt-auto focus:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md'>
             <FontAwesomeIcon icon={faSignOut} className="w-4 h-4" />
-            <span className="hidden md:inline">{'Sign out'}</span>
+            <span className="hidden md:inline">{'Log out'}</span>
           </button>
         </form>
       </div>
@@ -48,7 +48,7 @@ export default function UserProfileWidget({ userId }: UserProfileWidgetProps) {
             className="lg:hidden flex flex-row items-center justify-end w-full gap-2 p-2 text-sm font-medium mt-auto focus:cursor-pointer ml-auto"
           >
             <FontAwesomeIcon icon={faSignOut} className="w-4 h-4" />
-            <span className="hidden md:inline">{'Sign out'}</span>
+            <span className="hidden md:inline">{'Log out'}</span>
           </button>
         </form>
       </div>

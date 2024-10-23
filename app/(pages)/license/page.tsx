@@ -1,3 +1,5 @@
+import { SUPPORT_EMAIL } from "@/app/constants/support";
+
 export const revalidate = false;
 
 export default function Page() {
@@ -5,7 +7,7 @@ export default function Page() {
     <div id="license" className="">
       <div className="max-w-5xl mx-auto py-8 pt-24 ">
         <div className="p-5">
-          <div className="reactMarkDown lg:text-lg leading-relaxed">
+          <div className="leading-relaxed">
             <h1 className="text-3xl font-bold mb-4">License Agreement</h1>
             <p><strong>TL;DR;</strong> 
               <strong className="font-semibold">Personal License:</strong> Use ChartWise individually. 
@@ -36,14 +38,14 @@ export default function Page() {
             <h2 className="text-xl font-bold mt-6 mb-2">3. Ownership and Intellectual Property</h2>
             <p>FPF Labs retains all ownership and intellectual property rights in and to ChartWise. This Agreement does not grant Licensee any ownership rights in ChartWise.</p>
             <h2 className="text-xl font-bold mt-6 mb-2">4. Warranty and Disclaimer</h2>
-            <p>FPF TRADES IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NONINFRINGEMENT.</p>
+            <p>CHARTWISE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NONINFRINGEMENT.</p>
             <h2 className="text-xl font-bold mt-6 mb-2">5. Limitation of Liability</h2>
-            <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FPF LABS SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING TO THE USE OR INABILITY TO USE FPF TRADES, EVEN IF FPF LABS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FPF LABS SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING TO THE USE OR INABILITY TO USE CHARTWISE, EVEN IF FPF LABS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
             <h2 className="text-xl font-bold mt-6 mb-2">6. Governing Law and Jurisdiction</h2>
             <p>This Agreement shall be governed by and construed in accordance with the laws of the United Kingdom, without regard to its conflict of law principles. Any dispute arising out of or in connection with this Agreement shall be subject to the exclusive jurisdiction of the courts located in the United Kingdom.</p>
             <h2 className="text-xl font-bold mt-6 mb-2">7. Entire Agreement</h2>
             <p>This Agreement constitutes the entire agreement between Licensee and FPF Labs concerning the subject matter herein and supersedes all prior or contemporaneous agreements, representations, warranties, and understandings.</p>
-            <p>FPF Labs Contact Information: <a href="mailto:support@fpflabs.app">fpflabs@gmail.com</a></p>
+            <p>FPF Labs Contact Information: <a href={`mailto: ${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
             <p className="mb-4">Last updated: July 11, 2024.</p>
           </div>
         </div>

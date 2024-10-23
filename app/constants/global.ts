@@ -42,7 +42,8 @@ export const StorageKeys = {
   recentCharts: 'recent-charts',
   subscription: 'stripe-subscription',
   settings: 'settings',
-  encrypt: 'encrypt'
+  encrypt: 'encrypt',
+  onboarding: 'onboarding'
 }
 
 export const DefaultToastOptions: ToastOptions = {
@@ -71,5 +72,4 @@ export const DefaultSettings:Settings  = {
 export const PlanAmount = {
   basic:999,
   pro:2599,
-  elite: 3999,
 }

@@ -18,7 +18,8 @@ export enum AuthErrors  {
     POLLING_ERROR = 'Failed to poll',
     MISSING_IMAGE = 'Missing image',
     NO_DOCS_FOUND = 'No documents found matching the query',
-    DUPLICATE = 'E11000 duplicate key error collection'
+    DUPLICATE = 'E11000 duplicate key error collection',
+    RATE_LIMIT_ERROR='Too Many Requests'
   }
   
   export enum ServiceUsageErrors {

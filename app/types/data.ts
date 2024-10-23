@@ -20,7 +20,7 @@ export interface JobReceipt {
     chargeId: string;
 }
 
-export type UserPlan = 'Free' | 'Basic' | 'Pro' | 'Elite';
+export type UserPlan = 'Free' | 'Basic' | 'Pro';
 export type UserPlanOverView = {plan: UserPlan; cancel_at_period_end?: boolean; cancelled? :boolean;}
 
 export type UserProfileInfo = {

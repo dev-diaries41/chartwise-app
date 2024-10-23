@@ -13,7 +13,7 @@ import { faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 export default React.memo(function  SideNav({email}: {email: string | null | undefined}){
   const [isOpen, setIsOpen] = useState(false);
-  const {recentAnalyses, deleteAnalysis, viewAnalysis} = useChartwise();
+  const {recentAnalyses, deleteAnalysis} = useChartwise();
   // const {toggleSettings} = useSettings();
  
   return (
@@ -34,7 +34,7 @@ export default React.memo(function  SideNav({email}: {email: string | null | und
           <NavLinks navItems={dashboardLinks} />
           <div className="flex-1 max-h-[60vh] overflow-y-auto custom-scrollbar">
             <div className='mr-auto px-1'>
-              <RecentAnalyses analyses={recentAnalyses} onClick={viewAnalysis} onDelete={deleteAnalysis}/>
+              <RecentAnalyses analyses={recentAnalyses}  onDelete={deleteAnalysis}/>
             </div>
           </div>
           <div className="absolute bottom-0 right-0 left-0 p-3 flex flex-col">

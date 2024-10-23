@@ -1,6 +1,6 @@
 import { CHART_ANALYSIS_RESULTS_URL, CHART_ANALYSIS_URL, SAVE_ANALYSIS_URL, SHARED_ANALYSIS_URL, JOURNAL_URL, USAGE_URL, FPF_LABS_API_KEY, REFRESH_TOKEN_URL } from "@/app/constants/api";
 import { RequestErrors } from "@/app/constants/errors";
-import { AnalysisParams, JobReceipt, JobResult, IAnalysis, TradeJournalEntry, Usage, UsagePeriod } from "@/app/types";
+import { AnalysisParams, JobReceipt, JobResult, IAnalysis, TradeJournalEntry, UsagePeriod } from "@/app/types";
 import { APIResponse, GetDocsResponse } from "@/app/types/response";
 import axios from "axios";
 

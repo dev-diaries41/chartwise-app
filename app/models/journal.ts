@@ -3,7 +3,7 @@ import { TradeJournalEntry } from '@/app/types';
 
 
 const TradeJournalEntrySchema = new mongoose.Schema({
-    entryId: { type: Number, required: true },
+    entryId: { type: String, required: true },
     userId: { type: String, required: true},
     tradeDate: { type: Date, required: true },
     symbol: { type: String, required: true },

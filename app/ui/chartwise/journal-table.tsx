@@ -8,8 +8,8 @@ import {TableFilters, Spacer} from '@/app/ui';
 import { useJournal } from '@/app/providers/journal';
 
 
-export default function TradeJournalTable({onAddEntry, onDeleteEntry, onOpenEntry, metadata }: TradeJournalTableProps) {
-  const {entries} = useJournal()
+export default React.memo(function TradeJournalTable({onAddEntry, onDeleteEntry, onOpenEntry, metadata, entries }: TradeJournalTableProps) {
+  // const {entries} = useJournal()
   const {
     currentEntries,
     currentPage,
@@ -49,7 +49,7 @@ export default function TradeJournalTable({onAddEntry, onDeleteEntry, onOpenEntr
       <table className="min-w-full border border-gray-300 dark:border-gray-700 text-sm">
         <thead>
           <tr className='bg-gray-200 dark:bg-gray-800'>
-            <th className="p-2 border-b border-r border-gray-300 dark:border-gray-700"></th>
+            {/* <th className="p-2 border-b border-r border-gray-300 dark:border-gray-700"></th> */}
             <th className="p-2 border-b border-r border-gray-300 dark:border-gray-700">Trade Date</th>
             <th className="p-2 border-b border-r border-gray-300 dark:border-gray-700">Symbol</th>
             <th className="p-2 border-b border-r border-gray-300 dark:border-gray-700">Type</th>
@@ -68,7 +68,7 @@ export default function TradeJournalTable({onAddEntry, onDeleteEntry, onOpenEntr
               className={` hover:bg-gray-200 hover:dark:bg-gray-700`}
               onClick={() => onOpenEntry(entry)}
             >
-              <td className="p-2 border-b border-r border-gray-300 dark:border-gray-700">{entry.entryId}</td>
+              {/* <td className="p-2 border-b border-r border-gray-300 dark:border-gray-700">{entry.entryId}</td> */}
               <td className="p-2 border-b border-r border-gray-300 dark:border-gray-700">{new Date(entry.tradeDate).toDateString()}</td>
               <td className="p-2 border-b border-r border-gray-300 dark:border-gray-700">{entry.symbol}</td>
               <td className="p-2 border-b border-r border-gray-300 dark:border-gray-700">{entry.type}</td>
@@ -99,7 +99,7 @@ export default function TradeJournalTable({onAddEntry, onDeleteEntry, onOpenEntr
         {Math.min(currentPage * itemsPerPage, metadata?.totalDocuments || 0)} of {metadata?.totalDocuments || 0}
       </span>
       <span className="mx-2">Page {currentPage}</span>
-        {currentEntries.length === itemsPerPage && (
+        {currentEntries.length === itemsPerPage &&  (
           <button
             className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
             onClick={() => changePage(currentPage + 1)}
@@ -110,4 +110,4 @@ export default function TradeJournalTable({onAddEntry, onDeleteEntry, onOpenEntr
       </div>
     </div>
   );
-}
+})

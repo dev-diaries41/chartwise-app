@@ -1,5 +1,7 @@
 import CarouselImageViewer from '@/app/ui/common/image-carousel';
 
+export const revalidate = false;
+
 const tradingAssistantGuide = {
   title: "Chart Upload Guidelines",
   steps: [
@@ -30,7 +32,6 @@ const tradingAssistantGuide = {
   ]
 };
 
-export const revalidate = false;
 
 
 export default function TradingAssistantGuide(){

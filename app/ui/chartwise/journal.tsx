@@ -19,7 +19,7 @@ export default function TradeJournal({
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center px-4 overflow-auto lg:max-h-screen pt-16">
-      <TradeJournalTable  onAddEntry={toggleAddEntry} onDeleteEntry={deleteEntry} onOpenEntry={openEntry} metadata={metadata}/>
+      <TradeJournalTable  entries ={entries} onAddEntry={toggleAddEntry} onDeleteEntry={deleteEntry} onOpenEntry={openEntry} metadata={metadata}/>
       {(showAddEntryPopup  || selectedEntry)&& (
         <AddEntryPopup
           email ={email!}

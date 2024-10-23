@@ -1,14 +1,15 @@
 'use client';
  
-import { faArrowRight, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { useFormState, useFormStatus } from 'react-dom';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import CircleLoadingIndicator from '../common/circle-loading-indicator';
+import { useActionState } from 'react';
 
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const [errorMessage, dispatch] = useActionState(authenticate, undefined);
  
   return (
     <form action={dispatch} className="md:max-w-[50%] mx-auto space-y-3">
@@ -54,14 +55,19 @@ export default function LoginForm() {
               />
             </div>
             <p className='my-4 mb-8' >
-              Don't have an account?{' '}
-              <Link href="/register" className="text-blue-500 hover:underline">
-                Sign Up
+              <Link href="/forgot-password" className="text-blue-500 hover:underline">
+                Forgot password?
               </Link>
             </p>   
           </div>
         </div>
         <LoginButton />
+        <p className='my-4 mb-8' >
+              Don't have an account?{' '}
+              <Link href="/register" className="text-blue-500 hover:underline">
+                Sign Up
+              </Link>
+            </p>   
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
@@ -89,7 +95,8 @@ function LoginButton() {
     aria-disabled={pending}
     disabled={pending}
     >
-      {pending? 'Log in...' : 'Log in'} 
+      {'Log in'} 
+      {pending && <CircleLoadingIndicator size={20}/>}
     </button>
   );
 }

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { OnboardingAnswers, OnboardingQuestions } from '@/app/types';
+import Image from 'next/image';
 
 interface OnboardingProps extends Pick<WelcomePageProps, 'welcomeMessage' | 'welcomeTitle'> {
   onboardingQuestions: OnboardingQuestions[];
@@ -18,10 +19,18 @@ const WelcomePage = ({ welcomeMessage, welcomeTitle, onContinue, onSkip }: Welco
   return (
     <div className="bg-white dark:bg-gray-700 relative w-full max-w-5xl mx-auto rounded-md shadow-md shadow-black group animate-fadeIn">
       <div className="flex flex-col rounded-lg p-6 min-h-[400px]">
+        <Image
+            src={'/chartwise-icon.png'}
+            alt={'logo'}
+            width={40}
+            height={40}
+            className="max-w-9 max-h-9 md:max-w-12 md:max-h-12 mb-4"
+            priority={true}
+          />
         <h2 className="text-2xl md:text-3xl font-semibold text-center mb-4">
          {welcomeTitle}
         </h2>
-        <p className="text-center mb-4">
+        <p className="text-center mb-4 font-medium md:text-lg">
           {welcomeMessage}
         </p>
         <div className="w-full flex flex-row items-center justify-between gap-2 mt-auto">
@@ -97,7 +106,7 @@ export default function OnboardingCarousel({ onboardingQuestions, welcomeMessage
       {isIntroVisible ? (
         <WelcomePage onContinue={startOnboarding} onSkip={()=>onComplete(answers)} welcomeMessage={welcomeMessage} welcomeTitle={welcomeTitle}/>
       ) : (
-        <div className="bg-white dark:bg-gray-700 relative w-full max-w-5xl  rounded-md shadow-md shadow-black group animate-fadeOut">
+        <div className="bg-white dark:bg-gray-700 relative w-full max-w-5xl  rounded-md shadow-md shadow-black group">
           <div className="relative overflow-hidden rounded-lg p-6 min-h-[400px]">
             <div>
               <div className='flex flex-col gap-2 items-center mb-4'>

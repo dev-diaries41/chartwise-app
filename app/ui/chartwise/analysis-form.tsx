@@ -1,26 +1,31 @@
 'use client'
+import React from 'react'
 import { AcceptedImgMimes } from "@/app/constants/global";
 import {CarouselImageViewer, MarkdownView, RiskSlider, DragAndDropUpload, ActionRow} from "@/app/ui/";
 import {faCopy, faMagnifyingGlassChart, faRefresh, faShareNodes, faTimes, faUpload, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useChartwise } from "@/app/providers/chartwise";
 import { copyTextToClipboard } from "@/app/lib/helpers";
-import { ActionItem } from "@/app/types";
+import { ActionItem, JobReceipt } from "@/app/types";
 import StrategyDropdown from "./strategies";
 import { useSubscription } from "@/app/providers/subscription";
+import CircleLoadingIndicator from '../common/circle-loading-indicator';
+import { useFormStatus } from 'react-dom';
 
 
 interface AnalysisFormProps {
-    loading: boolean;
+  status: JobReceipt['status'] | null | undefined;
     handleAnalyseChart: () => Promise<void>;
 }
 
-export default function AnalysisForm ({
-    loading,
+export default React.memo(function AnalysisForm ({
+    status,
     handleAnalyseChart, 
   }: AnalysisFormProps){
   const {analysis, shareUrl, uploadCharts, onRiskChange, onStrategyChange, getRiskTolerance,  removeCharts} = useChartwise();
-  const {userPlanOverview} = useSubscription()
+  const {userPlanOverview} = useSubscription();
+  const loading = !!status && !['completed', 'failed'].includes(status);
+  const disabled = loading || analysis.chartUrls.length < 1 || !!analysis.output
 
   const actions: ActionItem[] = [
     { icon: faCopy, onClick: () => copyTextToClipboard(analysis.output), tooltip: 'Copy' },
@@ -44,7 +49,7 @@ export default function AnalysisForm ({
             </div>
             ):(
             <div className="mb-auto w-full h-full">
-              <DragAndDropUpload onFileUpload={uploadCharts} acceptedMimes={AcceptedImgMimes} maxFiles={(userPlanOverview.plan === 'Free' || userPlanOverview.plan === 'Basic')? 1 : 3}>
+              <DragAndDropUpload onFileUpload={uploadCharts} acceptedMimes={AcceptedImgMimes} maxFiles={(['Basic', 'Free'].includes(userPlanOverview.plan))? 1 : 3}>
                 <div className='flex flex-col gap-4 justify-center items-center'>
                   <FontAwesomeIcon icon={faUpload} className="w-8 h-8 text-emerald-500" />
                   <span className="text-lg font-semibold">Click to upload charts</span>
@@ -83,16 +88,26 @@ export default function AnalysisForm ({
             <div className="">
             { analysis.output && <ActionRow actions={actions}/>}
             </div>
-            <button
-              disabled={loading || analysis.chartUrls.length < 1 || !!analysis.output}
-              className={`flex  items-center justify-center bg-emerald-500 text-sm ml-auto text-white font-semibold p-2 rounded-full shadow-md gap-2 ${loading  || analysis.chartUrls.length < 1 || !!analysis.output? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
-              onClick={handleAnalyseChart}
-            >
-              <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
-              <span className="">Analyse Chart</span>
-            </button>
+            <form action={handleAnalyseChart} className='ml-auto'>
+              <AnalysisButton disabled={disabled} loading={loading}/>
+            </form>
           </div>
         </div>
     </div>
     )
+  })
+
+  function AnalysisButton({disabled, loading}: {disabled: boolean; loading: boolean}) {
+    const { pending } = useFormStatus();
+    return (
+      <button
+        type='submit'
+        disabled={disabled || pending}
+        className={`flex  items-center justify-center bg-emerald-500 text-sm text-white font-semibold p-2 rounded-full shadow-md gap-2 ${disabled? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
+      >
+        <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
+        <span className="">Analyse Chart</span>
+        {(loading || pending) && <CircleLoadingIndicator size={20}/>}
+      </button>
+    );
   }

@@ -35,8 +35,9 @@ import { z } from 'zod';
   });
 
   export const AnalysisSchema = AnalysisParamsSchema.extend({
-    output: z.string().min(1, { message: "Analysis must be at least 100 characters long." }),
-    userId: z.string().min(1, { message: "User ID is required." }), // Ensuring it's not an empty string
+    name: z.string().min(1, { message: "Analysis name must be at least 1 characters long." }),
+    output: z.string().min(1, { message: "Analysis must be at least 1, characters long." }),
+    userId: z.string().min(1, { message: "User ID is required." }), 
     formatVersion: z.number().optional(),
   });
 
@@ -44,10 +45,10 @@ import { z } from 'zod';
 
 
   export const TradeJournalEntrySchema = z.object({
-    entryId: z.number({
+    entryId: z.string({
       required_error: 'Entry ID is required',
-      invalid_type_error: 'Entry ID must be a number',
-    }),
+      invalid_type_error: 'Entry ID must be a string',
+    }).min(1),
     userId: z.string({
       required_error: 'User ID is required',
       invalid_type_error: 'User ID must be a string',
@@ -131,6 +132,20 @@ import { z } from 'zod';
       ),
     password: z.string().min(8, { message: 'Password must be at least 8 characters long.' }),
     confirmPassword: z.string().min(8, { message: 'Password must be at least 8 characters long.' })
+  });
+
+  export const CompletePasswordResetFormSchema = z.object({
+    password: z.string().min(8, { message: 'Password must be at least 8 characters long.' }),
+    confirmPassword: z.string().min(8, { message: 'Password must be at least 8 characters long.' })
+  });
+
+  export const ResetPasswordFormSchema = z.object({
+    email: z.string()
+      .email({ message: 'A valid email address is required.' })
+      .regex(
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        { message: 'The email must follow the correct syntax (e.g., user@example.com).' }
+      ),
   });
   
   

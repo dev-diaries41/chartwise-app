@@ -44,6 +44,6 @@ export const onboardingQuestions: OnboardingQuestions[] = [
   ];
 
   
-  export const CHARTWISE_WELCOME_TITLE = 'Welcome to Onboarding!';
+  export const CHARTWISE_WELCOME_TITLE = 'Welcome to ChartWise!';
   export const CHARTWISE_WELCOME_MESSAGE = 'To help us tailor your experience and provide personalized recommendations, please complete these four simple questions. It will only take a minute!';
   

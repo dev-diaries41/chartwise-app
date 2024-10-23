@@ -5,10 +5,10 @@ import { LoaderDialogProps } from '@/app/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-export default function LoaderDialog ({ title, description, position ='BOTTOM_RIGHT', onMinimize }:LoaderDialogProps) {
+export default function LoaderDialog ({ title, description, status, queue, position ='BOTTOM_RIGHT', onMinimize }:LoaderDialogProps) {
   return (
     <div
-      className={`fixed ${positions[position]} flex flex-col animate-fadeIn text-left items-left p-6 rounded-md shadow-lg shadow-black opacity-95 bg-gray-800 z-[100]`}
+      className={`fixed ${positions[position]} flex flex-col animate-fadeIn text-left items-left p-6 rounded-md shadow-md shadow-black opacity-95 bg-white dark:bg-gray-800 z-[100]`}
       style={{
         width: 'calc(100% - 2rem)',
         maxWidth: '400px',
@@ -27,6 +27,10 @@ export default function LoaderDialog ({ title, description, position ='BOTTOM_RI
         <h2 className={`text-md font-bold max-w-[80%]`}>{title}</h2>
       </div>
       <p className={`text-sm mb-4`}>{description}</p>
+      <div className='flex flex-row items-center justify-between gap-2 mt-auto'>
+        {status&&<p className={`text-sm mb-4 opacity-80`}>Status: {status}</p>}
+        {(!!queue && queue > 0) && <p className={`text-sm mb-4 opacity-80`}>{`Queue: ${queue}`}</p>}
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@
 
 ## Overview
 
-ChartWise is designed to help traders analyze charts and create effective trade plans. This article provides a detailed look into the tools and architecture that power ChartWise. TypeScript is used throughout the codebase, both on the frontend and backend. It’s my preferred language for app development due to its strong type safety, superior developer experience, and compatibility across different environments such as frontend, backend, and mobile applications.
+ChartWise is designed to help traders analyse charts and create effective trade plans. This article provides a detailed look into the tools and architecture that power ChartWise. TypeScript is used throughout the codebase, both on the frontend and backend. It’s my preferred language for app development due to its strong type safety, superior developer experience, and compatibility across different environments such as frontend, backend, and mobile applications.
 
 ## Frontend Development
 
@@ -329,7 +329,7 @@ The queue management system integrates with custom event handlers for comprehens
 
 **Integration and Real-Time Updates**
 
-ChartWise integrates **OpenAI’s GPT-4o** capabilities to handle the analysis of charts. GPT-4o Vision allows ChartWise to interpret and analyze charts with a high level of accuracy, providing insightful recommendations based on chart images.
+ChartWise integrates **OpenAI’s GPT-4o** capabilities to handle the analysis of charts. GPT-4o Vision allows ChartWise to interpret and analyse charts with a high level of accuracy, providing insightful recommendations based on chart images.
 
 **Conclusion**
 

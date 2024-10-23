@@ -1,6 +1,5 @@
 'use client'
-import React, { useEffect } from 'react';
-import { useFormState } from 'react-dom';
+import React, { useActionState, useEffect } from 'react';
 import { sendNotification } from '@/app/lib/actions';
 import InputError from '@/app/ui/common/form-error';
 import { toast } from 'react-toastify';
@@ -24,7 +23,7 @@ const supportOptions: {value:string, name: string}[] = [
 
 export default function ContactForm(){
   const initialState = { message: '', errors: {}};
-  const [state, dispatch] = useFormState(sendNotification, initialState);
+  const [state, dispatch] = useActionState(sendNotification, initialState);
 
   useEffect(() => {
     if(state.message === 'MESSAGE SENT'){

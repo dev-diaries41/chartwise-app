@@ -3,6 +3,7 @@ import { PlanAmount } from "@/app/constants/global";
 import { UserPlan, UserPlanOverView } from "@/app/types";
 import { stripe } from "../stripe";
 import Stripe from "stripe";
+import { SubscriptionMessages } from "../constants/messages";
 
 
 export async function getSubscription(email: string):Promise<{subscription: Stripe.Subscription;} | null> {
@@ -46,9 +47,7 @@ async function getUserPlan(email: string|null|undefined): Promise<UserPlanOverVi
         return {plan:'Basic', cancel_at_period_end};
       } else if (subscriptionAmount === PlanAmount.pro && subscription.status === 'active') {
         return {plan:'Pro', cancel_at_period_end};
-      } else if (subscriptionAmount === PlanAmount.elite && subscription.status === 'active') {
-        return {plan:'Elite', cancel_at_period_end};
-      } else {
+      }  else {
         return {plan:'Free', cancel_at_period_end};
       }
     } catch (error) {
@@ -66,10 +65,7 @@ async function getUserPlan(email: string|null|undefined): Promise<UserPlanOverVi
         return 100 ;
         }else if(plan === 'Pro'){
         return 500 ;
-        }else if(plan === 'Elite'){
-        return 1000 ;
-        }
-        else{
+        }else{
         return 10;
         }
     }
@@ -77,14 +73,81 @@ async function getUserPlan(email: string|null|undefined): Promise<UserPlanOverVi
     return {limit, userPlanOverview};
   };
 
-  export async function cancelSubscription(email: string){
+  export async function cancelSubscription(email: string): Promise<boolean>{
     try {
       const {subscription} = await getSubscription(email) || {};
       if(!subscription) throw new Error('Invalid subscription');
+      if(subscription.cancel_at_period_end)return subscription.cancel_at_period_end;  // early return if already cancelled
   
       const canclledSubscription = await stripe.subscriptions.update(subscription.id, {cancel_at_period_end: true});
-      console.log(canclledSubscription);
+      return canclledSubscription.cancel_at_period_end;
     } catch (error: any) {
       console.error('Error cancelled user subscription:', error.message);
+      return false;
     }
+  }
+
+  const getAmountFromPlan = (plan: UserPlan): number | undefined => {
+    if (plan === 'Basic') {
+      return PlanAmount.basic;
+    } else if (plan === 'Pro') {
+      return PlanAmount.pro;
+    } 
+    return undefined;
+  }
+
+
+export async function upgradeSubscription(email: string, planToUpgrade: UserPlan): Promise<{ success: boolean, message: string }> {
+  try {
+    const { subscription } = await getSubscription(email) || {};
+    if (!subscription) {
+      return { success: false, message: SubscriptionMessages.noSubscriptionToUpgrade};
+    }
+
+    const itemId = subscription.items.data[0].id;
+    const newPlanAmount = getAmountFromPlan(planToUpgrade);
+    if (!newPlanAmount) {
+      throw new Error('Error finding plan amount');
+    }
+
+    const newPlanPriceData = await findPriceData(newPlanAmount);
+    if (!newPlanPriceData) {
+      throw new Error('Error finding price plan data');
+    }
+
+    // Update the subscription and bill immediately
+    const upgradedSubscription = await stripe.subscriptions.update(subscription.id, {
+      items: [
+        {
+          id: itemId,
+          price: newPlanPriceData?.id,
+        }
+      ],
+      proration_behavior: 'create_prorations',
+      billing_cycle_anchor: 'now',
+    });
+
+    // Check if the subscription was successfully upgraded and is active
+    if (upgradedSubscription.status === 'active') {
+      // Retrieve the latest invoice that was automatically generated
+      const invoice = await stripe.invoices.retrieve(upgradedSubscription.latest_invoice as string);
+      if (invoice.paid) {
+        return { success: true, message: SubscriptionMessages.subscriptionUpgradeSuccess };
+      } else {
+        return { success: false, message: SubscriptionMessages.paymentFailed};
+      }
+    } 
+    return { success: false, message: SubscriptionMessages.upgradeFailed};
+  } catch (error: any) {
+    console.error(`Error in upgradeSubscription: ${error.message}`);
+    return { success: false, message: SubscriptionMessages.unknownError};
+  }
+}
+
+
+
+  async function findPriceData(planAmount: number):  Promise<Stripe.Price | undefined>{
+    const priceData = await stripe.prices.list({limit: 10 });
+    const plan = priceData.data.find(price => price.unit_amount === planAmount);
+    return plan
   }
