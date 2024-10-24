@@ -3,6 +3,7 @@ import { IAnalysis } from "@/app/types";
 import { getDoc, getDocs } from "@/app/lib/mongo/get";
 import ChartAnalysisModel from "@/app/models/analysis"
 import dbConnect from "@/app/lib/db";
+import { RequestErrors } from "@/app/constants/errors";
 
 export async function getAnalysis(id: string): Promise<IAnalysis> {
     await dbConnect()
@@ -20,7 +21,11 @@ export async function getAnalyses(userId: string): Promise<(IAnalysis & {_id: st
         if (!success || !data) throw new Error(message);
         return data; 
     }catch(error: any){
-        console.error(`Error getting analyses for ${userId}: `, error.message)
-        return []
+        if(error.message === RequestErrors.NO_DOCS_FOUND){
+            console.warn(`${userId} has no analyses. `)
+        }else{
+            console.error(`Error getting analyses for ${userId}: `, error.message)
+        }
+        return [];
     }
 }
