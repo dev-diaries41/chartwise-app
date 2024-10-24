@@ -1,4 +1,4 @@
-import { TradeJournalEntry } from "@/app/types"
+import { IAnalysisUrl, TradeJournalEntry } from "@/app/types"
 
 
 export const PLACEHOLDER_ANALYSIS = `# Key Takeaways
@@ -104,3 +104,5 @@ If the criteria includes a risk to reward ratio. Do not artificially create the 
 
 
 `
+
+// export const PLACEHOLDER_ANALYSES = Array.from({length: 20}, (_, index)=> ({name: `analyses_${index}`, analyseUrl: `analyses_url_${index}`}) as IAnalysisUrl)

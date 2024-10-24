@@ -32,7 +32,7 @@ const DefaultAnalysis: Omit<IAnalysis, 'userId'> = {
   }
 }
 
-const ChartwiseProvider = React.memo(({ children, email }: ProviderProps & {email: string | null | undefined}) => {
+const ChartwiseProvider = ({ children, email }: ProviderProps & {email: string | null | undefined}) => {
   const [recentAnalyses, setRecentAnalyses] = useState<IAnalysisUrl[]>([]);
   const [analysis, setAnalysis] = useState<Omit<IAnalysis, 'userId'>>(DefaultAnalysis);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
@@ -84,7 +84,7 @@ const ChartwiseProvider = React.memo(({ children, email }: ProviderProps & {emai
       {children}
     </ChartwiseContext.Provider>
   );
-});
+};
 
 const useChartwise = () => {
   const context = useContext(ChartwiseContext);
