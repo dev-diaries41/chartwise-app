@@ -64,7 +64,7 @@ export default function NavBar({ email }: { email: string }) {
 
         {/* Dropdown menu */}
         {isOpen && (
-          <div className="absolute top-0 right-0 flex flex-col min-h-screen w-full opacity-95 bg-white dark:bg-gray-800 border border-r-1 border-gray-700 text-lg text-black dark:text-white pt-16 p-4 z-40" id='navbar-menu'>
+          <div className="absolute top-0 right-0 pb-32 flex flex-col min-h-screen w-full opacity-95 bg-white dark:bg-gray-800 border border-r-1 border-gray-700 text-lg text-black dark:text-white pt-16 p-4 z-40" id='navbar-menu'>
             <NavLinks navItems={filteredMobHeaderLinks} />
             <Link
               href={email ? '/dashboard' : '/login'}

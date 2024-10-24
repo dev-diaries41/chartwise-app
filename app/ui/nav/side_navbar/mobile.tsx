@@ -57,7 +57,7 @@ onToggleMenu
         </div>}
 
         {isOpen && (
-        <div className=" absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16  p-2">
+        <div className=" absolute top-0 right-0 flex flex-col w-full min-h-screen bg-gray-100 dark:bg-gray-800 border border-r-1 border-gray-700 pt-16 pb-32  p-2">
           <NavLinks navItems={[...dashboardLinks]} />
           <div className="flex-1 mr-auto max-h-[50vh] overflow-y-auto mb-8 custom-scrollbar p-1 ">
             <RecentAnalyses analyses={recentAnalyses} onDelete={deleteAnalysis} />
