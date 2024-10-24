@@ -1,6 +1,6 @@
 import { faBook, faChartLine, faClock, faLayerGroup, faMagnifyingGlassChart, faShieldAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-export const HERO_DESCRIPTION = 'ChartWise helps traders identify patterns and trends, offering insights for precise trade strategies.';
+export const CHARTWISE_DESCRIPTION = 'ChartWise helps traders identify patterns, trends, and insights, providing execution plans to enable smarter trading.';
 
 export const HowItWorksGuide = [
     'Go to the  charts page and take a snapshot of the chart, or use an existing image.',

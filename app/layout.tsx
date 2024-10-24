@@ -8,21 +8,22 @@ import { auth } from '@/auth'
 import { handleGetSubscriptionInfo } from './lib/subscription'
 import { SessionProvider } from 'next-auth/react'
 import { SubscriptionProvider } from './providers/subscription'
+import { CHARTWISE_DESCRIPTION } from './constants/hero';
 
 const poppins = Poppins({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chartwise.vercel.app/'),
   title: 'ChartWise',
-  description: 'ChartWise helps traders identify patterns, trends, and more, and provides detailed insights to inform precise trade execution strategies.',
+  description: CHARTWISE_DESCRIPTION,
   keywords: ['trade', 'trading', 'charts', 'analysis', 'wealth', 'ai', 'artificial intelligence', 'openai', 'investing', 'forex', 'stocks', 'cryptocurrency'],
   applicationName: 'ChartWise',
   openGraph: {
     type: 'website',
     url: 'https://chartwise.vercel.app/',
-    description: 'ChartWise assists traders with techincal analysis by identifying patterns and trends, and offering insights for precise trade strategies',
+    description: CHARTWISE_DESCRIPTION,
     siteName: 'ChartWise',
-    images: ['/chartwise-homepage.png']
+    images: ['/chartwise-opengraph.png']
   }
 }
 

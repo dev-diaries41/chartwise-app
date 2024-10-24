@@ -5,7 +5,7 @@ import Link from 'next/link';
 import List from './ui/common/list';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Faqs } from '@/app/constants/faq';
-import { ChartWiseBenefits, HERO_DESCRIPTION, HowItWorksGuide } from './constants/hero';
+import { ChartWiseBenefits, CHARTWISE_DESCRIPTION, HowItWorksGuide } from './constants/hero';
 
 export const revalidate = 3600
 
@@ -28,7 +28,7 @@ const Hero = () => {
          
           <div className='absolute bottom-48 sm:relative sm:bottom-auto flex flex-col w-full justify-center items-center'>
             <p className="text-md md:text-lg lg:text-xl font-medium mb-5 px-3 mt-4 max-w-[90%] md:max-w-[80%]">
-            {HERO_DESCRIPTION}</p>
+            {CHARTWISE_DESCRIPTION}</p>
             <Link
                 href={'/dashboard'}
                 className={`flex flex-row items-center gap-2 justify-center w-[80%] md:max-w-[60%] lg:max-w-[40%] bg-emerald-700 hover:bg-emerald-600 border-2 border-emerald-400 text-gray-200 font-semibold p-2 md:p-4 rounded-full shadow-md text-lg md:text-xl lg:text-2xl mt-4 `}>
