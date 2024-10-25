@@ -69,7 +69,7 @@ const ChartwiseProvider = ({ children, email }: ProviderProps & {email: string |
       }
     }
    saveAnalysis()
-  }, [analysis, analysis.output]);
+  }, [analysis.output]);
 
 
   return (
