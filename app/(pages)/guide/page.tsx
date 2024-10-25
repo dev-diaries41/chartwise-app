@@ -7,7 +7,7 @@ const tradingAssistantGuide = {
   steps: [
     {
       title: "Show the full chart",
-      description: "Make sure to capture the entire chart, including the time period on the bottom axis. This will help provide the context of the chart and ensure a more accurate analysis."
+      description: "Make sure to capture the entire chart, including the time period on the bottom axis. This will provide essential context for the chart and ensure a more accurate analysis. For consistency, it's recommended to use the 'snapshot' button in the top right corner of the chart page (or on the official TradingView website). On mobile devices, you may need to rotate your device to capture the full view."
     },
     {
       title: "Include indicators",

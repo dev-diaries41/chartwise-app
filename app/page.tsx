@@ -67,17 +67,54 @@ const Benefits = () => {
 
 const HowItWorks = () => {
   return (
-    <section id='how-it-works' className=" w-full mx-auto flex flex-col items-center justify-center text-center py-16  bg-gray-900" >
-      <h1 className="text-center text-3xl md:text-5xl my-4 px-3 font-bold">How to analyse charts with ChartWise</h1>
-      <div className="flex flex-col md:flex-row  w-full max-w-7xl justify-between items-center gap-8 my-8 p-4 mb-auto">
-          <CarouselImageViewer images={['/analysis-page-v3.png', '/chart-page-v2.png']}  switchInterval={5000}/>
-        <div className='justify-start font-medium'>
-          <List items={HowItWorksGuide} listType='numbered' />
+    <section id='how-it-works' className="w-full mx-auto flex flex-col items-center justify-center text-center py-16 bg-gray-900">
+      <h1 className="text-center text-3xl md:text-5xl my-4 px-3 font-bold">How to Analyse Charts with ChartWise</h1>
+      
+      <div className="flex flex-col md:flex-row w-full max-w-7xl justify-between items-center gap-16 my-8 p-4 mb-auto">
+        {/* Image Carousel */}
+        <CarouselImageViewer images={['/analysis-page-v3.png', '/chart-page-v2.png']} switchInterval={5000} />
+        
+        {/* Instruction Steps */}
+        <div className='flex flex-col items-start justify-center gap-6 font-medium text-left'>
+          
+          {/* Step 1 */}
+          <div className="mb-1">
+            <h2 className="font-semibold text-xl md:text-2xl mb-2">Step 1: Take a Chart Snapshot</h2>
+            <p className="max-w-5xl md:text-lg opacity-90">
+              {HowItWorksGuide[0]}
+              <Link
+              href={'/guide'}
+              target="_blank"
+              className="link text-base-content text-blue-500 underline"
+            >
+              {'See the guide'}
+            </Link>
+            {' for upload best practices.'}
+            
+            </p>
+          </div>
+          
+          {/* Step 2 */}
+          <div className="mb-1">
+          <h2 className="font-semibold text-xl md:text-2xl mb-2">Step 2: Upload and Adjust Analysis Settings</h2>
+            <p className="max-w-5xl md:text-lg opacity-90">
+              {HowItWorksGuide[1]}
+            </p>
+          </div>
+
+          {/* Final Action */}
+          <div className="mb-1">
+          <h2 className="font-semibold text-xl md:text-2xl mb-2">Step 3: Analyse the Chart</h2>
+            <p className="max-w-5xl md:text-lg opacity-90">
+              Once you've uploaded your chart and adjusted your settings, click the <strong>Analyse</strong> button to generate your analysis.
+            </p>
+          </div>
         </div>
-    </div>
+      </div>
     </section>
   )
 }
+
 
 const Pricing = () => {
   return (
