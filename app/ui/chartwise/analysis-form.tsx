@@ -36,7 +36,7 @@ export default React.memo(function AnalysisForm ({
     return (
       <div className="relative w-full max-w-[100%] flex flex-col  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm md:text-md shadow-sm shadow-black rounded-md mb-2" >
         <div className=" p-4">
-          <div className={`flex lg:flex-row flex-col justify-between items-center gap-8 my-4 mb-8`}>
+          <div className={`flex lg:flex-row flex-col justify-between items-center gap-8 my-4`}>
             {analysis.chartUrls.length > 0? (
             <div className="relative mb-auto w-full mt-4">
               <button 
@@ -70,14 +70,14 @@ export default React.memo(function AnalysisForm ({
                   value={analysis.metadata.risk!} 
                   onChange={onRiskChange}/>
               </div>
-              <div className='mr-auto w-full p-2'>
+              <div className='mr-auto w-full p-2 '>
                 <StrategyDropdown onStrategyChange={onStrategyChange} analysis={analysis}/>
               </div>
             </div>
           </div>
           
           {analysis.output && (
-            <div className="flex flex-col items-center justify-center w-full max-w-[100%] lg:max-w-[80%] overflow-auto pb-8 mb-8 text-sm md:text-md">
+            <div className="flex flex-col w-full pb-8 mb-8 mr-auto">
               <MarkdownView content={analysis.output}/>
             </div>
           )}

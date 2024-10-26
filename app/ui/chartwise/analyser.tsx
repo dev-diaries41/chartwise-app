@@ -2,7 +2,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/global";
-import {LoaderDialog, AnalysisForm, OnboardingCarousel} from "@/app/ui/";
+import {LoaderDialog, AnalysisForm, OnboardingCarousel, MarkdownView} from "@/app/ui/";
 import {LocalStorage, SessionStorage} from "@/app/lib/storage"
 import { JobReceipt, PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, RequestErrors, ServiceUsageErrors } from "@/app/constants/errors";
@@ -177,6 +177,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
         </button> 
       </div>
       <p className="w-full flex text-sm md:text-md lg:text-lg text-left opacity-80 mb-4">You can upload up to 3 charts for multi-timeframe analysis (Pro users only).</p>
+  
       <AnalysisForm handleAnalyseChart={handleAnalyseChart} status={jobReceipt?.status}/>
       {(loading && !minimize) && (
         <LoaderDialog

@@ -1,108 +1,49 @@
 import { IAnalysisUrl, TradeJournalEntry } from "@/app/types"
 
 
-export const PLACEHOLDER_ANALYSIS = `# Key Takeaways
+export const PLACEHOLDER_ANALYSIS = `# Market Analysis Summary
 
+## Overall Market Bias
+- **Neutral**: The chart displays a sequence of higher highs and higher lows, indicating some bullish momentum. 
+- **Range-Bound**: Price has been oscillating within a defined range, suggesting indecision.
+- **Volume**: Inconsistent volume spikes do not align with strong directional moves, contributing to a neutral bias.
 
-## Bias
+## Support and Resistance
 
-  - Describe the bias and how you drew that conclusion: [Bias Description]
+- **Key Support Levels**: 
+  - **60,000** and **62,000**: Areas where the price has historically found demand.
 
-## Support And Resistance
+- **Key Resistance Levels**: 
+  - **70,000** and **72,000**: Levels where selling pressure has previously emerged.
 
-### Support Level
-    - Support Level: [Support Level]
+- **Dynamic Behavior**: 
+  - The price is currently testing the upper resistance level.
+  - A breakout above resistance with strong volume could suggest a bullish trend; otherwise, continued range-bound behavior is likely.
 
-### Resistance Level
-    - Resistance Level: [Resistance Level]
+## Patterns and Indicators
 
-## Volume
+- **Patterns**: No clear chart patterns (e.g., head and shoulders, triangles) are evident, reinforcing the ranging market structure.
+- **Indicators**: Lack of specific indicators on the chart makes it challenging to evaluate indicator quality or reliability.
 
-  - Describe the volume trends and their implications: [Volume Description]
+## Trade Evaluation
 
-## Patterns And Indicators
+- **Current Strategy**: Due to low-risk tolerance and neutral market conditions, there is no optimal trade setup.
+- **Ranging Market**: Without a clear breakout or breakdown, the conditions are not favorable for a low-risk trade.
 
-  - Identify and describe any relevant patterns, indicators, or candlestick patterns and their implications: [Pattern and Indicator Description]
+## Trade Execution Plan
 
-# Strategy And Criteria Evaluation
+- **Recommendation**: No trade execution plan is advised at this time. 
+- **Actionable Triggers**: Wait for a breakout above resistance or a breakdown below support, confirmed by volume, before considering a trade.
 
+## Summary
 
-- Evaluate whether there is an optimal profitable trade setup with a clear bias, which matches the provided strategy and criteria (if any). If you cannot identify any trade setups in the chart that match the strategy and criteria, inform the trader accordingly and do not proceed with trade execution details.
-
-If the criteria includes a risk to reward ratio. Do not artificially create the ratio by setting unrealistic take profits or stop losses.
-
-# Trade Execution Strategy
-
-
-## Strategy Overview
-
-  - If there is an optimal trade, describe the optimal execution strategy based on your meticulous analysis.
-
-## Distributed Entry Prices
-
-### First Entry
-    - First Entry: [First Entry Price] ([% Trade amount])
-
-### Second Entry
-    - Second Entry: [Second Entry Price] ([% Trade amount])
-
-## Distributed Stop Loss Prices
-
-### First Stop Loss
-    - First Stop Loss: [First Stop Loss] ([% Trade amount])
-
-### Second Stop Loss
-    - Second Stop Loss: [Second Stop Loss] ([% Trade amount])
-
-## Distributed Take Profit Prices
-
-### First Target
-    - First Target: [First Target Price] ([% Trade amount])
-
-### Second Target
-    - Second Target: [Second Target Price] ([% Trade amount])
-
-# Summary
-
-
-## Entry Prices
-
-### First
-    - First: [First Entry Price]
-
-### Second
-    - Second: [Second Entry Price]
-
-## Stop Loss Levels
-
-### First
-    - First: [First Stop Loss Price]
-
-### Second
-    - Second: [Second Stop Loss Price]
-
-## Target Prices
-
-### First
-    - First: [First Target Price]
-
-### Second
-    - Second: [Second Target Price]
-
-## Expected Duration
-
-  - Expected Duration: [Expected Duration]
-
-## Conditions To Re Evaluate
-
-  - Conditions in which to re-evaluate the trade setup: [Conditions to Re-evaluate]
-
-# Note
-
-
-- Important: IF THE IMAGE IS NOT A CHART, inform the trader that they need to provide a chart before you can begin analysis.
-
-
+- **Entry Price**: N/A
+- **Stop Loss**: N/A
+- **Take Profit**: N/A
+- **Expected Duration**: N/A
+- **Re-Evaluation Conditions**: 
+  - Re-evaluate the trade setup if the price breaks above **72,000** with strong volume.
+  - Re-assess if the price falls below **60,000**, suggesting potential trend direction.
 `
 
 // export const PLACEHOLDER_ANALYSES = Array.from({length: 20}, (_, index)=> ({name: `analyses_${index}`, analyseUrl: `analyses_url_${index}`}) as IAnalysisUrl)
