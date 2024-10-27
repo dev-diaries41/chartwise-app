@@ -76,8 +76,8 @@ const HowItWorks = () => {
             width="auto"
             height="auto"
             autoPlay={true}
+            muted 
             loop={true}
-            // controls={true}
             src={"/chartwise-demo-3.mp4"}
             className="lg:max-w-[60%]  mx-auto object-contain rounded-md"
           />
