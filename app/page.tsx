@@ -72,7 +72,15 @@ const HowItWorks = () => {
       
       <div className="flex flex-col md:flex-row w-full max-w-7xl justify-between items-center gap-16 my-8 p-4 mb-auto">
         {/* Image Carousel */}
-        <CarouselImageViewer images={['/analysis-page-v3.png', '/chart-page-v2.png']} switchInterval={5000} />
+        <video
+            width="auto"
+            height="auto"
+            autoPlay={true}
+            loop={true}
+            // controls={true}
+            src={"/chartwise-demo-3.mp4"}
+            className="lg:max-w-[60%]  mx-auto object-contain rounded-md"
+          />
         
         {/* Instruction Steps */}
         <div className='flex flex-col items-start justify-center gap-6 font-medium text-left'>
@@ -106,7 +114,7 @@ const HowItWorks = () => {
           <div className="mb-1">
           <h2 className="font-semibold text-xl md:text-2xl mb-2">Step 3: Analyse the Chart</h2>
             <p className="max-w-5xl md:text-lg opacity-90">
-              Once you've uploaded your chart and adjusted your settings, click the <strong>Analyse</strong> button to generate your analysis.
+            Click the <strong>Analyse chart</strong> button to generate your analysis.
             </p>
           </div>
         </div>

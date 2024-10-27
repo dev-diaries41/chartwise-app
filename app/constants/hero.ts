@@ -3,8 +3,8 @@ import { faBook, faChartLine, faClock, faLayerGroup, faMagnifyingGlassChart, faS
 export const CHARTWISE_DESCRIPTION = 'ChartWise helps traders identify patterns, trends, and insights, providing execution plans to enable smarter trading.';
 
 export const HowItWorksGuide = [
-  'If you don’t have a chart image, go to the charts page and capture a snapshot using the `snapshot` button in the top right corner. Otherwise, proceed to the next step. ',
-  'On the analysis page, upload your chart, and optionally add a strategy and set your risk tolerance. Choose from the default strategies or add a custom one.'
+  'Capture a chart snapshot on the charts page. If you already have a chart image, proceed to the next step. ',
+  'On the analyse page, upload your chart(s), and optionally add a strategy and set your risk tolerance.'
 ];
 
 
