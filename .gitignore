@@ -4,3 +4,5 @@ logs/
 node_modules/
 package-lock.json
 Caddyfile
+deploy.sh
+docker-compose.green.yml

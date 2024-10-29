@@ -24,6 +24,7 @@ export enum JobErrors {
 export enum ServiceUsageErrors  {
   EXCEEDED_FREE_LIMIT= 'Exceeded free usage limit',  
   EXCEEDED_PLAN_LIMIT= 'Exceeded plan limit',
+  EXCEEDED_TOTAL_LIMIT= 'Exceeded total free limit',
   FAILED_USAGE_CHECK= 'Unknown error checking usage',
   FAILED_DAILY_USAGE_CHECK= 'Failed to retrieve daily usage count',
   FAILED_MONTHLY_USAGE_CHECK= 'Failed to retrieve monthly usage count',
