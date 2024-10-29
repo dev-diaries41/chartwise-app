@@ -60,13 +60,13 @@ async function getUserPlan(email: string|null|undefined): Promise<UserPlanOverVi
     const userPlanOverview = await getUserPlan(userId);
     const getMonthlyLimit = (plan: UserPlan): number  => {
         if(plan === 'Free'){
-        return 10;
+        return 6;
         }else if(plan === 'Basic'){
         return 100 ;
         }else if(plan === 'Pro'){
         return 500 ;
         }else{
-        return 10;
+        return 6;
         }
     }
     const limit = getMonthlyLimit(userPlanOverview.plan)

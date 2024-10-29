@@ -13,8 +13,6 @@ import AnalysisUsage from './usage';
 import UsageCard from './usage-card';
 import AccountInformation from './account-info';
 import { CANCEL_MESSAGE_DESC, CANCEL_MESSAGE_TITLE } from '@/app/constants/messages';
-import { toast } from 'react-toastify';
-import { DefaultToastOptions } from '@/app/constants/global';
 import UpgradePopUp from '../pricing/upgrade-popup';
 
 
@@ -24,11 +22,6 @@ export default function AccountOverview({ usage , email }: { usage: Usage, email
 
   const cancelSub = async() => {
     const isCancelled = await cancelSubscription(email);
-    // if(isCancelled){
-    //   toast('Subscription cancelled successfully', DefaultToastOptions)
-    // }else{
-    //   toast.error('There waas an error cancelling your subscription. Please try again.', DefaultToastOptions)
-    // }
     closePopUp();
     if(isCancelled){
       updatePlanOverviewToCancelled();

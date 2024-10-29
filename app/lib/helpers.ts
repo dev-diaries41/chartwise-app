@@ -1,6 +1,5 @@
-import { PlanAmount, StorageKeys, Time } from "../constants/global";
-import { IAnalysis, IAnalysisUrl, UserPlan, UserProfileInfo } from "../types";
-import {SessionStorage} from "./storage"
+import { PlanAmount } from "../constants/global";
+import { IAnalysis, IAnalysisUrl } from "../types";
 
 
 export function copyTextToClipboard(text: string | null) {
@@ -37,13 +36,6 @@ export function convertToNumber(value: string | number, defaultValue: number): n
 
   return parsedValue;
 }
-
-
-  export function cacheUserPlan (userPlan: UserPlan) {
-    const ttl = Time.min;
-    const expiresAt = Date.now() + ttl;
-    SessionStorage.set(StorageKeys.subscription, JSON.stringify({ userPlan, expiresAt } as UserProfileInfo));
-  }
 
 
   export function getPlanFromPlanAmount(subscriptionAmount: number){

@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useState, useContext } from 'react';
-import { ProviderProps, UserPlan, UserPlanOverView } from '@/app/types';
-import { cacheUserPlan, getPlanFromPlanAmount } from '@/app/lib/helpers';
+import { ProviderProps, UserPlanOverView } from '@/app/types';
+import { getPlanFromPlanAmount } from '@/app/lib/helpers';
 import Stripe from 'stripe';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
@@ -70,7 +70,6 @@ const useSubscription = () => {
         const newUserPlan = getPlanFromPlanAmount(amount_total)
         if(newUserPlan){
           setUserPlanOverview(prev => ({...prev, plan: newUserPlan }))
-          cacheUserPlan(newUserPlan)
         }
       }
   

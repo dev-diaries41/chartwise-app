@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/global";
 import {LoaderDialog, AnalysisForm, OnboardingCarousel, MarkdownView} from "@/app/ui/";
-import {LocalStorage, SessionStorage} from "@/app/lib/storage"
+import {LocalStorage} from "@/app/lib/storage"
 import { JobReceipt, PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, RequestErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { getJobStatus, getNewToken } from "@/app/lib/requests/chartwise-client";
@@ -109,6 +109,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     if (error.message === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
       return onReachedFreeUseLimit();
     } 
+
     if (error.message === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
       return onReachedSubUsageLimit();
     } 

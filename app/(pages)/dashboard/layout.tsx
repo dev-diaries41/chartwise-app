@@ -1,11 +1,8 @@
 import {SideNav} from '@/app/ui'
 import { ChartwiseProvider } from '../../providers/chartwise'
-import { SubscriptionProvider } from '../../providers/subscription'
 import { SettingsProvider } from '../../providers/settings'
 import { auth } from '@/auth'
 import { JournalProvider } from '@/app/providers/journal'
-import { handleGetSubscriptionInfo } from '@/app/lib/subscription'
-import { getAnalyses } from '@/app/lib/data/analysis'
 
 export default async function Layout({
   children,

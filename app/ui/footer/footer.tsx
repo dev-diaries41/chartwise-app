@@ -11,7 +11,7 @@ import Logo from '../logo';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDivide, faGripVertical, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { DISCORD_INVITE_URL } from '@/app/constants/support';
+import { DISCORD_INVITE_URL, TWITTER_PROFILE } from '@/app/constants/support';
 
 
 export default function Footer() {
@@ -33,7 +33,7 @@ export default function Footer() {
               <Logo src={'/chartwise-icon.png'}/>
             </Link>
             <div className="mx-2 h-7 w-px bg-gray-700"></div>             */}
-            {/* <Link href="https://www.instagram.com/signsafemusic" target="_blank" rel="noopener noreferrer">
+            <a href={TWITTER_PROFILE} target="_blank" rel="noopener noreferrer">
               <Image
                 src="/x-logo.svg"
                 alt="X (Twitter)"
@@ -41,8 +41,8 @@ export default function Footer() {
                 height={24}
                 className='dark:invert'
               />
-            </Link> */}
-            <Link href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
+            </a>
+            <a href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
               <Image
                 src="/discord-mark-black.svg"
                 alt="Discord"
@@ -50,7 +50,7 @@ export default function Footer() {
                 height={24}
                 className='dark:invert'
               />
-            </Link>
+            </a>
           </div>
           <p className="opacity-80">
             Copyright © {new Date().getFullYear()} FPF Labs. All rights reserved.

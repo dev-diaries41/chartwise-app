@@ -28,7 +28,7 @@ export const Faqs: FAQ[] = [
     },
     {
         question: 'Is there a free trial?',
-        answer: ['Users who are not subscribed can run 3 analyses a day, with a total of 10 a month.'],
+        answer: ['Users who are not subscribed can run a total of 6 analyses for free'],
     },
   ];
   
