@@ -38,6 +38,7 @@ export const Time = {
 export const StorageKeys = {
   cwauth: 'cwauth',
   jobId: 'jobId',
+  polling: 'polling',
   recentAnalyses: 'recent-analyses',
   recentCharts: 'recent-charts',
   subscription: 'stripe-subscription',

@@ -1,9 +1,11 @@
 'use server'
-import { IAnalysis } from "@/app/types";
+import { AddDocResponse, IAnalysis } from "@/app/types";
 import { getDoc, getDocs } from "@/app/lib/mongo/get";
 import ChartAnalysisModel from "@/app/models/analysis"
 import dbConnect from "@/app/lib/db";
 import { RequestErrors } from "@/app/constants/errors";
+import { addDoc } from "../mongo/add";
+// import { uploadMultiple } from "../cloudinary";
 
 export async function getAnalysis(id: string): Promise<IAnalysis> {
     await dbConnect()
@@ -29,3 +31,10 @@ export async function getAnalyses(userId: string): Promise<(IAnalysis & {_id: st
         return [];
     }
 }
+
+// export async function saveChartAnalysis(analysis: IAnalysis): Promise<AddDocResponse>{
+//     await dbConnect();
+//     const uploadOpts = {folder: 'chart_analysis'};
+//     const urls = await uploadMultiple(analysis.chartUrls, uploadOpts)
+//     return await addDoc(ChartAnalysisModel, {...analysis, urls});
+// }

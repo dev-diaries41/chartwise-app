@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
     const { data } = await chartwiseAPI.analyse(analysis);
     return NextResponse.json({data});; 
   } catch (error: any) {
-    console.error(error);
     if (error?.remainingPoints <= 0) {
       return NextResponse.json({
         message: 'Too Many Requests',

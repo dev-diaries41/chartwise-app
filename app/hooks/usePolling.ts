@@ -9,10 +9,6 @@ const usePolling = (callback: () => void | Promise<void>, pollingOptions: PollOp
   const memoizedCallback = useCallback(callback, [callback]);
   const memoizedPollingOptions = useRef(pollingOptions); // Use ref to hold polling options
 
-  useEffect(() => {
-    memoizedPollingOptions.current = pollingOptions;
-  }, [pollingOptions]);
-
   const startPolling = () => {
     if (!pollingRef.current) {
       pollingRef.current = new Polling(memoizedCallback, memoizedPollingOptions.current);

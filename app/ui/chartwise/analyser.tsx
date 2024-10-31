@@ -2,8 +2,8 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/global";
-import {LoaderDialog, AnalysisForm, OnboardingCarousel, MarkdownView} from "@/app/ui/";
-import {LocalStorage} from "@/app/lib/storage"
+import {LoaderDialog, AnalysisForm, OnboardingCarousel} from "@/app/ui/";
+import {SessionStorage} from "@/app/lib/storage"
 import { JobReceipt, PollOptions } from "@/app/types";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, RequestErrors, ServiceUsageErrors } from "@/app/constants/errors";
 import { getJobStatus, getNewToken } from "@/app/lib/requests/chartwise-client";
@@ -22,8 +22,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
   const pathname = usePathname();
   const {analysis, analyseChart, removeAnalysis, onAnalysisComplete, newAnalysis} = useChartwise();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle, popUpCta} = usePopUp();
-  const {isVisible, onCompleteOnboarding} = useOnboarding(email);
-  const [isOnboarded, setIsOnboarded] = useState(true);
+  const {isVisible, isOnboarded, onCompleteOnboarding} = useOnboarding(email);
   const [jobReceipt, setJobReceipt] = useState<JobReceipt | null>(null);
   const loading = !!jobReceipt?.status && !['completed', 'failed'].includes(jobReceipt?.status);
   const [minimize, setMinimize] = useState(false);
@@ -33,11 +32,6 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     if(pathname !== '/dashboard'){
       router.push('/dashboard')
     }
-    const result = LocalStorage.get<string>(StorageKeys.onboarding);
-    if(result !== 'complete'){
-      setIsOnboarded(false);
-    }
-
   }, [])
 
   useEffect(() => {
@@ -56,7 +50,10 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     fetchToken();
   }, [email]);
   
-  
+  const toggleLoaderDialog = () => {
+    setMinimize(prev => !prev)
+  }
+
 
   const onJobFinished = (status: JobReceipt['status']) => {
     stopPolling();
@@ -99,7 +96,10 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
   const handleJobInProgress = (receipt: JobReceipt) => {
     if (!receipt.jobId) throw new Error(JobErrors.INVALID_JOB_ID);
     setJobReceipt(receipt);
-    LocalStorage.set(StorageKeys.jobId, receipt.jobId);
+    if(minimize){
+      toggleLoaderDialog();
+    }
+    SessionStorage.set(StorageKeys.jobId, receipt.jobId);
     setTimeout(startPolling, 5 * Time.sec);
   };
 
@@ -121,7 +121,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
   };
 
   const pollJobStatus = async () => {
-    const jobId = LocalStorage.get<string>(StorageKeys.jobId);
+    const jobId = SessionStorage.get<string>(StorageKeys.jobId);
     if (!jobId) throw new Error(JobErrors.INVALID_JOB_ID);
 
     const { data, status } = await getJobStatus(jobId);
@@ -151,9 +151,6 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     showPopUp(PLAN_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC);
   };
 
-  const toggleLoaderDialog = () => {
-    setMinimize(prev => !prev)
-  }
 
   return (
     <div className="w-full max-w-5xl flex flex-col mx-auto items-center  mb-auto md:my-auto py-8">
@@ -165,7 +162,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
       welcomeTitle={CHARTWISE_WELCOME_TITLE}/>
       )}
       <div className="absolute top-4 z-50">
-      {(popUpTitle && popUpDescription) &&<PlanLimitAlert onClose={closePopUp} title={popUpTitle} description={popUpDescription} onConfirmCta={popUpCta}/>}
+      {(popUpTitle && popUpDescription) && <PlanLimitAlert onClose={closePopUp} title={popUpTitle} description={popUpDescription} onConfirmCta={popUpCta}/>}
       </div>
       <div className='w-full flex flex-row gap-4 justify-between items-center'>
         <h1 className="text-left text-xl md:text-3xl my-4 font-bold">Upload & Analyse</h1>

@@ -1,6 +1,6 @@
 'use client'
 import { AnalysisSchemaWithoutUserId } from "@/app/constants/schemas";
-import { AuthErrors, JobErrors } from "@/app/constants/errors";
+import { AuthErrors } from "@/app/constants/errors";
 import {JobReceipt, JobResult, IAnalysis, AnalysisParams, OnboardingAnswers, User} from "@/app/types"
 import { FindOneAndUpdateResponse } from "@/app/types/response";
 

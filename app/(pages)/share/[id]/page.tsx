@@ -14,7 +14,7 @@ export default async function Page(props:  { params: Promise<{ id: string }> }) 
   return (
     <ErrorBoundary errorComponent={Error}>
       <Suspense fallback={<Loading/>}>
-        <SharedAnalysis analysis={analysis} />
+        <SharedAnalysis analysis={analysis}/>
       </Suspense>
     </ErrorBoundary>
   );

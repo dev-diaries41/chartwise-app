@@ -8,11 +8,21 @@ interface MarkdownViewProps {
 }
 
 export default function MarkdownView({ content }: MarkdownViewProps) {
+  const formatMarkdownContent = (content: string): string => {
+    // Step 1: Replace `-` with `*` for list items
+    let formattedContent = content.replace(/^- /gm, '* ');
+    // formattedContent = formattedContent.replace(/^  - /gm, '  * ');
+    // Step 2: Remove extra blank lines between list items
+    // This uses a regular expression to replace multiple newlines between lists with a single newline
+    formattedContent = formattedContent.replace(/\n{2,}(\*|\d+\.)/g, '\n$1');
+  
+    return formattedContent;
+  };
   return (
-    <div className="relative w-full flex flex-col max-w-3xl animate-fadeIn mt-4 rounded-md text-left ">
+    <div className="relative w-full flex flex-col animate-fadeIn mt-4 rounded-md text-left ">
       <div className="markdown-container p-4 ">
         <ReactMarkdown
-          children={content}
+          children={formatMarkdownContent(content)}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
           components={{

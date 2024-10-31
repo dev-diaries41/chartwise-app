@@ -2,7 +2,7 @@
 import React, { createContext, useState, useContext, useEffect, } from 'react';
 import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalysis } from '@/app/types';
 import { StorageKeys } from '../constants/global';
-import {LocalStorage} from "@/app/lib/storage"
+import {LocalStorage, SessionStorage} from "@/app/lib/storage"
 import * as ChartwiseClient from '../lib/requests/chartwise-client';
 import { RetryHandler } from 'devtilities';
 import { formatAnalyses, getAnalysisName } from '../lib/helpers';
@@ -54,23 +54,6 @@ const ChartwiseProvider = ({ children, email }: ProviderProps & {email: string |
     }
   },[])
 
-  useEffect(() => {
-    const saveAnalysis = async() => {
-      const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
-        LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
-        setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
-      }
-      if(analysis.chartUrls.length > 0 && analysis.output){
-        const url = await ChartwiseClient.saveAnalysis(analysis);
-        if(url){
-          setShareUrl(url);
-          addRecentAnalysis({name: analysis.name, analyseUrl: url});
-        }
-      }
-    }
-   saveAnalysis()
-  }, [analysis.output]);
-
 
   return (
     <ChartwiseContext.Provider value={{ 
@@ -97,6 +80,7 @@ const useChartwise = () => {
     analysis,
     setAnalysis,
     shareUrl,
+    setShareUrl,
   } = context;
 
 
@@ -165,7 +149,6 @@ const getRiskTolerance = () => {
   }
 }
 
-
 const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     try {
       const jobReceipt = await retryHandler.retry(
@@ -182,9 +165,24 @@ const analyseChart = async (analysis: AnalysisParams, userId: string) => {
    setAnalysis(DefaultAnalysis)
   }
 
-  const onAnalysisComplete = (output: string) => {
+  const saveAnalysis = async(output: string) => {
+    const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
+      LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
+      setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
+    }
+    if(analysis.chartUrls.length > 0 && output){
+      const url = await ChartwiseClient.saveAnalysis({...analysis, output});
+      if(url){
+        setShareUrl(url);
+        addRecentAnalysis({name: analysis.name, analyseUrl: url});
+      }
+    }
+  }
+
+  const onAnalysisComplete = async(output: string) => {
     setAnalysis(prevAnalysis => ({...prevAnalysis, output}))
-    LocalStorage.remove(StorageKeys.jobId);
+    await saveAnalysis(output);
+    SessionStorage.remove(StorageKeys.jobId);
   }
 
 

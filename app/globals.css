@@ -250,3 +250,9 @@ body {
     background: #1f2937; /* Tailwind gray-800 */
   }
 }
+
+.markdown-container ul ul {
+  margin-top: 0; /* Remove extra spacing between nested lists */
+  padding-left: 1.5em; /* Indent nested lists */
+}
+
