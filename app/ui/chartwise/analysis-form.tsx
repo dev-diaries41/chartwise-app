@@ -74,9 +74,9 @@ export default React.memo(function AnalysisForm ({
             </div>
           </div>
           
-          {PLACEHOLDER_A2 && (
+          {analysis.output && (
             <div className="flex flex-col w-full pb-8 mb-8 mx-auto max-w-4xl">
-              <MarkdownView content={PLACEHOLDER_A2}/>
+              <MarkdownView content={analysis.output}/>
             </div>
           )}
         </div>
