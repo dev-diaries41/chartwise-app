@@ -1,13 +1,10 @@
 'use client'
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { DefaultToastOptions, StorageKeys, Time } from "@/app/constants/global";
-import {LoaderDialog, AnalysisForm, OnboardingCarousel} from "@/app/ui/";
-import {SessionStorage} from "@/app/lib/storage"
-import { JobReceipt, PollOptions } from "@/app/types";
+import { DefaultToastOptions, Time } from "@/app/constants/global";
+import {AnalysisForm, OnboardingCarousel} from "@/app/ui/";
 import { DEFAULT_ERROR_MESSAGE, JobErrors, RequestErrors, ServiceUsageErrors } from "@/app/constants/errors";
-import { getJobStatus, getNewToken } from "@/app/lib/requests/chartwise-client";
-import { usePopUp, usePolling, useOnboarding } from "@/app/hooks";
+import { usePopUp, useOnboarding } from "@/app/hooks";
 import { toast } from "react-toastify";
 import { useChartwise } from "@/app/providers/chartwise";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -15,18 +12,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnalysisParamsSchema } from "@/app/constants/schemas";
 import { CHARTWISE_WELCOME_MESSAGE, CHARTWISE_WELCOME_TITLE, onboardingQuestions } from "@/app/constants/onboarding";
 import PlanLimitAlert from "../cards/limit-card";
-import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC, PLAN_USAGE_LIMIT_TITLE, CHARTWISE_LOADER_TITLE, CHARTWISE_LOADER_DESCRIPTION } from "@/app/constants/messages";
+import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/messages";
+import { Timer } from "devtilities";
 
 export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string | null | undefined, hasCompletedOnboarding?: boolean}){
   const router = useRouter();
   const pathname = usePathname();
-  const {analysis, analyseChart, removeAnalysis, onAnalysisComplete, newAnalysis} = useChartwise();
+  const {analysis, analyseChart, removeAnalysis, newAnalysis} = useChartwise();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle, popUpCta} = usePopUp();
   const {isVisible, isOnboarded, onCompleteOnboarding} = useOnboarding(email);
-  const [jobReceipt, setJobReceipt] = useState<JobReceipt | null>(null);
-  const loading = !!jobReceipt?.status && !['completed', 'failed'].includes(jobReceipt?.status);
-  const [minimize, setMinimize] = useState(false);
-
 
   useLayoutEffect(() => {
     if(pathname !== '/dashboard'){
@@ -34,47 +28,24 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     }
   }, [])
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      if (email) {
-        try {
-          await getNewToken({ email });
-          console.log('cwauth initialised');
-          // SessionStorage.set(StorageKeys.cwauth, 'initialised');
-        } catch (error) {
-          console.error('Error fetching token:', error);
-        }
-      }
-    };
-  
-    fetchToken();
-  }, [email]);
-  
-  const toggleLoaderDialog = () => {
-    setMinimize(prev => !prev)
-  }
+  const handleError= async (error: Error) => {
+    // console.error(error.message)
+    if (error.message === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
+      showPopUp(FREE_USAGE_LIMIT_TITLE, FREE_USAGE_LIMIT_DESC, 'Subscribe');
+    } 
 
-
-  const onJobFinished = (status: JobReceipt['status']) => {
-    stopPolling();
-    updateJobReceipt(status);
-
-  }
-
-  const updateJobReceipt = (status: JobReceipt['status']) => {
-    setJobReceipt(prev => prev === null? prev : ({...prev, status}))
-  }
-
-  const onJobComplete = (chartAnalysis: string) => {
-    onJobFinished('completed');
-    onAnalysisComplete(chartAnalysis);
+    if (error.message === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
+      showPopUp(PLAN_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC);
+    } 
+    if (error.message === JobErrors.TIMEOUT) {
+      return toast.error(JobErrors.TIMEOUT, DefaultToastOptions);
+    } 
+    if(error.message.includes('429') || error.message.includes(RequestErrors.RATE_LIMIT_ERROR)){
+      return toast.error(RequestErrors.RATE_LIMIT_ERROR, DefaultToastOptions);
+    }
+     toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
+     return;
   };
-
-  const onJobFail = () => {
-    onJobFinished('failed');
-    toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
-  };
-
 
   const handleAnalyseChart = async () => {
     if(!email || analysis.chartUrls.length < 1)return;
@@ -86,71 +57,12 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
 
     try {
-      const receipt = await analyseChart(validatedAnalysis.data, email);
-      handleJobInProgress(receipt);
+      const timer = new Timer();
+      await timer.timeoutFunction(()=> analyseChart(validatedAnalysis.data, email), (1.5*Time.min));
     } catch (error: any) {
-      handleFailedJobStart(error);
+      handleError(error);
     }
   };
-
-  const handleJobInProgress = (receipt: JobReceipt) => {
-    if (!receipt.jobId) throw new Error(JobErrors.INVALID_JOB_ID);
-    setJobReceipt(receipt);
-    if(minimize){
-      toggleLoaderDialog();
-    }
-    SessionStorage.set(StorageKeys.jobId, receipt.jobId);
-    setTimeout(startPolling, 5 * Time.sec);
-  };
-
-  const handleFailedJobStart = async (error: Error) => {
-    setJobReceipt(null);
-    
-    if (error.message === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
-      return onReachedFreeUseLimit();
-    } 
-
-    if (error.message === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
-      return onReachedSubUsageLimit();
-    } 
-    if(error.message.includes('429') || error.message.includes(RequestErrors.RATE_LIMIT_ERROR)){
-      return toast.error(RequestErrors.RATE_LIMIT_ERROR, DefaultToastOptions);
-    }
-     toast.error(DEFAULT_ERROR_MESSAGE, DefaultToastOptions);
-     return;
-  };
-
-  const pollJobStatus = async () => {
-    const jobId = SessionStorage.get<string>(StorageKeys.jobId);
-    if (!jobId) throw new Error(JobErrors.INVALID_JOB_ID);
-
-    const { data, status } = await getJobStatus(jobId);
-    updateJobReceipt(status);
-    if (status === 'completed') {
-      onJobComplete(data.output);
-    } else if (status === 'failed') {
-      onJobFail();
-    }
-  };
-  
-  const pollOptions: PollOptions = {
-    interval: 5 * Time.sec,
-    maxDuration: 2 * Time.min,
-    maxErrors: 3,
-    onMaxDuration: onJobFail,
-    onMaxErrors: onJobFail,
-  };
-
-  const { startPolling, stopPolling } = usePolling(pollJobStatus, pollOptions);
-
-  const onReachedFreeUseLimit = () => {
-    showPopUp(FREE_USAGE_LIMIT_TITLE, FREE_USAGE_LIMIT_DESC, 'Subscribe');
-  };
-
-  const onReachedSubUsageLimit = () => {
-    showPopUp(PLAN_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC);
-  };
-
 
   return (
     <div className="w-full max-w-5xl flex flex-col mx-auto items-center  mb-auto md:my-auto py-8">
@@ -176,17 +88,7 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
       </div>
       <p className="w-full flex text-sm md:text-md lg:text-lg text-left opacity-80 mb-4">You can upload up to 3 charts for multi-timeframe analysis (Pro users only).</p>
   
-      <AnalysisForm handleAnalyseChart={handleAnalyseChart} status={jobReceipt?.status}/>
-      {(loading && !minimize) && (
-        <LoaderDialog
-          position="BOTTOM_RIGHT"
-          title={CHARTWISE_LOADER_TITLE}
-          description={CHARTWISE_LOADER_DESCRIPTION}
-          status={jobReceipt?.status}
-          queue={jobReceipt?.queue}
-          onMinimize={toggleLoaderDialog}
-          />
-      )}
+      <AnalysisForm handleAnalyseChart={handleAnalyseChart}/>
     </div>
   );
 }

@@ -2,35 +2,33 @@
 import React from 'react'
 import { AcceptedImgMimes } from "@/app/constants/global";
 import {CarouselImageViewer, MarkdownView, RiskSlider, DragAndDropUpload, ActionRow} from "@/app/ui/";
-import {faCopy, faMagnifyingGlassChart, faRefresh, faShareNodes, faTimes, faUpload, faWarning } from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faMagnifyingGlassChart, faShareNodes, faTimes, faUpload, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useChartwise } from "@/app/providers/chartwise";
 import { copyTextToClipboard } from "@/app/lib/helpers";
-import { ActionItem, JobReceipt } from "@/app/types";
+import { ActionItem } from "@/app/types";
 import StrategyDropdown from "./strategies";
 import { useSubscription } from "@/app/providers/subscription";
 import CircleLoadingIndicator from '../common/circle-loading-indicator';
 import { useFormStatus } from 'react-dom';
+import { PLACEHOLDER_A2 } from '@/app/constants/placeholder';
 
 
 interface AnalysisFormProps {
-  status: JobReceipt['status'] | null | undefined;
-    handleAnalyseChart: () => Promise<void>;
+  handleAnalyseChart: () => Promise<void>;
 }
 
 export default React.memo(function AnalysisForm ({
-    status,
     handleAnalyseChart, 
   }: AnalysisFormProps){
   const {analysis, shareUrl, uploadCharts, onRiskChange, onStrategyChange, getRiskTolerance,  removeCharts} = useChartwise();
   const {userPlanOverview} = useSubscription();
-  const loading = !!status && !['completed', 'failed'].includes(status);
-  const disabled = loading || analysis.chartUrls.length < 1 || !!analysis.output
+  const disabled =  analysis.chartUrls.length < 1
 
   const actions: ActionItem[] = [
     { icon: faCopy, onClick: () => copyTextToClipboard(analysis.output), tooltip: 'Copy' },
     { icon: faShareNodes, onClick: () => copyTextToClipboard(shareUrl), tooltip: 'Share', isVisible: !!shareUrl },
-    { icon: faRefresh, onClick: ()=>handleAnalyseChart(), tooltip: 'Re-analyis', isVisible: analysis.chartUrls.length > 0 }
+    // { icon: faRefresh, onClick: ()=>handleAnalyseChart(), tooltip: 'Re-analyis', isVisible: analysis.chartUrls.length > 0 }
   ];
     
     return (
@@ -76,9 +74,9 @@ export default React.memo(function AnalysisForm ({
             </div>
           </div>
           
-          {analysis.output && (
-            <div className="flex flex-col w-full pb-8 mb-8 mr-auto">
-              <MarkdownView content={analysis.output}/>
+          {PLACEHOLDER_A2 && (
+            <div className="flex flex-col w-full pb-8 mb-8 mx-auto max-w-4xl">
+              <MarkdownView content={PLACEHOLDER_A2}/>
             </div>
           )}
         </div>
@@ -89,7 +87,7 @@ export default React.memo(function AnalysisForm ({
             { analysis.output && <ActionRow actions={actions}/>}
             </div>
             <form action={handleAnalyseChart} className='ml-auto'>
-              <AnalysisButton disabled={disabled} loading={loading}/>
+              <AnalysisButton disabled={disabled}/>
             </form>
           </div>
         </div>
@@ -97,7 +95,7 @@ export default React.memo(function AnalysisForm ({
     )
   })
 
-  function AnalysisButton({disabled, loading}: {disabled: boolean; loading: boolean}) {
+  function AnalysisButton({disabled}: {disabled: boolean}) {
     const { pending } = useFormStatus();
     return (
       <button
@@ -107,7 +105,7 @@ export default React.memo(function AnalysisForm ({
       >
         <FontAwesomeIcon icon={faMagnifyingGlassChart} className="w-4 h-4"/>
         <span className="">Analyse Chart</span>
-        {(loading || pending) && <CircleLoadingIndicator size={20}/>}
+        {(pending) && <CircleLoadingIndicator size={20}/>}
       </button>
     );
   }

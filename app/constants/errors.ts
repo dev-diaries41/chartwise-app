@@ -10,7 +10,8 @@ export enum AuthErrors  {
   export enum JobErrors {
     JOB_NOT_FOUND = 'Job not found',
     INVALID_JOB_ID = 'Invalid job ID',
-    INVALID_JOB_RESULTS = 'Invalid job results'
+    INVALID_JOB_RESULTS = 'Invalid job results',
+    TIMEOUT='Operation timed out'
   }
 
   export enum RequestErrors  {

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { AddDocResponse, AddMultipleDocsResponse } from '@/app/types';
 
-export async function addDoc<T>(model: mongoose.Model<T>, doc: Record<string, any>): Promise<AddDocResponse> {
+export async function addDoc<T extends Record<string, any>=Record<string, any>>(model: mongoose.Model<T>, doc: T): Promise<AddDocResponse> {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {

@@ -29,7 +29,7 @@ export async function signUp(newUser: NewUser): Promise<AddDocResponse> {
   const salt = crypto.randomBytes(16).toString('hex');
   const hashedPassword = hashPassword(password, salt)
   const user: User = {...userInfo, hashedPassword, salt};
-  return addDoc(UserModel, user);
+  return addDoc<User>(UserModel, user);
 }
 
 // try carch not needed as used in parent function 

@@ -2,11 +2,10 @@
 import React, { createContext, useState, useContext, useEffect, } from 'react';
 import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalysis } from '@/app/types';
 import { StorageKeys } from '../constants/global';
-import {LocalStorage, SessionStorage} from "@/app/lib/storage"
-import * as ChartwiseClient from '../lib/requests/chartwise-client';
+import {LocalStorage} from "@/app/lib/storage"
 import { RetryHandler } from 'devtilities';
 import { formatAnalyses, getAnalysisName } from '../lib/helpers';
-import { getAnalyses } from '../lib/data/analysis';
+import { getAnalyses, saveChartAnalysis } from '../lib/data/analysis';
 
 
 interface TradeContextProps {
@@ -16,6 +15,7 @@ interface TradeContextProps {
   setAnalysis: React.Dispatch<React.SetStateAction<Omit<IAnalysis, 'userId'>>>; 
   shareUrl: string | null, 
   setShareUrl:  React.Dispatch<React.SetStateAction<string | null>>;
+
 }
 
 const ChartwiseContext = createContext<TradeContextProps | undefined>(undefined);
@@ -36,6 +36,8 @@ const ChartwiseProvider = ({ children, email }: ProviderProps & {email: string |
   const [recentAnalyses, setRecentAnalyses] = useState<IAnalysisUrl[]>([]);
   const [analysis, setAnalysis] = useState<Omit<IAnalysis, 'userId'>>(DefaultAnalysis);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchRecentAnalysis = async(email: string) => {
@@ -149,43 +151,74 @@ const getRiskTolerance = () => {
   }
 }
 
-const analyseChart = async (analysis: AnalysisParams, userId: string) => {
-    try {
-      const jobReceipt = await retryHandler.retry(
-        async () => await ChartwiseClient.submitAnalysisRequest(analysis),
-        async(error)=> await ChartwiseClient.refreshOnError(error as Error, userId)
-      );
-      return jobReceipt;
-    } catch (error) {
-      throw error;
+const saveAnalysis = async(analysis: Omit<IAnalysis, 'userId'>, userId: string) => {
+  const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
+    LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
+    setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
+  }
+  if(analysis.chartUrls.length > 0 && analysis.output){
+    const {id} = await saveChartAnalysis({ ...analysis, userId });
+    const analyseUrl = `${window.location.origin}/share/${id}`;
+    if(analyseUrl){
+      setShareUrl(analyseUrl);
+      addRecentAnalysis({name: analysis.name, analyseUrl});
+    }else{
+      console.error('Error saving analysis');
     }
-  };
+  }
+}
+
+const analyseChart = async (analysisParams: AnalysisParams, email: string) => {
+  const streamRequest = new Request('/api/analysis/stream', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(analysisParams),
+  });
+ 
+      const response = await fetch(streamRequest);
+      if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let accumulatedContent = '';
+      let chunkCount = 0; // To keep track of how many chunks we've read
+
+      const readChunk = async () => {
+          try {
+              const { done, value } = await reader?.read() || {};
+              if (done) {
+                  console.log('Stream complete');
+                  setAnalysis((prev) => ({ ...prev, output: accumulatedContent }));  // Final state update in case the last few chunks are less than the batching threshold
+                  await saveAnalysis({ ...analysis, output: accumulatedContent }, email);
+                  return;
+              }
+
+              if (value) {
+                  const content = decoder.decode(value, { stream: true });
+                  accumulatedContent += content;
+                  chunkCount++;
+
+                  if (chunkCount % 3 === 0) {
+                      setAnalysis((prev) => ({ ...prev, output: accumulatedContent }));
+                  }
+              }
+
+              readChunk(); // Process the next chunk
+          } catch (error) {
+              console.error('Error reading chunk:', error);
+          }
+      };
+
+      await readChunk(); // Start reading the stream
+};
 
   const newAnalysis = () => {
    setAnalysis(DefaultAnalysis)
   }
-
-  const saveAnalysis = async(output: string) => {
-    const addRecentAnalysis = (analysisUrlFormat: IAnalysisUrl) => {
-      LocalStorage.append(StorageKeys.recentAnalyses, analysisUrlFormat);
-      setRecentAnalyses(prevAnalyses => [...prevAnalyses, analysisUrlFormat])
-    }
-    if(analysis.chartUrls.length > 0 && output){
-      const url = await ChartwiseClient.saveAnalysis({...analysis, output});
-      if(url){
-        setShareUrl(url);
-        addRecentAnalysis({name: analysis.name, analyseUrl: url});
-      }
-    }
-  }
-
-  const onAnalysisComplete = async(output: string) => {
-    setAnalysis(prevAnalysis => ({...prevAnalysis, output}))
-    await saveAnalysis(output);
-    SessionStorage.remove(StorageKeys.jobId);
-  }
-
-
 
   return {
     analysis,
@@ -197,7 +230,6 @@ const analyseChart = async (analysis: AnalysisParams, userId: string) => {
     analyseChart,
     removeCharts,
     onStrategyChange,
-    onAnalysisComplete,
     onRiskChange,
     getRiskTolerance,
     uploadCharts,
