@@ -54,9 +54,9 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
     }
     const {output, ...anaylsisParams} = analysis
     const validatedAnalysis = AnalysisParamsSchema.safeParse(anaylsisParams);
-    if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error))
 
     try {
+      if(!validatedAnalysis.success)throw new Error(JSON.stringify(validatedAnalysis.error));
       const timer = new Timer();
       await timer.timeoutFunction(()=> analyseChart(validatedAnalysis.data, email), (1.5*Time.min));
     } catch (error: any) {
