@@ -17,7 +17,7 @@
     "axios": "^1.7.2",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
-    "devtilities": "^1.0.3",
+    "devtilities": "^1.0.4",
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",

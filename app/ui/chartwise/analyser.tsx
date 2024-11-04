@@ -29,13 +29,13 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
   }, [])
 
   const handleError= async (error: Error) => {
-    // console.error(error.message)
+    console.error("Eroor here: ",error.message)
     if (error.message === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
-      showPopUp(FREE_USAGE_LIMIT_TITLE, FREE_USAGE_LIMIT_DESC, 'Subscribe');
+      return showPopUp(FREE_USAGE_LIMIT_TITLE, FREE_USAGE_LIMIT_DESC, 'Subscribe');
     } 
 
     if (error.message === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
-      showPopUp(PLAN_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC);
+      return showPopUp(PLAN_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC);
     } 
     if (error.message === JobErrors.TIMEOUT) {
       return toast.error(JobErrors.TIMEOUT, DefaultToastOptions);
