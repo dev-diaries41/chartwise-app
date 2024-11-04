@@ -179,7 +179,8 @@ const analyseChart = async (analysisParams: AnalysisParams, email: string) => {
  
       const response = await fetch(streamRequest);
       if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+        const errorResponse = await response.json();
+          throw new Error(errorResponse.message);
       }
 
       const reader = response.body?.getReader();
