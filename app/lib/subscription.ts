@@ -144,10 +144,9 @@ export async function upgradeSubscription(email: string, planToUpgrade: UserPlan
   }
 }
 
-
-
   async function findPriceData(planAmount: number):  Promise<Stripe.Price | undefined>{
     const priceData = await stripe.prices.list({limit: 10 });
     const plan = priceData.data.find(price => price.unit_amount === planAmount);
     return plan
   }
+

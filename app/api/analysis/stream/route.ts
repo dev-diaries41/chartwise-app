@@ -3,12 +3,18 @@ import { handleError } from "@/app/lib/requests/next-api-errors";
 import { AnalysisParams } from "@/app/types";
 import { generateTextFromImageStream, generateTextFromMutliImagesStream } from "@/app/lib/ai/openai";
 import { chartAnalysisPrompt } from "@/app/lib/ai/prompts";
+import { checkUsageLimit } from "@/app/lib/data/usage";
+import { auth } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
     const analysisParams = (await req.json()) as AnalysisParams;
     if (!analysisParams) return NextResponse.json({ message: "Invalid analysis input", status: 400 },{ status: 400 });
-    
+
+    const result = await checkUsageLimit(session?.user.email);
+    if (!result.isAllowed) return NextResponse.json({ message: result.message, status: 403 },{ status: 403 });
+
     const {chartUrls, metadata} = analysisParams;
     const prompt =  chartAnalysisPrompt(metadata, chartUrls.length > 1);
 

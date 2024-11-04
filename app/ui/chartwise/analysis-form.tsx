@@ -11,7 +11,6 @@ import StrategyDropdown from "./strategies";
 import { useSubscription } from "@/app/providers/subscription";
 import CircleLoadingIndicator from '../common/circle-loading-indicator';
 import { useFormStatus } from 'react-dom';
-import { PLACEHOLDER_A2 } from '@/app/constants/placeholder';
 
 
 interface AnalysisFormProps {

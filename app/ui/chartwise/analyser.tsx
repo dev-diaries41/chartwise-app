@@ -87,7 +87,6 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
         </button> 
       </div>
       <p className="w-full flex text-sm md:text-md lg:text-lg text-left opacity-80 mb-4">You can upload up to 3 charts for multi-timeframe analysis (Pro users only).</p>
-  
       <AnalysisForm handleAnalyseChart={handleAnalyseChart}/>
     </div>
   );
