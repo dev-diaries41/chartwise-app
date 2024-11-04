@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react'
 import { StorageKeys } from '@/app/constants/global';
-import { SessionStorage } from '@/app/lib/storage';
+import { LocalStorage, SessionStorage } from '@/app/lib/storage';
 import { OnboardingAnswers } from '@/app/types';
 import { completedOnboarding } from '@/app/lib/requests/chartwise-client';
 
@@ -10,7 +10,7 @@ const useOnboarding = (email: string | null | undefined) => {
     const [isOnboarded, setIsOnboarded] = useState(true);
 
     useEffect(() => {
-        const result = SessionStorage.get<string>(StorageKeys.onboarding);
+        const result = LocalStorage.get<string>(StorageKeys.onboarding);
         if(result !== 'complete'){
             setIsOnboarded(false);
         }
@@ -25,7 +25,7 @@ const useOnboarding = (email: string | null | undefined) => {
         if (email) {
             closeOnboardingPopUp();
             await completedOnboarding(email, answers);
-            SessionStorage.set(StorageKeys.onboarding, 'complete');
+            LocalStorage.set(StorageKeys.onboarding, 'complete');
         }
     };
 

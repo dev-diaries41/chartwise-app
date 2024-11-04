@@ -21,8 +21,8 @@ export default React.memo(function AnalysisForm ({
     handleAnalyseChart, 
   }: AnalysisFormProps){
   const {analysis, shareUrl, uploadCharts, onRiskChange, onStrategyChange, getRiskTolerance,  removeCharts} = useChartwise();
-  const {userPlanOverview} = useSubscription();
-  const disabled =  analysis.chartUrls.length < 1
+  const {userPlanOverview, hasReachedLimit} = useSubscription();
+  const disabled =  analysis.chartUrls.length < 1 || hasReachedLimit
 
   const actions: ActionItem[] = [
     { icon: faCopy, onClick: () => copyTextToClipboard(analysis.output), tooltip: 'Copy' },
@@ -86,7 +86,7 @@ export default React.memo(function AnalysisForm ({
             { analysis.output && <ActionRow actions={actions}/>}
             </div>
             <form action={handleAnalyseChart} className='ml-auto'>
-              <AnalysisButton disabled={disabled}/>
+              <AnalysisButton disabled={disabled} hasReachedLimit={hasReachedLimit}/>
             </form>
           </div>
         </div>
@@ -94,10 +94,11 @@ export default React.memo(function AnalysisForm ({
     )
   })
 
-  function AnalysisButton({disabled}: {disabled: boolean}) {
+  function AnalysisButton({disabled, hasReachedLimit}: {disabled: boolean, hasReachedLimit:boolean}) {
     const { pending } = useFormStatus();
     return (
-      <button
+     <div className='w-full relative group'>
+       <button
         type='submit'
         disabled={disabled || pending}
         className={`flex  items-center justify-center bg-emerald-500 text-sm text-white font-semibold p-2 rounded-full shadow-md gap-2 ${disabled? 'opacity-50' : 'opacity-100 hover:bg-emerald-500'}`}
@@ -106,5 +107,10 @@ export default React.memo(function AnalysisForm ({
         <span className="">Analyse Chart</span>
         {(pending) && <CircleLoadingIndicator size={20}/>}
       </button>
+      {hasReachedLimit&&<span className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-xs rounded opacity-0 group-hover:opacity-100 max-w-[200px] w-full p-2 shadow-md shadow-black">
+          {'Reached subscription limit.'}
+      </span>}
+     </div> 
+     
     );
   }

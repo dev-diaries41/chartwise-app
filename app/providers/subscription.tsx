@@ -70,6 +70,9 @@ const useSubscription = () => {
         const newUserPlan = getPlanFromPlanAmount(amount_total)
         if(newUserPlan){
           setUserPlanOverview(prev => ({...prev, plan: newUserPlan }))
+          if(hasReachedLimit){
+            setHasReachedLimit(false);
+          }
         }
       }
   
@@ -90,6 +93,10 @@ const useSubscription = () => {
     setUserPlanOverview(prev => ({...prev, cancel_at_period_end: true}))
   }
 
+  const reachedLimit = () => {
+    setHasReachedLimit(true);
+  }
+
   return {
     checkOutDetails,
     isUpgrading,
@@ -98,7 +105,8 @@ const useSubscription = () => {
     userPlanOverview,    
     getCheckoutSessionDetails,
     toggleUpgradePop,
-    updatePlanOverviewToCancelled
+    updatePlanOverviewToCancelled,
+    reachedLimit
   };
 };
 

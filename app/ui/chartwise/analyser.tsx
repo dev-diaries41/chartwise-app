@@ -14,11 +14,13 @@ import { CHARTWISE_WELCOME_MESSAGE, CHARTWISE_WELCOME_TITLE, onboardingQuestions
 import PlanLimitAlert from "../cards/limit-card";
 import { FREE_USAGE_LIMIT_DESC, FREE_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC, PLAN_USAGE_LIMIT_TITLE } from "@/app/constants/messages";
 import { Timer } from "devtilities";
+import { useSubscription } from "@/app/providers/subscription";
 
 export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string | null | undefined, hasCompletedOnboarding?: boolean}){
   const router = useRouter();
   const pathname = usePathname();
   const {analysis, analyseChart, removeAnalysis, newAnalysis} = useChartwise();
+  const {reachedLimit} = useSubscription();
   const {showPopUp, closePopUp, popUpDescription, popUpTitle, popUpCta} = usePopUp();
   const {isVisible, isOnboarded, onCompleteOnboarding} = useOnboarding(email);
 
@@ -29,14 +31,17 @@ export function ChartAnalyser ({email, hasCompletedOnboarding}: {email: string |
   }, [])
 
   const handleError= async (error: Error) => {
-    console.error("Eroor here: ",error.message)
+    // console.error(error.message)
     if (error.message === ServiceUsageErrors.EXCEEDED_FREE_LIMIT) {
+      reachedLimit();
       return showPopUp(FREE_USAGE_LIMIT_TITLE, FREE_USAGE_LIMIT_DESC, 'Subscribe');
     } 
 
     if (error.message === ServiceUsageErrors.EXCEEDED_PLAN_LIMIT) {
+      reachedLimit();
       return showPopUp(PLAN_USAGE_LIMIT_TITLE, PLAN_USAGE_LIMIT_DESC);
     } 
+
     if (error.message === JobErrors.TIMEOUT) {
       return toast.error(JobErrors.TIMEOUT, DefaultToastOptions);
     } 

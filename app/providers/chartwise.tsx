@@ -3,7 +3,6 @@ import React, { createContext, useState, useContext, useEffect, } from 'react';
 import { ProviderProps, IAnalysisUrl, AnalysisParams, IAnalysis } from '@/app/types';
 import { StorageKeys } from '../constants/global';
 import {LocalStorage} from "@/app/lib/storage"
-import { RetryHandler } from 'devtilities';
 import { formatAnalyses, getAnalysisName } from '../lib/helpers';
 import { getAnalyses, saveChartAnalysis } from '../lib/data/analysis';
 
@@ -19,8 +18,6 @@ interface TradeContextProps {
 }
 
 const ChartwiseContext = createContext<TradeContextProps | undefined>(undefined);
-const retryHandler = new RetryHandler(1); // Allow only 1 retry to handle expired token
-
 
 const DefaultAnalysis: Omit<IAnalysis, 'userId'> = {
   name: '',
@@ -36,8 +33,6 @@ const ChartwiseProvider = ({ children, email }: ProviderProps & {email: string |
   const [recentAnalyses, setRecentAnalyses] = useState<IAnalysisUrl[]>([]);
   const [analysis, setAnalysis] = useState<Omit<IAnalysis, 'userId'>>(DefaultAnalysis);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
 
   useEffect(() => {
     const fetchRecentAnalysis = async(email: string) => {
