@@ -9,6 +9,7 @@ import { handleGetSubscriptionInfo } from './lib/subscription'
 import { SessionProvider } from 'next-auth/react'
 import { SubscriptionProvider } from './providers/subscription'
 import { CHARTWISE_DESCRIPTION } from './constants/hero';
+import { Analytics } from '@vercel/analytics/react';
 
 const poppins = Poppins({ subsets: ['latin'], weight: '400' })
 
@@ -44,6 +45,7 @@ export default async function RootLayout({
             <main className='bg-gray-100 dark:bg-gray-900 relative flex flex-col min-h-screen '>
               <Header email ={email!}/>
               {children}
+              <Analytics />
               <ToastContainer />
               <Footer/>
             </main>
