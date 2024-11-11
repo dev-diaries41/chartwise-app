@@ -78,7 +78,7 @@ const HowItWorks = () => {
             autoPlay={true}
             muted 
             loop={true}
-            src={"/chartwise-demo-3.mp4"}
+            src={"/chartwise-demo.mp4"}
             className="lg:max-w-[60%]  mx-auto object-contain rounded-md"
           />
         

@@ -8,7 +8,7 @@ import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation'
 import { RequestErrors } from '../constants/errors';
 import {ACCOUNT_EXISTS, CHECK_EMAIL_MESSAGE, EMAIL_MESSAGE, PASSWORDS_DO_NOT_MATCH, REGISTRATION_FAILED, REGISTRATION_SUCCESS, RESET_FAILED, RESET_SUCCESS} from '@/app/constants/messages';
-import { isValidUser, signUp, updatePassword } from './user';
+import { isValidUser, signUp, updatePassword } from './data/user';
 import { generateAccessUrl } from './auth';
 import { sendEmail } from './email';
 

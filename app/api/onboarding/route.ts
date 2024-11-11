@@ -2,7 +2,7 @@ import { AuthErrors } from "@/app/constants/errors";
 import { NextRequest, NextResponse } from "next/server";
 import { handleError } from "@/app/lib/requests/next-api-errors";
 import { OnboardingAnswers } from "@/app/types";
-import { completedOnboarding } from "@/app/lib/user";
+import { completedOnboarding } from "@/app/lib/data/user";
 
 export async function POST(req: NextRequest) {
   try {

@@ -4,7 +4,7 @@ import { ServiceUsageErrors } from "@/app/constants/errors";
 import { countDocs } from "@/app/lib/mongo/count";
 import ServiceUsage from "@/app/models/usage"
 import { Usage } from "@/app/types";
-import dbConnect from "@/app/lib/db";
+import dbConnect from "@/app/lib/data/db";
 import { FREE_MONTHLY_LIMIT } from "@/app/constants/usage";
 import { PlanAmount } from "@/app/constants/global";
 import Stripe from "stripe";

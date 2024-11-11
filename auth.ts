@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { authConfig } from './auth.config';
-import { getUser } from './app/lib/user';
+import { getUser } from './app/lib/data/user';
 import { hashPassword } from './app/lib/cryptography';
 import { User } from './app/types';
 

@@ -4,7 +4,7 @@ import { addDoc } from "@/app//lib/mongo/add";
 import { getDocs } from "@/app//lib/mongo/get";
 import { AddDocResponse, FindOneAndUpdateResponse, GetDocsResponse, TradeJournalEntry } from "@/app/types";
 import TradeJournalModel from "@/app/models/journal"
-import dbConnect from "../db";
+import dbConnect from "./db";
 import { RequestErrors } from "@/app/constants/errors";
 import { findOneAndUpdateDoc } from "../mongo/update";
 

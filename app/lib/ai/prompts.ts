@@ -72,3 +72,10 @@ export const chartAnalysisPrompt = (metadata: AnalysisParams['metadata'], isMult
   **Important: IF THE IMAGE IS NOT A CHART, inform the trader that they need to provide a chart before you can begin analysis**
   `;
 };
+
+export function recentPriceDataPrompt(priceData: string){
+  `**Price data**:\n${priceData}
+  
+  Use the price data above along with the chart images to provide the analysis
+  `
+}

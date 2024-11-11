@@ -2,7 +2,7 @@
 import { AddDocResponse, IAnalysis } from "@/app/types";
 import { getDoc, getDocs } from "@/app/lib/mongo/get";
 import ChartAnalysisModel from "@/app/models/analysis"
-import dbConnect from "@/app/lib/db";
+import dbConnect from "@/app/lib/data/db";
 import { RequestErrors } from "@/app/constants/errors";
 import { addDoc } from "../mongo/add";
 import { uploadMultiple } from "../cloudinary";
