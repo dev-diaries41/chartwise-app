@@ -1,6 +1,6 @@
 # ChartWise: A Practical Tool for Better Trading
 
-![ChartWise Demo](public/chartwise-demo.gif)
+![ChartWise Demo](assets/chartwise-demo.gif)
 
 ![Analysis Page](public/analysis-page-v3.png)
 
