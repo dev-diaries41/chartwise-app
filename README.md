@@ -23,10 +23,6 @@ ChartWise is designed to help traders analyse charts and create effective trade 
 
 The main goal of ChartWise is to bridge the gap between understanding a trade and executing it well. It’s not just for beginners trying to get a handle on charts, but also for experienced traders who want to refine their strategies and avoid common mistakes. By offering structured analysis and actionable plans, ChartWise helps ensure that you follow through on your trading insights effectively.
 
-## How ChartWise Was Built
-
-ChartWise combines modern technologies to deliver a seamless experience. I used Next.js and TypeScript for a responsive and robust frontend, ensuring an intuitive user interface. On the backend, TypeScript, Express.js, and MongoDB work together to handle data efficiently. BullMQ manages job queues to process chart analyses quickly, while OpenAI enhances the analysis capabilities using AI and computer vision. For those interested in the technical details, you can explore my technical breakdown article for a deeper dive.
-
 ## Conclusion
 
 ChartWise is a tool created out of necessity to improve trading execution. It simplifies the process of analyzing charts and turning that analysis into actionable trade plans. Whether you're new to trading or have years of experience, ChartWise aims to help you execute your trades more effectively.
