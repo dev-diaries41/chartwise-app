@@ -1,5 +1,11 @@
 # ChartWise: A Practical Tool for Better Trading
 
+![ChartWise Demo](public/chartwise-demo.mp4)
+![Analysis Page](public/analysis-page-v3.png)
+![Charts Page](public/chart-page-v2.png)
+![Account Page](public/accounts.png)
+---
+
 Trading in the financial markets, whether it's forex, stocks, or cryptocurrency, is a mix of highs and lows. For many traders, the challenge isn’t just finding good trades but executing them effectively. This was my struggle, and it led me to create ChartWise—a tool aimed at making trade execution simpler and more reliable.
 
 ## The Challenge: Trading Execution Issues

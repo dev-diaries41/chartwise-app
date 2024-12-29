@@ -15,9 +15,10 @@ type PriceData = {
     close: number | null;
     volume: number | null;
 }[]
-export async function getPriceData(tickerSymbol: string, days: number = 30, interval: Interval = '1d' ): Promise<string|null> {
+
+export async function getPriceData(tickerSymbol: string, period1: string | number | Date, period2:string | number | Date, interval: Interval = '1d' ): Promise<string|null> {
     try {
-        const data = await yahooFinance.chart(tickerSymbol, { period1: new Date(Date.now() - days * Time.day), interval });
+        const data = await yahooFinance.chart(tickerSymbol, { period1, period2, interval });
         if (!data || data.quotes.length === 0) {
             console.log(`No data found for ticker symbol '${tickerSymbol}'.`);
             return null;
