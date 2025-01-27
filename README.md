@@ -9,24 +9,55 @@
 ![Account Page](public/accounts.png)
 ---
 
-Trading in the financial markets, whether it's forex, stocks, or cryptocurrency, is a mix of highs and lows. For many traders, the challenge isn’t just finding good trades but executing them effectively. This was my struggle, and it led me to create ChartWise—a tool aimed at making trade execution simpler and more reliable.
 
-## The Challenge: Trading Execution Issues
+ChartWise is a practical tool designed to help traders improve their trading execution by simplifying the process of chart analysis and trade planning. Whether you're trading forex, stocks, or cryptocurrency, ChartWise aims to bridge the gap between identifying good trade opportunities and executing them effectively.
 
-In my trading journey, I've experienced both gains and losses to say the least. I often had a good sense of when to enter a trade but struggled with executing it properly. This gap in execution often resulted in losses despite having the right strategy. ChartWise was developed to address this issue by providing clear, actionable insights for better trade execution.
+![ChartWise Demo](assets/chartwise-demo.gif)
 
-## What Is ChartWise?
+---
 
-ChartWise is designed to help traders analyse charts and create effective trade plans. You start by uploading a screenshot of your chart and inputting details about your trading strategy and risk tolerance. ChartWise then generates a detailed analysis and execution plan tailored to your inputs, leveraging advanced technical analysis and artificial intelligence.
+## Features
 
-## Why ChartWise Can Help
+1. **Chart Analysis**
+   - Upload screenshots of your trading charts.
+   - Input details about your trading strategy and risk tolerance.
+   - Receive detailed analysis leveraging advanced technical analysis and AI.
 
-The main goal of ChartWise is to bridge the gap between understanding a trade and executing it well. It’s not just for beginners trying to get a handle on charts, but also for experienced traders who want to refine their strategies and avoid common mistakes. By offering structured analysis and actionable plans, ChartWise helps ensure that you follow through on your trading insights effectively.
+2. **Trade Planning**
+   - Generate actionable trade plans based on your inputs.
+   - Tailored execution strategies to match your trading goals.
 
-## Conclusion
+3. **User-Friendly Interface**
+   - Intuitive design for both beginners and experienced traders.
+   - Structured layouts for chart analysis, account management, and trade insights.
 
-ChartWise is a tool created out of necessity to improve trading execution. It simplifies the process of analyzing charts and turning that analysis into actionable trade plans. Whether you're new to trading or have years of experience, ChartWise aims to help you execute your trades more effectively.
+---
 
-If you’re looking to make more informed trading decisions and improve your execution strategy, give ChartWise a try. It’s designed to support you in navigating the complexities of trading with greater confidence and precision.
+## Why Use ChartWise?
+
+ChartWise was created to solve a common problem in trading: the difficulty of executing trades effectively despite having the right strategy. Key benefits include:
+
+- **Enhanced Execution**: Turn your trading insights into well-executed trades.
+- **Actionable Insights**: Avoid common mistakes by following structured and reliable trade plans.
+- **Versatile Utility**: Designed for both new traders and seasoned professionals looking to refine their strategies.
+
+---
+
+## How It Works
+
+1. **Upload Your Chart**: Start by uploading a screenshot of your chart.
+2. **Define Your Strategy**: Input details about your trading approach and risk tolerance.
+3. **Get Your Plan**: Receive a detailed analysis and execution plan customized to your inputs.
+
+---
+
+## Getting Started
+
+1. Visit [ChartWise](https://chartwise.fpflabs.app).
+2. Create an account or log in.
+3. Begin analyzing your charts and generating trade plans.
+
+---
 
 [Try ChartWise now!](https://chartwise.fpflabs.app)
+
