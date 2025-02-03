@@ -1,18 +1,18 @@
 # ChartWise: A Practical Tool for Better Trading
 
-![ChartWise Demo](assets/chartwise-demo.gif)
+![ChartWise Demo](client/assets/chartwise-demo.gif)
 
-![Analysis Page](public/analysis-page-v3.png)
+![Analysis Page](client/public/analysis-page-v3.png)
 
-![Charts Page](public/chart-page-v2.png)
+![Charts Page](client/public/chart-page-v2.png)
 
-![Account Page](public/accounts.png)
+![Account Page](client/public/accounts.png)
 ---
 
 
 ChartWise is a practical tool designed to help traders improve their trading execution by simplifying the process of chart analysis and trade planning. Whether you're trading forex, stocks, or cryptocurrency, ChartWise aims to bridge the gap between identifying good trade opportunities and executing them effectively.
 
-![ChartWise Demo](assets/chartwise-demo.gif)
+![ChartWise Demo](client/assets/chartwise-demo.gif)
 
 ---
 
