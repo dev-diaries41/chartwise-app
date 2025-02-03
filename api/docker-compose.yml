@@ -1,0 +1,43 @@
+services:
+  chartwise:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}  # Use an environment variable for the password
+    depends_on:
+      - redis
+    restart: unless-stopped
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--maxmemory", "200mb", "--maxmemory-policy", "noeviction"] # use "allkeys-lru" to evict last recently used keys
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}  # Pass the password to Redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]  # Use the environment variable in the health check
+      interval: 30s
+      timeout: 10s
+      retries: 3
+#   caddy:
+#     image: caddy:2
+#     restart: always
+#     ports:
+#       - "80:80"
+#       - "443:443"
+#     volumes:
+#       - ./Caddyfile:/etc/caddy/Caddyfile
+#       - caddy_data:/data
+#       - caddy_config:/config
+#     depends_on:
+#       - chartwise
+
+# volumes:
+#   caddy_data:
+#   caddy_config:
